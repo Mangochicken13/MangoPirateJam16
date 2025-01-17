@@ -11,10 +11,15 @@
             "id": "f27dd456c0444db8",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Ideas.md",
+                "mode": "source",
+                "backlinks": false,
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Ideas"
             }
           }
         ]
@@ -160,6 +165,7 @@
   },
   "active": "f27dd456c0444db8",
   "lastOpenFiles": [
+    "Ideas.md",
     "docs/Pong/Todo.md",
     "docs/Pong",
     "docs",
