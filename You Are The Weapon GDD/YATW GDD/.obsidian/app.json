@@ -1,0 +1,11 @@
+{
+  "newFileLocation": "current",
+  "showUnsupportedFiles": true,
+  "attachmentFolderPath": "./",
+  "showLineNumber": true,
+  "userIgnoreFilters": [
+    "\"/(.import)/\"",
+    "\"/.+\\.import/\""
+  ],
+  "promptDelete": false
+}
