@@ -16,3 +16,6 @@ mono_crash.*.json
 
 # Mac .DS_Store
 .DS_Store
+
+# Obsidian Settings
+/You Are The Weapon GDD/YATW GDD/.obsidian
