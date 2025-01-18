@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://lnuocne6qmhb"]
+
+[ext_resource type="Script" path="res://Components/Dev Tools/testing_wall.gd" id="1_2oy8g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mln17"]
+resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6qiis"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_dprae"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_6qiis")
+
+[node name="Testing Solid Wall" type="StaticBody3D" node_paths=PackedStringArray("mesh", "collision_shape")]
+collision_layer = 2
+script = ExtResource("1_2oy8g")
+mesh = NodePath("MeshInstance3D")
+collision_shape = NodePath("CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_mln17")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_dprae")
+skeleton = NodePath("../..")
