@@ -23,12 +23,12 @@ func _physics_process(delta: float) -> void:
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		var normal = collision.get_normal()
-		print("normal: {0}".format([normal]))
-		print("velocity before: {0}".format([velocity]))
+		#print("normal: {0}".format([normal]))
+		#print("velocity before: {0}".format([velocity]))
 		velocity = velocity.bounce(normal)
-		print("veloctity after: {0}".format([velocity]))
-		print("basis before: {0}".format([basis]))
+		#print("veloctity after: {0}".format([velocity]))
+		#print("basis before: {0}".format([basis]))
 		basis = Basis.looking_at(velocity)
-		print("basis after:  {0}".format([basis]))
-		print("")
+		#print("basis after:  {0}".format([basis]))
+		#print("")
 	pass
