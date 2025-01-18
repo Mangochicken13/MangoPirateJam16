@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://cw2l6ifqw3yxn"]
+
+[ext_resource type="PackedScene" uid="uid://nv2sbbj23yw1" path="res://Components/ball.tscn" id="1_ikktw"]
+[ext_resource type="PackedScene" uid="uid://c2u36u0ugffua" path="res://Components/game_camera.tscn" id="2_dgu68"]
+[ext_resource type="PackedScene" uid="uid://lnuocne6qmhb" path="res://Components/Dev Tools/testing_wall.tscn" id="3_1vec6"]
+
+[node name="Test Scene" type="Node3D"]
+
+[node name="Ball" parent="." instance=ExtResource("1_ikktw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.98183, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.196751, -0.377242, 0.904974, -1.10369e-08, 0.923016, 0.384762, -0.980454, -0.0757022, 0.181604, 3.63781, 5.07967, 0)
+
+[node name="Camera Pivot" parent="." node_paths=PackedStringArray("target") instance=ExtResource("2_dgu68")]
+target = NodePath("../Ball")
+
+[node name="floor" parent="." instance=ExtResource("3_1vec6")]
+size = Vector3(20, 1, 20)
+color = Color(0.658272, 0.341172, 0.913242, 1)
+
+[node name="ceiling" parent="." instance=ExtResource("3_1vec6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+size = Vector3(20, 1, 20)
+color = Color(0.256158, 0.682616, 0.926869, 1)
+
+[node name="Testing Solid Wall" parent="." instance=ExtResource("3_1vec6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 10)
+size = Vector3(20, 20, 1)
+color = Color(1, 0.469953, 0.150274, 1)
+
+[node name="Testing Solid Wall2" parent="." instance=ExtResource("3_1vec6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 10, 0)
+size = Vector3(1, 20, 20)
+color = Color(0.238983, 0.87108, 0.555269, 1)
+
+[node name="Testing Solid Wall3" parent="." instance=ExtResource("3_1vec6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -10)
+size = Vector3(20, 20, 1)
+color = Color(1, 0.238824, 0.168311, 1)
+
+[node name="Testing Solid Wall4" parent="." instance=ExtResource("3_1vec6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 10, 0)
+size = Vector3(1, 20, 20)
+color = Color(0.718141, 0.639102, 0.180302, 1)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.3476, 0)
+omni_range = 62.5
