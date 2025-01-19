@@ -2,12 +2,17 @@ extends CharacterBody3D
 class_name Ball
 
 @export var mesh: MeshInstance3D
+@export var camera_target: Node3D
+
+@export var pcam: PhantomCamera3D
 
 @export var speed: float = 20
 
 func _ready() -> void:
-	#velocity = Vector3(0, 0, speed)
-	pass
+	# This line is required to make the controls work as expected before hitting a wall
+	# For some reason they are inverted without this, could be a sign that something else is benig done wrong
+	# This works for now though
+	basis = basis.looking_at(basis * speed * Vector3.FORWARD)
 
 
 func _physics_process(delta: float) -> void:
@@ -18,17 +23,19 @@ func _physics_process(delta: float) -> void:
 	var turn_dir_y = Input.get_axis("turn_right", "turn_left")
 	rotate_object_local(Vector3.MODEL_TOP, turn_dir_y * delta)
 	
+	# Constant velocity for now, change this to allow deceleration if decided as the lose condition
+	# Other lose condition options include a timer or a combo/hype system
 	velocity = basis * speed * Vector3.FORWARD
 	
 	var collision = move_and_collide(velocity * delta)
+	# Bounce function: Needs to be moved to a seperate function call to handle different wall types
 	if collision:
 		var normal = collision.get_normal()
-		#print("normal: {0}".format([normal]))
-		#print("velocity before: {0}".format([velocity]))
 		velocity = velocity.bounce(normal)
-		#print("veloctity after: {0}".format([velocity]))
-		#print("basis before: {0}".format([basis]))
-		basis = Basis.looking_at(velocity)
-		#print("basis after:  {0}".format([basis]))
-		#print("")
-	pass
+		
+		basis = basis.looking_at(velocity)
+		
+	# Using a lerp here to change the angle of the phantom camera spring arm 
+	#   avoids manually changing the angle along with player input, and handles bouncing
+	pcam.set_third_person_rotation(lerp(pcam.get_third_person_rotation(), global_rotation, 0.06))
+	
