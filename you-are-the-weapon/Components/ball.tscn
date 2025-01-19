@@ -15,7 +15,7 @@ material = SubResource("StandardMaterial3D_mh3kg")
 [node name="Ball" type="CharacterBody3D" node_paths=PackedStringArray("mesh", "camera_target")]
 collision_mask = 6
 motion_mode = 1
-safe_margin = 0.06
+safe_margin = 0.6
 script = ExtResource("1_e50cp")
 mesh = NodePath("Pivot/MeshInstance3D")
 camera_target = NodePath("")

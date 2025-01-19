@@ -35,7 +35,14 @@ func _physics_process(delta: float) -> void:
 		
 		basis = basis.looking_at(velocity)
 		
+	
+
+func _process(delta: float) -> void:
 	# Using a lerp here to change the angle of the phantom camera spring arm 
 	#   avoids manually changing the angle along with player input, and handles bouncing
-	pcam.set_third_person_rotation(lerp(pcam.get_third_person_rotation(), global_rotation, 0.06))
+	var pcam_angle = pcam.get_third_person_rotation()
+	for i in range(3):
+		pcam_angle[i] = lerp_angle(pcam_angle[i], global_rotation[i], 0.06)
+	pcam.set_third_person_rotation(pcam_angle)
+	#pcam.set_third_person_rotation(lerp(pcam.get_third_person_rotation(), global_rotation, 0.06))
 	
