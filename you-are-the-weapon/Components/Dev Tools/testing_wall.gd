@@ -11,20 +11,27 @@ class_name Testing_Solid_Wall
 			collision_shape.shape.set("size", new_size)
 		size = new_size
 
-@export var color: Color = Color.WHITE:
+@export var color: Color = Color(1, 1, 1, 254.0/255):
 	set(new_color):
-		if mesh:
+		if mesh and new_color != Color(1, 1, 1, 254.0/255):
 			mesh.mesh.get("material").set("albedo_color", new_color)
+			mesh.mesh.get("material").set("albedo_texture", TYPE_NIL)
+		else:
+			mesh.mesh.get("material").set("albedo_color", Color.WHITE)
+			mesh.mesh.get("material").set("albedo_texture", mesh_texture)
 		color = new_color
 
+var mesh_texture: Texture2D
 
 @export_category("Internals")
 @export var mesh: MeshInstance3D
 @export var collision_shape: CollisionShape3D
 
-
-func _process(delta: float) -> void:
+func _enter_tree() -> void:
 	if Engine.is_editor_hint():
-		if mesh:
-			#print(mesh.mesh.get("size"))
-			pass
+		var image = Image.load_from_file("res://Components/Dev Tools/testing_wall.png")
+		mesh_texture = ImageTexture.create_from_image(image)
+	else:
+		var image = load("res://Components/Dev Tools/testing_wall.png")
+		mesh_texture = image
+		
