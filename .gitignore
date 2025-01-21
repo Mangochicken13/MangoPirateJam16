@@ -19,3 +19,6 @@ mono_crash.*.json
 
 # Obsidian Settings
 /You Are The Weapon GDD/YATW GDD/.obsidian
+
+# Turning off the export folder
+/you-are-the-weapon/Export
