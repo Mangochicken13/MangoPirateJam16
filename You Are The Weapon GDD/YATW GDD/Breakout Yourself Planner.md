@@ -20,8 +20,10 @@ kanban-plugin: board
 ## Todo
 
 - [ ] ### Make Camera not awful while bouncing
-	- [ ] Research using lerps and easing
+	- [x] Research using lerps and easing ✅ 2025-01-20
 	- [ ] Research using camera boundaries
+- [ ] ### Add Trail to Ball movement path
+	- [ ] Make it fade out before reaching the camera
 
 
 ## In progress
@@ -30,11 +32,11 @@ kanban-plugin: board
 
 ## Urgent
 
-- [ ] ### Make test blocks automatically set mesh side albedo
 
 
 ## Complete
 
+- [x] ### Make test blocks automatically set mesh side albedo ✅ 2025-01-20
 
 
 
