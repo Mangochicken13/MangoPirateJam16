@@ -2,17 +2,20 @@ extends CharacterBody3D
 class_name Ball
 
 @export var mesh: MeshInstance3D
-@export var camera_target: Node3D
-
-@export var pcam: PhantomCamera3D
+@onready var ball_cam: PhantomCamera3D
 
 @export var speed: float = 20
+@export var turn_speed: float = 1
+
+const LERP_SPEED: float = 2
 
 func _ready() -> void:
+	ball_cam = owner.get_node("BallCamera")
+	
 	# This line is required to make the controls work as expected before hitting a wall
 	# For some reason they are inverted without this, could be a sign that something else is benig done wrong
 	# This works for now though
-	basis = basis.looking_at(basis * speed * Vector3.FORWARD)
+	basis = Basis.looking_at(basis * speed * Vector3.FORWARD)
 
 
 func _physics_process(delta: float) -> void:
@@ -33,16 +36,18 @@ func _physics_process(delta: float) -> void:
 		var normal = collision.get_normal()
 		velocity = velocity.bounce(normal)
 		
-		basis = basis.looking_at(velocity)
+		# No need to multiply by delta, the remainder magnitude is already multiplied by it
+		move_and_collide(velocity.normalized() * collision.get_remainder().length())
+		basis = Basis.looking_at(velocity)
 		
 	
 
 func _process(delta: float) -> void:
 	# Using a lerp here to change the angle of the phantom camera spring arm 
 	#   avoids manually changing the angle along with player input, and handles bouncing
-	var pcam_angle = pcam.get_third_person_rotation()
+	var ball_cam_angle = ball_cam.get_third_person_rotation()
 	for i in range(3):
-		pcam_angle[i] = lerp_angle(pcam_angle[i], global_rotation[i], 0.06)
-	pcam.set_third_person_rotation(pcam_angle)
+		ball_cam_angle[i] = lerp_angle(ball_cam_angle[i], global_rotation[i], LERP_SPEED * delta)
+	ball_cam.set_third_person_rotation(ball_cam_angle)
 	#pcam.set_third_person_rotation(lerp(pcam.get_third_person_rotation(), global_rotation, 0.06))
 	

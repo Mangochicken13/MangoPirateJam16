@@ -12,20 +12,17 @@ albedo_texture = ExtResource("2_tjuhk")
 [sub_resource type="SphereMesh" id="SphereMesh_ryvd1"]
 material = SubResource("StandardMaterial3D_mh3kg")
 
-[node name="Ball" type="CharacterBody3D" node_paths=PackedStringArray("mesh", "camera_target")]
+[node name="Ball" type="CharacterBody3D" node_paths=PackedStringArray("mesh")]
 collision_mask = 6
 motion_mode = 1
 safe_margin = 0.6
 script = ExtResource("1_e50cp")
 mesh = NodePath("Pivot/MeshInstance3D")
-camera_target = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00149775, 0, 0)
 shape = SubResource("SphereShape3D_0gomf")
 
 [node name="Pivot" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
 mesh = SubResource("SphereMesh_ryvd1")
-skeleton = NodePath("../..")
