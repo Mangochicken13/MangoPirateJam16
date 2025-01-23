@@ -1,6 +1,6 @@
 @tool
 
-extends StaticBody3D
+extends Wall
 class_name Testing_Solid_Wall
 
 @export var size: Vector3 = Vector3.ONE:
@@ -16,7 +16,7 @@ class_name Testing_Solid_Wall
 		if mesh and new_color != Color(1, 1, 1, 254.0/255):
 			mesh.mesh.get("material").set("albedo_color", new_color)
 			mesh.mesh.get("material").set("albedo_texture", TYPE_NIL)
-		else:
+		elif mesh_texture:
 			mesh.mesh.get("material").set("albedo_color", Color.WHITE)
 			mesh.mesh.get("material").set("albedo_texture", mesh_texture)
 		color = new_color
@@ -29,9 +29,9 @@ var mesh_texture: Texture2D
 
 func _enter_tree() -> void:
 	if Engine.is_editor_hint():
-		var image = Image.load_from_file("res://Components/Dev Tools/testing_wall.png")
+		var image = Image.load_from_file("res://Components/Walls/testing_wall.png")
 		mesh_texture = ImageTexture.create_from_image(image)
 	else:
-		var image = load("res://Components/Dev Tools/testing_wall.png")
+		var image = load("res://Components/Walls/testing_wall.png")
 		mesh_texture = image
 		

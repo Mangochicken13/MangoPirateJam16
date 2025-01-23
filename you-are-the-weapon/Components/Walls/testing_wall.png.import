@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b2chgrkjp72rm"
-path="res://.godot/imported/testing_wall.png-fbecaed0aebf85d375e844bb3256c834.ctex"
+path="res://.godot/imported/testing_wall.png-4597d6e3a05ce6265da3f0fd428597fa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Components/Dev Tools/testing_wall.png"
-dest_files=["res://.godot/imported/testing_wall.png-fbecaed0aebf85d375e844bb3256c834.ctex"]
+source_file="res://Components/Walls/testing_wall.png"
+dest_files=["res://.godot/imported/testing_wall.png-4597d6e3a05ce6265da3f0fd428597fa.ctex"]
 
 [params]
 
