@@ -1,6 +1,6 @@
 @tool
 
-extends Wall
+extends StaticBody3D
 class_name Testing_Solid_Wall
 
 @export var size: Vector3 = Vector3.ONE:
