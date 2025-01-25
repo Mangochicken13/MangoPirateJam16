@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://37702wvtpjm6"]
+
+[ext_resource type="Script" path="res://Components/Walls/breakable_wall.gd" id="1_7jxn8"]
+[ext_resource type="FastNoiseLite" uid="uid://t62yaaxyjx8e" path="res://Components/Walls/wall_crack_noise.tres" id="2_ko5f1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmtlg"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_6qcxt"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_gmtlg")
+size = Vector3(3, 2, 1)
+subdivide_width = 16
+subdivide_height = 24
+subdivide_depth = 8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0ybw5"]
+resource_local_to_scene = true
+size = Vector3(3, 2, 1)
+
+[node name="Breakable Wall" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_7jxn8")
+crack_noise = ExtResource("2_ko5f1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_6qcxt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_0ybw5")
