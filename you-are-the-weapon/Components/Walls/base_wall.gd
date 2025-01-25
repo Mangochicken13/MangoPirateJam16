@@ -5,7 +5,23 @@ class_name Wall
 @export var velocity_multiplier: float = 1
 @export var combo_modifier: float = 0
 
+var mesh_instance: MeshInstance3D
+var mesh: Mesh
+var mesh_material: Material
+var collision_shape: CollisionShape3D
 
+func _ready() -> void:
+	var children = get_children()
+	for node in children:
+		if node is MeshInstance3D and !mesh_instance:
+			mesh_instance = node
+			mesh = mesh_instance.mesh
+			mesh_material = mesh.get("material")
+		elif node is CollisionShape3D and !collision_shape:
+			collision_shape = node
+	
+	# Solid Walls
+	collision_layer = 2
 
 func _bounce(velocity: Vector3) -> Vector3:
 	velocity = velocity * velocity_multiplier
