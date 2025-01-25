@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="You Are The Weapon"
-run/main_scene="res://test_scene.tscn"
+run/main_scene="res://test_scene_2.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -26,6 +26,12 @@ window/subwindows/embed_subwindows=false
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://addons/": "gray"
+}
 
 [input]
 
@@ -94,6 +100,10 @@ debug_start_moving={
 3d_physics/layer_1="Player"
 3d_physics/layer_2="Static Walls"
 3d_physics/layer_3="Breakable Blocks"
+
+[phantom_camera]
+
+tips/show_jitter_tips=false
 
 [rendering]
 
