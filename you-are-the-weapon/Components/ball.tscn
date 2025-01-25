@@ -1,7 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://nv2sbbj23yw1"]
+[gd_scene load_steps=18 format=3 uid="uid://nv2sbbj23yw1"]
 
 [ext_resource type="Script" path="res://Components/ball.gd" id="1_e50cp"]
 [ext_resource type="Texture2D" uid="uid://dctrhgyqt27k3" path="res://icon.svg" id="2_tjuhk"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="3_p2b4v"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="4_j6r2q"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="5_qycq2"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="6_y7xus"]
+[ext_resource type="Script" path="res://Components/Walls/testing_wall.gd" id="7_nu58y"]
+[ext_resource type="Texture2D" uid="uid://b2chgrkjp72rm" path="res://Components/Walls/testing_wall.png" id="8_dwrm4"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_0gomf"]
 
@@ -11,6 +17,41 @@ albedo_texture = ExtResource("2_tjuhk")
 
 [sub_resource type="SphereMesh" id="SphereMesh_ryvd1"]
 material = SubResource("StandardMaterial3D_mh3kg")
+
+[sub_resource type="Resource" id="Resource_m43vb"]
+script = ExtResource("5_qycq2")
+duration = 1.0
+transition = 0
+ease = 2
+
+[sub_resource type="Resource" id="Resource_7k4t5"]
+script = ExtResource("6_y7xus")
+cull_mask = 1048573
+h_offset = 0.0
+v_offset = 0.0
+projection = 0
+fov = 75.0
+size = 1.0
+frustum_offset = Vector2(0, 0)
+near = 0.05
+far = 4000.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_s1nqx"]
+margin = 0.117
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0iw5f"]
+resource_local_to_scene = true
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d04j6"]
+resource_local_to_scene = true
+albedo_texture = ExtResource("8_dwrm4")
+texture_filter = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_et1fl"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_d04j6")
+size = Vector3(0.4, 0.4, 0.4)
 
 [node name="Ball" type="CharacterBody3D" node_paths=PackedStringArray("mesh")]
 collision_mask = 6
@@ -26,3 +67,57 @@ shape = SubResource("SphereShape3D_0gomf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
 mesh = SubResource("SphereMesh_ryvd1")
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Node"]
+transform = Transform3D(1.94707e-07, -0.00113086, 0.999999, 4.65661e-10, 0.999999, 0.00113086, -1, 2.45476e-10, 1.94707e-07, 2.99989, 0.103392, 5.841e-07)
+cull_mask = 1048573
+
+[node name="RayCast3D" type="RayCast3D" parent="Node/Camera3D"]
+transform = Transform3D(0.999996, 5.55112e-17, -2.84217e-14, -8.32667e-17, 0.999988, -1.16415e-10, 0, 1.16415e-10, 0.999989, 0, 0, 0)
+visible = false
+target_position = Vector3(0, 0, -3)
+collision_mask = 0
+debug_shape_custom_color = Color(0.894118, 7.70092e-07, 0.504646, 1)
+debug_shape_thickness = 3
+
+[node name="PhantomCameraHost" type="Node" parent="Node/Camera3D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("3_p2b4v")
+
+[node name="BallCamera" type="Node3D" parent="Node" node_paths=PackedStringArray("follow_target")]
+unique_name_in_owner = true
+transform = Transform3D(1.94701e-07, -0.00113081, 0.999964, 4.65648e-10, 0.999959, 0.00113082, -0.999972, 2.45466e-10, 1.947e-07, 2.99989, 0.103392, 5.841e-07)
+script = ExtResource("4_j6r2q")
+follow_mode = 6
+follow_target = NodePath("../..")
+tween_resource = SubResource("Resource_m43vb")
+tween_on_load = false
+camera_3d_resource = SubResource("Resource_7k4t5")
+follow_offset = Vector3(0, 0.1, 0)
+follow_damping = true
+follow_distance = 3.0
+dead_zone_width = 0.3
+dead_zone_height = 0.3
+spring_length = 3.0
+collision_mask = 6
+shape = SubResource("SphereShape3D_s1nqx")
+look_at_damping = true
+
+[node name="Testing Solid Wall" type="StaticBody3D" parent="Node/BallCamera" node_paths=PackedStringArray("mesh", "collision_shape")]
+visible = false
+collision_layer = 2
+script = ExtResource("7_nu58y")
+size = Vector3(0.4, 0.4, 0.4)
+mesh = NodePath("MeshInstance3D")
+collision_shape = NodePath("CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node/BallCamera/Testing Solid Wall"]
+shape = SubResource("BoxShape3D_0iw5f")
+disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node/BallCamera/Testing Solid Wall"]
+layers = 2
+mesh = SubResource("BoxMesh_et1fl")

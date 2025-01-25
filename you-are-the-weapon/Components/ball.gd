@@ -10,7 +10,7 @@ class_name Ball
 const LERP_SPEED: float = 2
 
 func _ready() -> void:
-	ball_cam = owner.get_node("BallCamera")
+	ball_cam = %BallCamera
 	
 	# This line is required to make the controls work as expected before hitting a wall
 	# For some reason they are inverted without this, could be a sign that something else is benig done wrong
