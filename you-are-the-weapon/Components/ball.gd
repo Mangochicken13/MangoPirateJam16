@@ -7,6 +7,8 @@ class_name Ball
 @export var speed: float = 20
 @export var turn_speed: float = 1
 
+var damage_mult: float = 1
+
 const LERP_SPEED: float = 2
 
 func _ready() -> void:
@@ -33,12 +35,14 @@ func _physics_process(delta: float) -> void:
 	var collision = move_and_collide(velocity * delta)
 	# Bounce function: Needs to be moved to a seperate function call to handle different wall types
 	if collision:
-		var normal = collision.get_normal()
-		velocity = velocity.bounce(normal)
-		
-		# No need to multiply by delta, the remainder magnitude is already multiplied by it
-		move_and_collide(velocity.normalized() * collision.get_remainder().length())
-		basis = Basis.looking_at(velocity)
+		if collision.get_collider() is Wall:
+			var normal = collision.get_normal()
+			velocity = velocity.bounce(normal)
+			
+			# No need to multiply by delta, the remainder magnitude is already multiplied by it
+			move_and_collide(velocity.normalized() * collision.get_remainder().length())
+			basis = Basis.looking_at(velocity)
+			
 		
 	
 

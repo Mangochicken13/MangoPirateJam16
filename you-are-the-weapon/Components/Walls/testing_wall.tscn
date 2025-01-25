@@ -26,11 +26,11 @@ texture_filter = 2
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_6qiis")
 
-[node name="Testing Solid Wall" type="StaticBody3D" node_paths=PackedStringArray("mesh", "collision_shape")]
+[node name="Testing Solid Wall" type="StaticBody3D" node_paths=PackedStringArray("mesh_editor", "collision_shape_editor")]
 collision_layer = 2
 script = ExtResource("1_2oy8g")
-mesh = NodePath("MeshInstance3D")
-collision_shape = NodePath("CollisionShape3D")
+mesh_editor = NodePath("MeshInstance3D")
+collision_shape_editor = NodePath("CollisionShape3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_mln17")

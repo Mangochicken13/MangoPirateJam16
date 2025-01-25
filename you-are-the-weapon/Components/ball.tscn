@@ -106,13 +106,13 @@ collision_mask = 6
 shape = SubResource("SphereShape3D_s1nqx")
 look_at_damping = true
 
-[node name="Testing Solid Wall" type="StaticBody3D" parent="Node/BallCamera" node_paths=PackedStringArray("mesh", "collision_shape")]
+[node name="Testing Solid Wall" type="StaticBody3D" parent="Node/BallCamera"]
 visible = false
 collision_layer = 2
 script = ExtResource("7_nu58y")
 size = Vector3(0.4, 0.4, 0.4)
-mesh = NodePath("MeshInstance3D")
-collision_shape = NodePath("CollisionShape3D")
+velocity_multiplier = null
+combo_modifier = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node/BallCamera/Testing Solid Wall"]
 shape = SubResource("BoxShape3D_0iw5f")
