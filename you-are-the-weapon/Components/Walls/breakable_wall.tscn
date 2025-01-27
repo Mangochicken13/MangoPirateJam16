@@ -10,14 +10,14 @@ resource_local_to_scene = true
 [sub_resource type="BoxMesh" id="BoxMesh_6qcxt"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_gmtlg")
-size = Vector3(3, 2, 1)
+size = Vector3(5, 4, 2)
 subdivide_width = 16
 subdivide_height = 24
 subdivide_depth = 8
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0ybw5"]
 resource_local_to_scene = true
-size = Vector3(3, 2, 1)
+size = Vector3(5, 4, 2)
 
 [node name="Breakable Wall" type="StaticBody3D"]
 collision_layer = 4
