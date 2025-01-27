@@ -33,25 +33,14 @@ enum WIN_CONDITION {
 @export var exit_trigger: Area3D
 @export var boundary: AABB
 
-func _init() -> void:
-	if Engine.is_editor_hint():
-		var exit_area := Area3D.new()
-		add_child(exit_area)
-		exit_area.owner = get_tree().edited_scene_root
-		
-		var exit_collision_shape := CollisionShape3D.new()
-		exit_collision_shape.shape = BoxShape3D.new()
-		exit_area.add_child(exit_collision_shape)
-		exit_collision_shape.owner = exit_area
-		
-		exit_trigger = exit_area
-
 func _ready() -> void:
+	if exit_trigger:
+		exit_trigger.body_entered.connect(try_finish_level)
+
+func try_finish_level():
 	pass
-	
 
-
-# Concept copied from 
+# Concept copied from Phantom Camera source code
 func _validate_property(property: Dictionary) -> void:
 	if !timed:
 		match property.name:
