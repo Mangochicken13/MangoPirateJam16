@@ -14,20 +14,22 @@ This was a great launching point to transition to a Roguelike/Roguelite game, pr
 The movement was most closely inspired by the visuals of [Children of the Sun](https://store.steampowered.com/app/1309950/Children_of_the_Sun/), adapted to feature continuous control, due to being directly in control of the projectile
 
 ### Player Experience
-
+TODO: Outline content in the final version
 
 ### Platform
-The game would like to be fully released on Windows/Mac/Linux, but the demo is being done for browser playability
+The game would ideally be fully released on Windows/Mac/Linux as a downloadable executable through either Itch or Steam, but the demo is being done as a web game for playing on Itch due to both Jam requirements and ease of access
 
 ### Development Software
 - Godot 4.3 for programming
-- Aseprite 1.x dev (compiled) for 2D Assets
+- Aseprite 1.x dev (compiled) for 2D Sprites
 
 ### Genre: 
 - Rougelike/Rougelite
 - Singleplayer
-- 
+
+### Target Audience:
+The difficult controls and fast paced gameplay likely do not lend well to a good experience for casual players, so the target audience would likely lean more towards fans of movement-based or fast-paced roguelike games
 
 ### Gameplay:
-You play as the ball in a [Breakout](https://en.wikipedia.org/wiki/Breakout_(video_game)) style game, translated into a rougelike format. 
+The player controls the ball in a [Breakout](https://en.wikipedia.org/wiki/Breakout_(video_game)) style game, translated into a rougelike format and 3 Dimensional environment. 
 The ball moves forward on its own, with the player having control over the direction it turns (relatively being left-right, and up-down; similarly to how a plane would control), as well as how it spins, which will ideally affect how bounces work
