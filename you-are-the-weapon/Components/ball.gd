@@ -11,7 +11,7 @@ var target_spring_length: float
 
 var damage_mult: float = 1
 
-const CAMERA_LERP_SPEED: float = 2
+const CAMERA_LERP_SPEED: Vector3 = Vector3(2, 4, 2)
 const SPRING_LERP_SPEED: float = 4
 const VELOCITY_LERP_SPEED: float = 1
 const ADDITIONAL_COLLISIONS: int = 3
@@ -34,6 +34,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	#region Rotation
+	# I don't entirely understand the rotation functions, but they work so that's good enough
 	var turn_dir_x = Input.get_axis("turn_up", "turn_down")
 	rotate_object_local(Vector3.MODEL_RIGHT, turn_dir_x * delta)
 	velocity = velocity.rotated(basis * Vector3.LEFT, turn_dir_x * delta)
@@ -89,7 +90,7 @@ func calculate_damage() -> float:
 	var damage = max(0.5, (1 + pow(max(0, (velocity.length() - speed)) ** 2, (1.0/3)))) * damage_mult
 	
 	print("Damage: ", damage)
-	print("From values: \nVelocity magnitude: {0}\nSpeed: {1}\nDamage Multiplier: {2}".format([velocity.length(), speed, damage_mult]))
+	print("From values: \nVelocity magnitude: {0}\nSpeed: {1}\nDamage Multiplier: {2}\n".format([velocity.length(), speed, damage_mult]))
 	return damage
 	
 
@@ -101,7 +102,7 @@ func _process(delta: float) -> void:
 	#   avoids manually changing the angle along with player input, and handles bouncing
 	var ball_cam_angle = ball_cam.get_third_person_rotation()
 	for i in range(3):
-		ball_cam_angle[i] = lerp_angle(ball_cam_angle[i], global_rotation[i], CAMERA_LERP_SPEED * delta)
+		ball_cam_angle[i] = lerp_angle(ball_cam_angle[i], global_rotation[i], CAMERA_LERP_SPEED[i] * delta)
 	ball_cam.set_third_person_rotation(ball_cam_angle)
 	
 	# TODO: more work needed on this
