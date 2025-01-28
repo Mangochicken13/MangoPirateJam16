@@ -100,6 +100,7 @@ debug_start_moving={
 3d_physics/layer_1="Player"
 3d_physics/layer_2="Static Walls"
 3d_physics/layer_3="Breakable Blocks"
+3d_physics/layer_4="Area3Ds"
 
 [phantom_camera]
 
