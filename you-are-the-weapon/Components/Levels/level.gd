@@ -105,11 +105,44 @@ func _ready() -> void:
 
 func _start_level() -> void:
 	
+	_check_win_condition_completion()
+	
 	if timed:
 		completion_timer.start()
 
-func try_finish_level():
-	pass
+func try_finish_level() -> bool:
+	if condition_met:
+		level_finished.emit()
+		return true
+	
+	return false
+
+func _on_brick_destroyed():
+	bricks_destroyed += 1
+	
+
+func _check_win_condition_completion() -> float:
+	var completion: float = 0
+	match win_condition:
+		WIN_CONDITION.None:
+			completion = 1
+		WIN_CONDITION.Brick_percentage:
+			completion = (100.0 * bricks_destroyed / bricks_in_level) / brick_percentage
+		WIN_CONDITION.Brick_num:
+			completion = float(bricks_destroyed) / brick_num
+		WIN_CONDITION.Trigger_percentage:
+			completion = (100.0 * triggers_activated / triggers_in_level) / trigger_percentage
+		WIN_CONDITION.Trigger_num:
+			completion * float(triggers_activated) / trigger_num
+	
+	if completion >= 1:
+		complete_win_condition()
+	
+	return completion
+
+func complete_win_condition() -> void:
+	condition_met.emit()
+	score += completion_timer.time_left * 10 / 1
 
 #region Get children of holder nodes
 func get_breakable_bricks(parent: Node = breakable_bricks_holder) -> int:
