@@ -8,8 +8,9 @@ var max_health: float
 @export var damage_reduction: float = 0
 
 @export var health_gradient: Gradient
-@export var crack_noise: Resource
+@export var crack_noise_texture: FastNoiseLite
 
+signal destroyed
 
 func _ready() -> void:
 	super._ready()
@@ -22,8 +23,9 @@ func _ready() -> void:
 ## Returns the final damage dealt after damage reduction and defence
 func _deal_damage(incoming_damage: float) -> float:
 	
-	var final_damage = incoming_damage * (1 - damage_reduction)
+	var final_damage: float = incoming_damage * (1 - damage_reduction)
 	final_damage = final_damage - defence
+	final_damage = maxf(final_damage, 0.0)
 	
 	health = health - final_damage
 	
@@ -45,6 +47,7 @@ func _update_cracks() -> void:
 	pass
 
 func _destroy() -> void:
+	destroyed.emit()
 	queue_free()
 	#shatter into pieces, still bounce off of the last hit though
 	pass

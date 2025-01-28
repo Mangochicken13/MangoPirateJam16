@@ -24,7 +24,7 @@ collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_7jxn8")
 health_gradient = ExtResource("2_ogmrn")
-crack_noise = ExtResource("2_ko5f1")
+crack_noise_texture = ExtResource("2_ko5f1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_6qcxt")
