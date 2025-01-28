@@ -59,6 +59,8 @@ var triggers_in_level: int = 0
 @export var breakable_bricks_holder: Node
 @export var solid_walls_holder: Node
 
+@export var completion_timer: Timer
+
 @export var boundary: AABB
 
 func _ready() -> void:

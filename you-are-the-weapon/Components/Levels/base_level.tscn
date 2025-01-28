@@ -26,3 +26,4 @@ shape = SubResource("BoxShape3D_4n8d0")
 [node name="Solid Walls" type="Node" parent="."]
 
 [node name="Completion Timer" type="Timer" parent="."]
+one_shot = true
