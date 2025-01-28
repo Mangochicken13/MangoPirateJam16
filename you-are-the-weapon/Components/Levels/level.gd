@@ -16,13 +16,13 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 		win_condition = condition
 		notify_property_list_changed()
 @export_range(0, 100, 1, "suffix:%") var brick_percentage: int = 60
-@export var brick_num: int:
+@export_range(0, 255, 1, "or_greater") var brick_num: int:
 	set(num):
 		# validate this against the number of bricks in the level
 		brick_num = num
 
 @export_range(0, 100, 1, "suffix:%") var trigger_percentage: int = 100
-@export var trigger_num: int:
+@export_range(0, 255, 1, "or_greater") var trigger_num: int:
 	set(num):
 		# another validation spot
 		trigger_num = num
