@@ -133,16 +133,22 @@ func _check_win_condition_completion() -> float:
 		WIN_CONDITION.Trigger_percentage:
 			completion = (100.0 * triggers_activated / triggers_in_level) / trigger_percentage
 		WIN_CONDITION.Trigger_num:
-			completion * float(triggers_activated) / trigger_num
+			completion = float(triggers_activated) / trigger_num
 	
 	if completion >= 1:
-		complete_win_condition()
+		complete_win_condition(completion)
 	
 	return completion
 
-func complete_win_condition() -> void:
+func complete_win_condition(completion: float) -> void:
 	condition_met.emit()
-	score += completion_timer.time_left * 10 / 1
+	
+	@warning_ignore("narrowing_conversion")
+	var time_bonus: int = completion_timer.time_left * 10
+	@warning_ignore("narrowing_conversion")
+	var completion_bonus: int = maxi(100, (completion - 1) * 1000)
+	score += time_bonus
+	score += completion_bonus
 
 #region Get children of holder nodes
 func get_breakable_bricks(parent: Node = breakable_bricks_holder) -> int:
