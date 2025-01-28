@@ -11,24 +11,24 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 	Trigger_num, ## Enter/meet [member trigger_num] of triggers (must be less than or equal to the total number of triggers) 
 }
 
+#region Export vars
+
 @export var win_condition: WIN_CONDITION:
 	set(condition):
 		win_condition = condition
 		notify_property_list_changed()
 
-var breakable_bricks_in_level: int = 0
 @export_range(0, 100, 1, "suffix:%") var brick_percentage: int = 60
 @export_range(0, 255, 1, "or_greater") var brick_num: int:
 	set(num):
-		breakable_bricks_in_level = get_breakable_bricks()
-		if num > breakable_bricks_in_level:
-			brick_num = breakable_bricks_in_level
-			print("Variable \"Brick Num\" cannot exceed the number of bricks in the scene (%s)" % breakable_bricks_in_level)
+		bricks_in_level = get_breakable_bricks()
+		if num > bricks_in_level:
+			brick_num = bricks_in_level
+			print("Variable \"Brick Num\" cannot exceed the number of bricks in the scene (%s)" % bricks_in_level)
 			return
 		
 		brick_num = num
 
-var triggers_in_level: int = 0
 @export_range(0, 100, 1, "suffix:%") var trigger_percentage: int = 100
 @export_range(0, 255, 1, "or_greater") var trigger_num: int:
 	set(num):
@@ -47,11 +47,14 @@ var triggers_in_level: int = 0
 	set(value):
 		timed = value
 		notify_property_list_changed()
+
 ## Whether to stop counting down the timer once the condition is met.
 ## Setting this to [code]false[/code] means the player has to reach the exit after completing 
 ## This does nothing if the condition is [enum WIN_CONDITION.None]
 @export var stop_timer_on_win: bool = true
 @export var time: float = 120
+
+@export var score_multiplier: float = 1
 
 @export_category("References")
 @export var exit_trigger: Area3D
@@ -63,6 +66,25 @@ var triggers_in_level: int = 0
 
 @export var boundary: AABB
 
+#endregion
+
+var win_condition_met: bool = false
+
+var bricks_in_level: int = 0
+var bricks_destroyed: int = 0
+
+var triggers_in_level: int = 0
+var triggers_activated: int = 0
+
+var score: float = 0
+
+#region Signals
+
+signal level_finished
+signal condition_met
+
+#endregion
+
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		pass
@@ -72,13 +94,24 @@ func _ready() -> void:
 		else:
 			push_error("No exit for level ", get_tree().current_scene.scene_file_path.get_file().get_basename())
 		
-		breakable_bricks_in_level = get_breakable_bricks()
+		bricks_in_level = get_breakable_bricks()
+		triggers_in_level = get_triggers()
 		
+		for node in breakable_bricks_holder.get_children():
+			if node is BreakableWall:
+				node.destroyed.connect()
+		
+		completion_timer.wait_time = time
+
+func _start_level() -> void:
 	
+	if timed:
+		completion_timer.start()
 
 func try_finish_level():
 	pass
 
+#region Get children of holder nodes
 func get_breakable_bricks(parent: Node = breakable_bricks_holder) -> int:
 	return get_children_of_type(parent, BreakableWall)
 
@@ -93,9 +126,11 @@ func get_children_of_type(parent: Node, type: Variant) -> int:
 		if is_instance_of(node, type):
 			num += 1
 	return num
+#endregion
 
 # super expensive calc, only do this manually
 func get_aabb():
+	#important for automatic positioning of nodes if seemless transitions are required
 	pass
 
 # Concept copied from Phantom Camera source code
