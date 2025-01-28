@@ -76,7 +76,9 @@ var bricks_destroyed: int = 0
 var triggers_in_level: int = 0
 var triggers_activated: int = 0
 
-var score: float = 0
+var level_score: int = 0
+var time_bonus: int = 0
+var completion_bonus: int = 0
 
 #region Signals
 
@@ -113,6 +115,17 @@ func _start_level() -> void:
 func try_finish_level() -> bool:
 	if condition_met:
 		level_finished.emit()
+		
+		@warning_ignore("narrowing_conversion")
+		time_bonus = completion_timer.time_left * 10
+		
+		# maybe do some visual count up here? lerp seems right?
+		# probably want to add these seperately for visual flair?
+		level_score += time_bonus
+		
+		level_score += completion_bonus
+		
+		
 		return true
 	
 	return false
@@ -142,13 +155,8 @@ func _check_win_condition_completion() -> float:
 
 func complete_win_condition(completion: float) -> void:
 	condition_met.emit()
-	
 	@warning_ignore("narrowing_conversion")
-	var time_bonus: int = completion_timer.time_left * 10
-	@warning_ignore("narrowing_conversion")
-	var completion_bonus: int = maxi(100, (completion - 1) * 1000)
-	score += time_bonus
-	score += completion_bonus
+	completion_bonus = maxi(100, (completion - 1) * 1000)
 
 #region Get children of holder nodes
 func get_breakable_bricks(parent: Node = breakable_bricks_holder) -> int:
