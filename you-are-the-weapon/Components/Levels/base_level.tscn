@@ -5,10 +5,21 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_4n8d0"]
 size = Vector3(5, 5, 5)
 
-[node name="Level" type="Node3D"]
+[node name="Level" type="Node3D" node_paths=PackedStringArray("exit_trigger", "trigger_holder", "breakable_bricks_holder", "solid_walls_holder")]
 script = ExtResource("1_4dys2")
+exit_trigger = NodePath("Exit Area")
+trigger_holder = NodePath("Trigger Holder")
+breakable_bricks_holder = NodePath("Breakable Bricks")
+solid_walls_holder = NodePath("Solid Walls")
 
 [node name="Exit Area" type="Area3D" parent="."]
+collision_layer = 8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Exit Area"]
 shape = SubResource("BoxShape3D_4n8d0")
+
+[node name="Trigger Holder" type="Node" parent="."]
+
+[node name="Breakable Bricks" type="Node" parent="."]
+
+[node name="Solid Walls" type="Node" parent="."]
