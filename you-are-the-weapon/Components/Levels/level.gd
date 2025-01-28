@@ -15,16 +15,29 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 	set(condition):
 		win_condition = condition
 		notify_property_list_changed()
+
+var breakable_bricks_in_level: int = 0
 @export_range(0, 100, 1, "suffix:%") var brick_percentage: int = 60
 @export_range(0, 255, 1, "or_greater") var brick_num: int:
 	set(num):
-		# validate this against the number of bricks in the level
+		breakable_bricks_in_level = get_breakable_bricks()
+		if num > breakable_bricks_in_level:
+			brick_num = breakable_bricks_in_level
+			print("Variable \"Brick Num\" cannot exceed the number of bricks in the scene (%s)" % breakable_bricks_in_level)
+			return
+		
 		brick_num = num
 
+var triggers_in_level: int = 0
 @export_range(0, 100, 1, "suffix:%") var trigger_percentage: int = 100
 @export_range(0, 255, 1, "or_greater") var trigger_num: int:
 	set(num):
-		# another validation spot
+		triggers_in_level = get_triggers()
+		if num > triggers_in_level:
+			trigger_num = triggers_in_level
+			print("Variable \"Trugger Num\" cannot exceed the number of bricks in the scene (%s)" % triggers_in_level)
+			return
+		
 		trigger_num = num
 
 ## If the selected win condition has a time to complete it within.
@@ -49,13 +62,35 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 @export var boundary: AABB
 
 func _ready() -> void:
-	if exit_trigger:
-		exit_trigger.body_entered.connect(try_finish_level)
+	if Engine.is_editor_hint():
+		pass
 	else:
-		push_error("No exit trigger selected")
+		if exit_trigger:
+			exit_trigger.body_entered.connect(try_finish_level)
+		else:
+			push_error("No exit for level ", get_tree().current_scene.scene_file_path.get_file().get_basename())
+		
+		breakable_bricks_in_level = get_breakable_bricks()
+		
+	
 
 func try_finish_level():
 	pass
+
+func get_breakable_bricks(parent: Node = breakable_bricks_holder) -> int:
+	return get_children_of_type(parent, BreakableWall)
+
+func get_triggers(parent: Node = trigger_holder) -> int:
+	return get_children_of_type(parent, Area3D) # placeholder for a custom trigger type with a visual indicator
+
+func get_children_of_type(parent: Node, type: Variant) -> int:
+	var num: int = 0
+	if !parent:
+		parent = self
+	for node in parent.get_children():
+		if is_instance_of(node, type):
+			num += 1
+	return num
 
 # super expensive calc, only do this manually
 func get_aabb():
