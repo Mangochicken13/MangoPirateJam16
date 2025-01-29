@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://7kcef77qbpfl"]
+
+[ext_resource type="Script" path="res://Components/Levels/level_trigger.gd" id="1_xwh3f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ff0tt"]
+size = Vector3(5, 5, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y3nyg"]
+transparency = 1
+albedo_color = Color(1, 0.54902, 0, 0.501961)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ud4qt"]
+material = SubResource("StandardMaterial3D_y3nyg")
+
+[node name="Level Trigger" type="Area3D"]
+collision_layer = 8
+script = ExtResource("1_xwh3f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ff0tt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ud4qt")

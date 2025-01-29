@@ -175,7 +175,7 @@ func get_breakable_bricks(parent: Node = breakable_bricks_holder) -> int:
 	return get_children_of_type(parent, BreakableWall)
 
 func get_triggers(parent: Node = trigger_holder) -> int:
-	return get_children_of_type(parent, Area3D) # placeholder for a custom trigger type with a visual indicator
+	return get_children_of_type(parent, LevelTrigger)
 
 func get_children_of_type(parent: Node, type: Variant) -> int:
 	var num: int = 0
