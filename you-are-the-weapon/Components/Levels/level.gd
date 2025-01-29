@@ -52,7 +52,7 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 ## Setting this to [code]false[/code] means the player has to reach the exit after completing 
 ## This does nothing if the condition is [enum WIN_CONDITION.None]
 @export var stop_timer_on_win: bool = true
-@export var time: float = 120
+@export_custom(PROPERTY_HINT_NONE, "suffix:seconds") var time: float = 120
 
 @export var score_multiplier: float = 1
 
