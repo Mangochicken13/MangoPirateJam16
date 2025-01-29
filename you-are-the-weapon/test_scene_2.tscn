@@ -15,12 +15,16 @@ light_energy = 4.0
 omni_range = 51.3525
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.1401, -35.9122)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.998, 21.2912, -19.4227)
 light_energy = 4.0
-omni_range = 51.3525
+omni_range = 74.559
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.609451, -0.580795, 0.539673, 0.248838, 0.786429, 0.56534, -0.752761, -0.210256, 0.623814, 9.18985, 17.8547, -10.0448)
+transform = Transform3D(0.609451, -0.580795, 0.539673, 0.248838, 0.786429, 0.56534, -0.752761, -0.210256, 0.623814, 0, 0, 0)
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.675215, -0.232474, -0.700029, 0.143468, 0.889521, -0.433786, 0.723534, -0.393331, -0.567265, 0, 0, 0)
+light_energy = 0.3
 
 [node name="Breakable Walls" type="Node" parent="."]
 
