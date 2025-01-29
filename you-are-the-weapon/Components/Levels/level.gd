@@ -19,24 +19,31 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 		notify_property_list_changed()
 
 @export_range(0, 100, 1, "suffix:%") var brick_percentage: int = 60
-@export_range(0, 255, 1, "or_greater") var brick_num: int:
+@export_range(0, 1000, 1, "or_greater") var brick_num: int:
 	set(num):
-		bricks_in_level = get_breakable_bricks()
-		if num > bricks_in_level:
-			brick_num = bricks_in_level
-			print("Variable \"Brick Num\" cannot exceed the number of bricks in the scene (%s)" % bricks_in_level)
-			return
-		
-		brick_num = num
+		if Engine.is_editor_hint():
+			bricks_in_level = get_breakable_bricks()
+			if num > bricks_in_level:
+				brick_num = bricks_in_level
+				_brick_num = bricks_in_level
+				#print("Variable \"Brick Num\" cannot exceed the number of bricks in the scene (%s)" % bricks_in_level)
+				return
+			_brick_num = num
+			brick_num = num
+	get():
+		return _brick_num
+
+@export var _brick_num: int = 0
 
 @export_range(0, 100, 1, "suffix:%") var trigger_percentage: int = 100
 @export_range(0, 255, 1, "or_greater") var trigger_num: int:
 	set(num):
-		triggers_in_level = get_triggers()
-		if num > triggers_in_level:
-			trigger_num = triggers_in_level
-			print("Variable \"Trugger Num\" cannot exceed the number of bricks in the scene (%s)" % triggers_in_level)
-			return
+		if Engine.is_editor_hint():
+			triggers_in_level = get_triggers()
+			if num > triggers_in_level:
+				trigger_num = triggers_in_level
+				#print("Variable \"Trugger Num\" cannot exceed the number of bricks in the scene (%s)" % triggers_in_level)
+				return
 		
 		trigger_num = num
 
@@ -59,6 +66,7 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 @export_category("References")
 @export var exit_area: Area3D
 @export var entrance_area: Area3D
+@export var door: StaticBody3D
 
 @export var trigger_holder: Node
 @export var breakable_bricks_holder: Node
@@ -111,10 +119,11 @@ func _ready() -> void:
 		
 		completion_timer.wait_time = time
 
-func _process(delta: float) -> void:
-	if Engine.is_editor_hint():
-		DebugDraw3D.draw_aabb(boundary, Color.DARK_ORANGE)
-		pass
+#func _process(delta: float) -> void:
+	#if Engine.is_editor_hint():
+		#var debug_draw = DebugDraw3D as Variant
+		#debug_draw.call("draw_aabb", boundary, Color.DARK_ORANGE)
+	#pass
 
 func _start_level() -> void:
 	
@@ -123,7 +132,7 @@ func _start_level() -> void:
 	if timed:
 		completion_timer.start()
 
-func try_finish_level() -> bool:
+func try_finish_level(_body: Node3D) -> bool:
 	if condition_met:
 		level_finished.emit()
 		
@@ -143,6 +152,7 @@ func try_finish_level() -> bool:
 
 func _on_brick_destroyed():
 	bricks_destroyed += 1
+	_check_win_condition_completion()
 	
 
 func _check_win_condition_completion() -> float:
@@ -159,13 +169,20 @@ func _check_win_condition_completion() -> float:
 		WIN_CONDITION.Trigger_num:
 			completion = float(triggers_activated) / trigger_num
 	
-	if completion >= 1:
+	if completion >= 1 and !win_condition_met:
 		complete_win_condition(completion)
 	
 	return completion
 
 func complete_win_condition(completion: float) -> void:
 	condition_met.emit()
+	win_condition_met = true
+	# super temporary code, want this to be on the door node
+	if door:
+		var tween = get_tree().create_tween()
+		tween.tween_property(door, "position", door.position + Vector3(0, 0, -3), 2)
+		tween.tween_property(door, "position", door.position + Vector3(0, -10, -3), 3)
+		tween.tween_callback(door.queue_free)
 	@warning_ignore("narrowing_conversion")
 	completion_bonus = maxi(100, (completion - 1) * 1000)
 
@@ -297,3 +314,7 @@ func _validate_property(property: Dictionary) -> void:
 				"trigger_percentage":
 				#"trigger_num":
 					property.usage = PROPERTY_USAGE_NO_EDITOR
+	
+	match property.name:
+		"_brick_num":
+			property.usage = PROPERTY_USAGE_NO_EDITOR
