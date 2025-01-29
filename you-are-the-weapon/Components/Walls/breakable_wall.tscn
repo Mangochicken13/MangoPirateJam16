@@ -1,19 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://37702wvtpjm6"]
+[gd_scene load_steps=6 format=3 uid="uid://37702wvtpjm6"]
 
 [ext_resource type="Script" path="res://Components/Walls/breakable_wall.gd" id="1_7jxn8"]
 [ext_resource type="FastNoiseLite" uid="uid://t62yaaxyjx8e" path="res://Components/Walls/wall_crack_noise.tres" id="2_ko5f1"]
 [ext_resource type="Gradient" uid="uid://b0110vjwm62cs" path="res://Components/Walls/health_gradient.tres" id="2_ogmrn"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmtlg"]
-resource_local_to_scene = true
-
-[sub_resource type="BoxMesh" id="BoxMesh_6qcxt"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_gmtlg")
-size = Vector3(5, 4, 2)
-subdivide_width = 16
-subdivide_height = 24
-subdivide_depth = 8
+[ext_resource type="BoxMesh" uid="uid://781nrqkwx8te" path="res://Components/Walls/breakable_wall.tres" id="4_h6878"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0ybw5"]
 resource_local_to_scene = true
@@ -27,7 +17,7 @@ health_gradient = ExtResource("2_ogmrn")
 crack_noise_texture = ExtResource("2_ko5f1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_6qcxt")
+mesh = ExtResource("4_h6878")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_0ybw5")
