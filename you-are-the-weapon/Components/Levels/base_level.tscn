@@ -10,7 +10,6 @@ size = Vector3(10, 10, 5)
 
 [node name="Level" type="Node3D" node_paths=PackedStringArray("exit_area", "entrance_area", "trigger_holder", "breakable_bricks_holder", "solid_walls_holder", "completion_timer")]
 script = ExtResource("1_4dys2")
-timed = true
 exit_area = NodePath("Exit Area")
 entrance_area = NodePath("Entrance Area")
 trigger_holder = NodePath("Trigger Holder")
