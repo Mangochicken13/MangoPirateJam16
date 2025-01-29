@@ -57,14 +57,20 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 @export var score_multiplier: float = 1
 
 @export_category("References")
-@export var exit_trigger: Area3D
+@export var exit_area: Area3D
+@export var entrance_area: Area3D
+
 @export var trigger_holder: Node
 @export var breakable_bricks_holder: Node
 @export var solid_walls_holder: Node
 
 @export var completion_timer: Timer
 
-@export var boundary: AABB
+@export var boundary: AABB = AABB(Vector3(-0.2, -0.2, -0.2), Vector3(0.4, 0.4, 0.4))
+@export var update_boundary: bool:
+	set(value):
+		boundary = get_aabb(self, false, self.transform)
+		update_boundary = value
 
 #endregion
 
@@ -91,8 +97,8 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		pass
 	else:
-		if exit_trigger:
-			exit_trigger.body_entered.connect(try_finish_level)
+		if exit_area:
+			exit_area.body_entered.connect(try_finish_level)
 		else:
 			push_error("No exit for level ", get_tree().current_scene.scene_file_path.get_file().get_basename())
 		
@@ -101,9 +107,14 @@ func _ready() -> void:
 		
 		for node in breakable_bricks_holder.get_children():
 			if node is BreakableWall:
-				node.destroyed.connect()
+				node.destroyed.connect(_on_brick_destroyed)
 		
 		completion_timer.wait_time = time
+
+func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		DebugDraw3D.draw_aabb(boundary, Color.DARK_ORANGE)
+		pass
 
 func _start_level() -> void:
 	
@@ -159,6 +170,7 @@ func complete_win_condition(completion: float) -> void:
 	completion_bonus = maxi(100, (completion - 1) * 1000)
 
 #region Get children of holder nodes
+
 func get_breakable_bricks(parent: Node = breakable_bricks_holder) -> int:
 	return get_children_of_type(parent, BreakableWall)
 
@@ -173,12 +185,73 @@ func get_children_of_type(parent: Node, type: Variant) -> int:
 		if is_instance_of(node, type):
 			num += 1
 	return num
+
 #endregion
 
+
+#region AABB calculator
+
 # super expensive calc, only do this manually
-func get_aabb():
+# Code adapted from the godot source code: https://github.com/godotengine/godot/blob/master/editor/plugins/node_3d_editor_plugin.cpp#L4475
+func get_aabb(p_parent: Node3D, p_omit_top_level: bool, p_bounds_orientation: Transform3D):
+	var bounds: AABB
+	
+	var bounds_orientation: Transform3D
+	if (p_bounds_orientation):
+		bounds_orientation = p_bounds_orientation;
+	else:
+		bounds_orientation = p_parent.get_global_transform();
+	
+	# meant for null pointers i think?
+	if (!p_parent):
+		return AABB(Vector3(-0.2, -0.2, -0.2), Vector3(0.4, 0.4, 0.4));
+	
+	var xform_to_top_level_parent_space: Transform3D = bounds_orientation.affine_inverse() * p_parent.get_global_transform();
+	
+	var visual_instance: VisualInstance3D = p_parent as VisualInstance3D
+	if (visual_instance):
+		bounds = visual_instance.get_aabb();
+	else:
+		bounds = AABB();
+	
+	# adding collision shapes to the bounding box
+	if p_parent is CollisionShape3D:
+		var shape: Shape3D = p_parent.shape
+		var shape_bounds: AABB = AABB()
+		match shape:
+			var box when box is BoxShape3D:
+				shape_bounds.size = box.size
+			var x when x is SphereShape3D:
+				shape_bounds.size = (2 * Vector3(x.radius, x.radius, x.radius))
+		
+		bounds = bounds.merge(AABB(p_parent.global_position - shape_bounds.size / 2, shape_bounds.size))
+	
+	bounds = xform_to_top_level_parent_space * bounds;
+	
+	for i in p_parent.get_child_count():
+		#print(p_parent.get_child(i).name)
+		var child: Node3D = p_parent.get_child(i) as Node3D;
+		#print(child)
+		if (child && !(p_omit_top_level && child.is_set_as_top_level())):
+			# recursive function
+			var child_bounds: AABB = get_aabb(child, p_omit_top_level, bounds_orientation);
+			bounds = bounds.merge(child_bounds);
+		
+		#if typeof(p_parent.get_child(i)) == typeof(Node):
+			#var child_as_node: Node = p_parent.get_child(i)
+			#for j in child_as_node.get_child_count():
+				#child_as_node
+	
+	print(p_parent.name)
+	print(bounds)
+	return bounds;
+	
 	#important for automatic positioning of nodes if seemless transitions are required
-	pass
+
+# Use this to make the check propagate through Node children trees
+#func _propagate_get_aabb()
+
+#endregion
 
 # Concept copied from Phantom Camera source code
 func _validate_property(property: Dictionary) -> void:

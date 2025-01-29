@@ -1,27 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://ca0itvftvsk06"]
+[gd_scene load_steps=5 format=3 uid="uid://ca0itvftvsk06"]
 
 [ext_resource type="Script" path="res://Components/Levels/level.gd" id="1_4dys2"]
+[ext_resource type="PackedScene" uid="uid://37702wvtpjm6" path="res://Components/Walls/breakable_wall.tscn" id="2_m56oy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4n8d0"]
-size = Vector3(5, 5, 5)
+size = Vector3(10, 10, 5)
 
-[node name="Level" type="Node3D" node_paths=PackedStringArray("exit_trigger", "trigger_holder", "breakable_bricks_holder", "solid_walls_holder", "completion_timer")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_unbfw"]
+size = Vector3(10, 10, 5)
+
+[node name="Level" type="Node3D" node_paths=PackedStringArray("trigger_holder", "breakable_bricks_holder", "solid_walls_holder", "completion_timer")]
 script = ExtResource("1_4dys2")
-exit_trigger = NodePath("Exit Area")
 trigger_holder = NodePath("Trigger Holder")
 breakable_bricks_holder = NodePath("Breakable Bricks")
 solid_walls_holder = NodePath("Solid Walls")
 completion_timer = NodePath("Completion Timer")
+boundary = AABB(-5, -5, -42.5, 10, 10, 45)
 
 [node name="Exit Area" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40)
 collision_layer = 8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Exit Area"]
 shape = SubResource("BoxShape3D_4n8d0")
 
+[node name="Entrance Area" type="Area3D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Entrance Area"]
+shape = SubResource("BoxShape3D_unbfw")
+
 [node name="Trigger Holder" type="Node" parent="."]
 
 [node name="Breakable Bricks" type="Node" parent="."]
+
+[node name="Breakable Wall" parent="Breakable Bricks" instance=ExtResource("2_m56oy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 9, -20)
 
 [node name="Solid Walls" type="Node" parent="."]
 
