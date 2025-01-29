@@ -15,18 +15,36 @@ kanban-plugin: board
 
 ## Todo
 
-- [ ] ### Breakable Walls/Blocks
-	- [ ] Break into non-colliding chunks
-	- [ ] Trigger breaking when health is depleted
-	- [ ] Visually indicate health by cracks
+- [ ] Score Mechanic
+	- Add points for: 
+		- [ ] breaking a brick
+		- [ ] activating a trigger
+		- [ ] completing a win condition
+		- [ ] completing the level
+		- [ ] time bonus
+	- [ ] Multiply level score by a combo value based on speed
+	- [ ] Store high score between plays
 
 
 ## In progress
 
+- [ ] ### Breakable Walls/Blocks
+	- [ ] Break into non-colliding chunks
+	- [x] Trigger breaking when health is depleted ✅ 2025-01-29
+	- [ ] Visually indicate health by cracks
 
 
 ## Urgent
 
+- [ ] Create Main Menu
+	- [ ] Make buttons functional
+	- [ ] (Optional) Make it look good
+- [ ] Create Main manager script
+	- Handle starting the game
+		- [ ] Position the ball correctly
+		- [ ] Lerp Engine.time_scale to 1 over a few seconds to launch
+	- [ ] Manage level transitions (manual positioning for now)
+	- [ ] Manage scoring
 
 
 ## Complete
