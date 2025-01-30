@@ -1,6 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://crcwwsl077er8"]
+[gd_scene load_steps=12 format=3 uid="uid://crcwwsl077er8"]
 
+[ext_resource type="Script" path="res://UI/menu.gd" id="1_jbfmi"]
 [ext_resource type="Texture2D" uid="uid://dctrhgyqt27k3" path="res://icon.svg" id="1_midum"]
+[ext_resource type="Script" path="res://UI/menu.settings_scene.gd" id="2_7c3c1"]
+[ext_resource type="LabelSettings" uid="uid://b6xid1r8yq7d6" path="res://UI/label_settings.tres" id="3_hrrea"]
+[ext_resource type="Script" path="res://UI/menu.settings_scene.confirm_changes.gd" id="4_nytky"]
+[ext_resource type="Script" path="res://UI/menu.main_scene.gd" id="5_5ob8y"]
+[ext_resource type="Script" path="res://UI/menu.player_customiser_scene.gd" id="7_e7sv3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ytc6k"]
+bg_color = Color(0.31, 0.31, 0.31, 1)
+shadow_color = Color(0, 0, 0, 0.745098)
+shadow_size = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7k4v2"]
 bg_color = Color(0, 0, 0, 0.27451)
@@ -10,15 +21,176 @@ bg_color = Color(0, 0, 0, 0.27451)
 [sub_resource type="LabelSettings" id="LabelSettings_ifcco"]
 font_size = 64
 
-[node name="Menu" type="Control"]
+[node name="Menu" type="Control" node_paths=PackedStringArray("main_scene", "settings_scene", "player_customiser_scene")]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jbfmi")
+main_scene = NodePath("Main")
+settings_scene = NodePath("Settings")
+player_customiser_scene = NodePath("Player Customiser")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="Settings" type="PanelContainer" parent="." node_paths=PackedStringArray("main_scene_button", "confirmation_popup", "settings_container")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_7c3c1")
+main_scene_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Back to Main")
+confirmation_popup = NodePath("Change Settings Confirmation")
+settings_container = NodePath("MarginContainer/VBoxContainer/SettingsContainer")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Settings"]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Unfinished at the moment: Does not currently change gameplay"
+label_settings = ExtResource("3_hrrea")
+
+[node name="Back to Main" type="Button" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(126, 64)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Label" type="Label" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer/Back to Main"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Back →"
+label_settings = ExtResource("3_hrrea")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="SettingsContainer" type="ScrollContainer" parent="Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/MarginContainer/VBoxContainer/SettingsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Game Speed" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer/SettingsContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/MarginContainer/VBoxContainer/SettingsContainer/VBoxContainer/Game Speed"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Game Speed"
+label_settings = ExtResource("3_hrrea")
+
+[node name="Label2" type="Label" parent="Settings/MarginContainer/VBoxContainer/SettingsContainer/VBoxContainer/Game Speed"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+label_settings = ExtResource("3_hrrea")
+vertical_alignment = 1
+
+[node name="GameSpeed" type="HSlider" parent="Settings/MarginContainer/VBoxContainer/SettingsContainer/VBoxContainer/Game Speed"]
+custom_minimum_size = Vector2(256, 0)
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+min_value = 0.1
+max_value = 1.5
+step = 0.1
+value = 1.0
+
+[node name="Change Settings Confirmation" type="PopupPanel" parent="Settings" node_paths=PackedStringArray("cancel_button", "confirm_button")]
+title = "Confirm changes?"
+initial_position = 1
+size = Vector2i(480, 160)
+always_on_top = true
+theme_override_styles/panel = SubResource("StyleBoxFlat_ytc6k")
+script = ExtResource("4_nytky")
+cancel_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Cancel")
+confirm_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Confirm")
+
+[node name="MarginContainer" type="MarginContainer" parent="Settings/Change Settings Confirmation"]
+offset_right = 480.0
+offset_bottom = 160.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/Change Settings Confirmation/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/Change Settings Confirmation/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Do you want to apply your changes?"
+label_settings = ExtResource("3_hrrea")
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Change Settings Confirmation/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Cancel" type="Button" parent="Settings/Change Settings Confirmation/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Label" type="Label" parent="Settings/Change Settings Confirmation/MarginContainer/VBoxContainer/HBoxContainer/Cancel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "No"
+label_settings = ExtResource("3_hrrea")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Confirm" type="Button" parent="Settings/Change Settings Confirmation/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Label" type="Label" parent="Settings/Change Settings Confirmation/MarginContainer/VBoxContainer/HBoxContainer/Confirm"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 7.0
+offset_right = 95.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+text = "Yes
+"
+label_settings = ExtResource("3_hrrea")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Main" type="PanelContainer" parent="." node_paths=PackedStringArray("settings_button", "player_customiser_button", "start_button", "quit_button")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,31 +198,63 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_7k4v2")
+script = ExtResource("5_5ob8y")
+settings_button = NodePath("VBoxContainer/HBoxContainer/Open Settings")
+player_customiser_button = NodePath("VBoxContainer/HBoxContainer/Customise Player")
+start_button = NodePath("VBoxContainer/Start Game")
+quit_button = NodePath("VBoxContainer/HBoxContainer2/Quit Game")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Settings" type="TextureButton" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(64, 64)
+[node name="Open Settings" type="Button" parent="Main/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(182, 64)
 layout_mode = 2
 size_flags_horizontal = 2
-texture_normal = ExtResource("1_midum")
-ignore_texture_size = true
-stretch_mode = 0
 
-[node name="Customise Player" type="TextureButton" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/VBoxContainer/HBoxContainer/Open Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Main/VBoxContainer/HBoxContainer/Open Settings/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("1_midum")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Main/VBoxContainer/HBoxContainer/Open Settings/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Settings"
+label_settings = ExtResource("3_hrrea")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Customise Player" type="Button" parent="Main/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 8
-texture_normal = ExtResource("1_midum")
-ignore_texture_size = true
-stretch_mode = 0
 
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Main/VBoxContainer/HBoxContainer/Customise Player"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_midum")
+expand_mode = 1
+
+[node name="Start Game" type="Button" parent="Main/VBoxContainer"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -58,7 +262,7 @@ size_flags_vertical = 6
 size_flags_stretch_ratio = 8.0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_j8ngq")
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/Button"]
+[node name="Label" type="Label" parent="Main/VBoxContainer/Start Game"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,26 +274,84 @@ label_settings = SubResource("LabelSettings_ifcco")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Main/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 2
 
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+[node name="Quit Game" type="Button" parent="Main/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 6
-icon = ExtResource("1_midum")
 expand_icon = true
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2/Button"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/VBoxContainer/HBoxContainer2/Quit Game"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Main/VBoxContainer/HBoxContainer2/Quit Game/HBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+texture = ExtResource("1_midum")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Main/VBoxContainer/HBoxContainer2/Quit Game/HBoxContainer"]
+layout_mode = 2
 text = "Quit"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="Player Customiser" type="PanelContainer" parent="." node_paths=PackedStringArray("main_scene_button")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 2.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_e7sv3")
+main_scene_button = NodePath("MarginContainer/HBoxContainer/VBoxContainer/Back to Main Menu")
+
+[node name="MarginContainer" type="MarginContainer" parent="Player Customiser"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Player Customiser/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Player Customiser/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="Back to Main Menu" type="Button" parent="Player Customiser/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Player Customiser/MarginContainer/HBoxContainer/VBoxContainer/Back to Main Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "←Back"
+label_settings = ExtResource("3_hrrea")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Player Customiser/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(500.71, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Also not implemented lol. I definitely did not budget enough time for this to be part of the game in this timeframe"
+label_settings = ExtResource("3_hrrea")
+autowrap_mode = 2
