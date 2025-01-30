@@ -1,7 +1,7 @@
 ## Theme: You Are The Weapon
 
 
-Format referenced from the example Game Design Document, for [Mass Flux](https://docs.google.com/document/d/1Vl7BMvzUOhbunJrI_X1gUc6x-LAp3aaBiPwHUf27B70). Future documents will likely use a simpler format, but having a guide was very useful for the referencing the formatting for me.
+Format referenced from the example Game Design Document, for [Mass Flux](https://docs.google.com/document/d/1Vl7BMvzUOhbunJrI_X1gUc6x-LAp3aaBiPwHUf27B70). Future documents will likely use a simpler format, but having a guide was very useful for referencing the formatting for me.
 
 ### Game Summary Pitch
 Breakout Yourself is a platformer? game about breaking blocks quickly in a 3D level
@@ -15,7 +15,7 @@ The movement was most closely inspired by the visuals of [Children of the Sun](h
 
 ### Player Experience
 Current plan is for 3 levels to be played in sequence, showcasing the completed mechanics (base movement + bouncing, bouncier bricks/walls, and win conditions)
-There will ideally be an options menu to decrease the game speed to enable easier play, as the game will likely be quite difficu
+There will ideally be an options menu to decrease the game speed to enable easier play, as the game will likely be quite difficult
 
 ### Platform
 The game would ideally be fully released on Windows/Mac/Linux as a downloadable executable through either Itch or Steam, but the demo is being done as a web game for playing on Itch due to both Jam requirements and ease of access
