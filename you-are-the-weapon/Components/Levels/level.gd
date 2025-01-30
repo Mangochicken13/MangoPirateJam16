@@ -24,12 +24,10 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 		if Engine.is_editor_hint():
 			bricks_in_level = get_breakable_bricks()
 			if num > bricks_in_level:
-				brick_num = bricks_in_level
 				_brick_num = bricks_in_level
 				#print("Variable \"Brick Num\" cannot exceed the number of bricks in the scene (%s)" % bricks_in_level)
 				return
 			_brick_num = num
-			brick_num = num
 	get():
 		return _brick_num
 
@@ -41,11 +39,14 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 		if Engine.is_editor_hint():
 			triggers_in_level = get_triggers()
 			if num > triggers_in_level:
-				trigger_num = triggers_in_level
+				_trigger_num = triggers_in_level
 				#print("Variable \"Trugger Num\" cannot exceed the number of bricks in the scene (%s)" % triggers_in_level)
 				return
-		
-		trigger_num = num
+			_trigger_num = num
+	get():
+		return _trigger_num
+
+@export var _trigger_num: int = 0
 
 ## If the selected win condition has a time to complete it within.
 ## Using this in conjunction with [enum WIN_CONDITION.None] 
@@ -293,6 +294,8 @@ func _validate_property(property: Dictionary) -> void:
 				"trigger_percentage", \
 				"trigger_num":
 					property.usage = PROPERTY_USAGE_NO_EDITOR
+				"brick_num":
+					property.usage = PROPERTY_USAGE_NO_INSTANCE_STATE + PROPERTY_USAGE_EDITOR
 		WIN_CONDITION.Brick_percentage:
 			match property.name:
 				#"brick_percentage", \
@@ -314,7 +317,10 @@ func _validate_property(property: Dictionary) -> void:
 				"trigger_percentage":
 				#"trigger_num":
 					property.usage = PROPERTY_USAGE_NO_EDITOR
+				"trigger_num":
+					property.usage = PROPERTY_USAGE_NO_INSTANCE_STATE + PROPERTY_USAGE_EDITOR
 	
 	match property.name:
-		"_brick_num":
+		"_brick_num", \
+		"_trigger_num":
 			property.usage = PROPERTY_USAGE_NO_EDITOR
