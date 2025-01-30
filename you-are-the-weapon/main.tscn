@@ -5,8 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://nv2sbbj23yw1" path="res://Components/ball.tscn" id="3_dowce"]
 
 [node name="Main" type="Node"]
+process_mode = 3
 script = ExtResource("1_qpx57")
 
 [node name="Menu" parent="." instance=ExtResource("2_j5eyx")]
 
-[node name="Ball" parent="." instance=ExtResource("3_dowce")]
+[node name="Game" type="Node" parent="."]
+process_mode = 1
+
+[node name="Ball" parent="Game" instance=ExtResource("3_dowce")]
