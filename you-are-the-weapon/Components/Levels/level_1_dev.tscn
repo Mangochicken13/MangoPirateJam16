@@ -7,10 +7,9 @@
 
 [node name="Level" node_paths=PackedStringArray("door") instance=ExtResource("1_5rqff")]
 win_condition = 2
-brick_num = 31
 _brick_num = 31
 door = NodePath("Exit Area/Door")
-boundary = AABB(-5, -5, -86.5, 10, 10, 89)
+boundary = AABB(-40, -40, -67, 80, 80, 107)
 
 [node name="Exit Area" parent="." index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -46)
