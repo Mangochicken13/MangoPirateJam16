@@ -19,7 +19,6 @@ completion_timer = NodePath("Completion Timer")
 boundary = AABB(-5, -5, -42.5, 10, 10, 45)
 
 [node name="Exit Area" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40)
 collision_layer = 8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Exit Area"]
@@ -31,11 +30,11 @@ collision_layer = 8
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Entrance Area"]
 shape = SubResource("BoxShape3D_unbfw")
 
-[node name="Trigger Holder" type="Node" parent="."]
+[node name="Trigger Holder" type="Node3D" parent="."]
 
-[node name="Breakable Bricks" type="Node" parent="."]
+[node name="Breakable Bricks" type="Node3D" parent="."]
 
-[node name="Solid Walls" type="Node" parent="."]
+[node name="Solid Walls" type="Node3D" parent="."]
 
 [node name="Completion Timer" type="Timer" parent="."]
 one_shot = true
