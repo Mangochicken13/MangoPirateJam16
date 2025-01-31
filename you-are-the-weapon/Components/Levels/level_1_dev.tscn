@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdhc4jew8px57"]
+[gd_scene load_steps=4 format=3 uid="uid://bdhc4jew8px57"]
 
 [ext_resource type="PackedScene" uid="uid://ca0itvftvsk06" path="res://Components/Levels/base_level.tscn" id="1_5rqff"]
 [ext_resource type="PackedScene" uid="uid://lnuocne6qmhb" path="res://Components/Walls/testing_wall.tscn" id="2_c2c2e"]
-[ext_resource type="PackedScene" uid="uid://nv2sbbj23yw1" path="res://Components/ball.tscn" id="3_6p351"]
 [ext_resource type="PackedScene" uid="uid://37702wvtpjm6" path="res://Components/Walls/breakable_wall.tscn" id="3_81wr8"]
 
 [node name="Level" node_paths=PackedStringArray("door") instance=ExtResource("1_5rqff")]
@@ -13,9 +12,6 @@ boundary = AABB(-40, -40, -67, 80, 80, 107)
 
 [node name="Exit Area" parent="." index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -46)
-
-[node name="CollisionShape3D" parent="Exit Area" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 38)
 
 [node name="Door" parent="Exit Area" index="1" instance=ExtResource("2_c2c2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.98053)
@@ -176,23 +172,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 18, -36)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 18, -36)
 
 [node name="Testing Solid Wall" parent="Solid Walls" index="0" instance=ExtResource("2_c2c2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -25, -21)
-size = Vector3(60, 1, 45)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -25, -18.5)
+size = Vector3(60, 1, 50)
 
 [node name="Testing Solid Wall2" parent="Solid Walls" index="1" instance=ExtResource("2_c2c2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25, -21)
-size = Vector3(60, 1, 45)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25, -18.5)
+size = Vector3(60, 1, 50)
 
 [node name="Testing Solid Wall3" parent="Solid Walls" index="2" instance=ExtResource("2_c2c2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -21)
-size = Vector3(1, 50, 45)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -18.5)
+size = Vector3(1, 50, 50)
 
 [node name="Testing Solid Wall4" parent="Solid Walls" index="3" instance=ExtResource("2_c2c2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -21)
-size = Vector3(1, 50, 45)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -18.5)
+size = Vector3(1, 50, 50)
 
 [node name="Testing Solid Wall5" parent="Solid Walls" index="4" instance=ExtResource("2_c2c2e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
 size = Vector3(62, 50, 1)
 
 [node name="Testing Solid Wall6" parent="Solid Walls" index="5" instance=ExtResource("2_c2c2e")]
@@ -211,29 +207,14 @@ size = Vector3(25, 10, 5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 0, -46)
 size = Vector3(25, 10, 5)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="6"]
-transform = Transform3D(0.563103, -0.456679, -0.688738, 0.0111684, 0.837562, -0.546228, 0.826311, 0.299891, 0.476734, 0, 0, 0)
-light_energy = 0.3
-directional_shadow_mode = 0
-
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." index="7"]
-transform = Transform3D(-0.443766, -0.618998, 0.648007, -0.585843, 0.747577, 0.312915, -0.678129, -0.240769, -0.694385, 0, 0, 0)
-light_energy = 0.7
-directional_shadow_mode = 0
-
-[node name="Ball" parent="." index="8" instance=ExtResource("3_6p351")]
-
-[node name="SpotLight3D" type="SpotLight3D" parent="." index="9"]
-transform = Transform3D(0.840851, -0.316917, 0.438787, 0.0533187, 0.855221, 0.515514, -0.538635, -0.410075, 0.736011, 22, 17, 1.4)
+[node name="SpotLight3D" type="SpotLight3D" parent="." index="6"]
+transform = Transform3D(0.858966, -0.294255, 0.419037, 0.128923, 0.916302, 0.379169, -0.495537, -0.27167, 0.825008, 22, 17, 1.4)
 rotation_edit_mode = 1
-light_color = Color(0.612539, 0.992814, 0.771342, 1)
-light_energy = 2.094
+light_energy = 16.0
 shadow_enabled = true
-spot_range = 67.0
-spot_angle = 7.0
+spot_range = 354.06
+spot_angle = 20.6265
 
-[node name="OmniLight3D" type="OmniLight3D" parent="." index="10"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 3, -26)
-visible = false
-light_energy = 0.712
-omni_range = 40.0
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 9.04818, -6.11285)
+omni_range = 168.181
