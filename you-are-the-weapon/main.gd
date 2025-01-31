@@ -42,7 +42,9 @@ func exit_level(level: Level):
 	total_score += level.level_score
 	levels_completed += 1
 	if levels_completed >= levels_in_scene and win_ui:
+		win_ui.score_label.text = "You Scored: " + str(total_score)
 		win_ui.show()
+		get_tree().paused = true
 
 func _restart_game():
-	print(get_tree().reload_current_scene())
+	get_tree().reload_current_scene()

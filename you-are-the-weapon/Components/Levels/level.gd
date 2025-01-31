@@ -118,10 +118,9 @@ func _ready() -> void:
 		
 		bricks_in_level = get_breakable_bricks()
 		triggers_in_level = get_triggers()
+		print(get_breakable_bricks())
 		
-		for node in breakable_bricks_holder.get_children():
-			if node is BreakableWall:
-				node.destroyed.connect(_on_brick_destroyed)
+		_recursive_connect_bricks()
 		
 		for i in trigger_holder.get_child_count():
 			var child = trigger_holder.get_child(i)
@@ -135,6 +134,13 @@ func _ready() -> void:
 		#var debug_draw = DebugDraw3D as Variant
 		#debug_draw.call("draw_aabb", boundary, Color.DARK_ORANGE)
 	#pass
+
+func _recursive_connect_bricks(p_node: Node = breakable_bricks_holder):
+	for node in p_node.get_children():
+		if node.get_child_count() > 0: 
+			_recursive_connect_bricks(node)
+		if node is BreakableWall:
+			node.destroyed.connect(_on_brick_destroyed)
 
 func _start_level() -> void:
 	

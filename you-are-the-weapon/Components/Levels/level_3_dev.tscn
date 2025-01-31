@@ -1,0 +1,225 @@
+[gd_scene load_steps=4 format=3 uid="uid://tql1shvc5wn"]
+
+[ext_resource type="PackedScene" uid="uid://ca0itvftvsk06" path="res://Components/Levels/base_level.tscn" id="1_8ayjw"]
+[ext_resource type="PackedScene" uid="uid://lnuocne6qmhb" path="res://Components/Walls/testing_wall.tscn" id="2_ob6oo"]
+[ext_resource type="PackedScene" uid="uid://37702wvtpjm6" path="res://Components/Walls/breakable_wall.tscn" id="2_svbsw"]
+
+[node name="Level" node_paths=PackedStringArray("door") instance=ExtResource("1_8ayjw")]
+win_condition = 1
+brick_percentage = 50
+timed = true
+time = 100.0
+door = NodePath("Exit Area/Testing Solid Wall")
+
+[node name="Exit Area" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -72)
+
+[node name="Testing Solid Wall" parent="Exit Area" index="1" instance=ExtResource("2_ob6oo")]
+size = Vector3(10, 10, 1)
+color = Color(0, 0.760591, 0.807829, 0.996078)
+
+[node name="Entrance Area" parent="." index="1"]
+metadata/_edit_lock_ = true
+
+[node name="Node3D" type="Node3D" parent="Breakable Bricks" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -32)
+
+[node name="Breakable Wall" parent="Breakable Bricks/Node3D" index="0" instance=ExtResource("2_svbsw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6, 0, 0)
+
+[node name="Breakable Wall2" parent="Breakable Bricks/Node3D" index="1" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="Breakable Wall3" parent="Breakable Bricks/Node3D" index="2" instance=ExtResource("2_svbsw")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6, 0, 0)
+
+[node name="Breakable Wall4" parent="Breakable Bricks/Node3D" index="3" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="Breakable Wall5" parent="Breakable Bricks/Node3D" index="4" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -6, 0)
+
+[node name="Breakable Wall6" parent="Breakable Bricks/Node3D" index="5" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 6, 0)
+
+[node name="Node3D2" type="Node3D" parent="Breakable Bricks" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -32)
+
+[node name="Breakable Wall" parent="Breakable Bricks/Node3D2" index="0" instance=ExtResource("2_svbsw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6, 0, 0)
+
+[node name="Breakable Wall2" parent="Breakable Bricks/Node3D2" index="1" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="Breakable Wall3" parent="Breakable Bricks/Node3D2" index="2" instance=ExtResource("2_svbsw")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6, 0, 0)
+
+[node name="Breakable Wall4" parent="Breakable Bricks/Node3D2" index="3" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="Breakable Wall5" parent="Breakable Bricks/Node3D2" index="4" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -6, 0)
+
+[node name="Breakable Wall6" parent="Breakable Bricks/Node3D2" index="5" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 6, 0)
+
+[node name="Node3D3" type="Node3D" parent="Breakable Bricks" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, -32)
+
+[node name="Breakable Wall" parent="Breakable Bricks/Node3D3" index="0" instance=ExtResource("2_svbsw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6, 0, 0)
+
+[node name="Breakable Wall2" parent="Breakable Bricks/Node3D3" index="1" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="Breakable Wall3" parent="Breakable Bricks/Node3D3" index="2" instance=ExtResource("2_svbsw")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6, 0, 0)
+
+[node name="Breakable Wall4" parent="Breakable Bricks/Node3D3" index="3" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="Breakable Wall5" parent="Breakable Bricks/Node3D3" index="4" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -6, 0)
+
+[node name="Breakable Wall6" parent="Breakable Bricks/Node3D3" index="5" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 6, 0)
+
+[node name="Node3D4" type="Node3D" parent="Breakable Bricks" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -51)
+
+[node name="Breakable Wall" parent="Breakable Bricks/Node3D4" index="0" instance=ExtResource("2_svbsw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6, 0, 0)
+
+[node name="Breakable Wall2" parent="Breakable Bricks/Node3D4" index="1" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="Breakable Wall3" parent="Breakable Bricks/Node3D4" index="2" instance=ExtResource("2_svbsw")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6, 0, 0)
+
+[node name="Breakable Wall4" parent="Breakable Bricks/Node3D4" index="3" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="Breakable Wall5" parent="Breakable Bricks/Node3D4" index="4" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -6, 0)
+
+[node name="Breakable Wall6" parent="Breakable Bricks/Node3D4" index="5" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 6, 0)
+
+[node name="Node3D5" type="Node3D" parent="Breakable Bricks" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -51)
+
+[node name="Breakable Wall" parent="Breakable Bricks/Node3D5" index="0" instance=ExtResource("2_svbsw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6, 0, 0)
+
+[node name="Breakable Wall2" parent="Breakable Bricks/Node3D5" index="1" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="Breakable Wall3" parent="Breakable Bricks/Node3D5" index="2" instance=ExtResource("2_svbsw")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6, 0, 0)
+
+[node name="Breakable Wall4" parent="Breakable Bricks/Node3D5" index="3" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="Breakable Wall5" parent="Breakable Bricks/Node3D5" index="4" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -6, 0)
+
+[node name="Breakable Wall6" parent="Breakable Bricks/Node3D5" index="5" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 6, 0)
+
+[node name="Node3D6" type="Node3D" parent="Breakable Bricks" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, -51)
+
+[node name="Breakable Wall" parent="Breakable Bricks/Node3D6" index="0" instance=ExtResource("2_svbsw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6, 0, 0)
+
+[node name="Breakable Wall2" parent="Breakable Bricks/Node3D6" index="1" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="Breakable Wall3" parent="Breakable Bricks/Node3D6" index="2" instance=ExtResource("2_svbsw")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6, 0, 0)
+
+[node name="Breakable Wall4" parent="Breakable Bricks/Node3D6" index="3" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="Breakable Wall5" parent="Breakable Bricks/Node3D6" index="4" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -6, 0)
+
+[node name="Breakable Wall6" parent="Breakable Bricks/Node3D6" index="5" instance=ExtResource("2_svbsw")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 6, 0)
+
+[node name="Entrance Tunnel" type="Node3D" parent="Solid Walls" index="0"]
+
+[node name="Testing Solid Wall" parent="Solid Walls/Entrance Tunnel" index="0" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 10)
+size = Vector3(1, 10, 20)
+
+[node name="Testing Solid Wall2" parent="Solid Walls/Entrance Tunnel" index="1" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.5, 10)
+size = Vector3(10, 1, 20)
+
+[node name="Testing Solid Wall3" parent="Solid Walls/Entrance Tunnel" index="2" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 10)
+size = Vector3(10, 1, 20)
+
+[node name="Testing Solid Wall4" parent="Solid Walls/Entrance Tunnel" index="3" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, 10)
+size = Vector3(1, 10, 20)
+
+[node name="Entrance Wall" type="Node3D" parent="Solid Walls" index="1"]
+
+[node name="Testing Solid Wall" parent="Solid Walls/Entrance Wall" index="0" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0)
+size = Vector3(30, 50, 1)
+
+[node name="Testing Solid Wall2" parent="Solid Walls/Entrance Wall" index="1" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+size = Vector3(30, 50, 1)
+
+[node name="Testing Solid Wall3" parent="Solid Walls/Entrance Wall" index="2" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, 0)
+size = Vector3(10, 20, 1)
+
+[node name="Testing Solid Wall4" parent="Solid Walls/Entrance Wall" index="3" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
+size = Vector3(10, 20, 1)
+
+[node name="Testing Solid Wall5" parent="Solid Walls" index="2" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -35)
+size = Vector3(2, 50, 70)
+
+[node name="Testing Solid Wall6" parent="Solid Walls" index="3" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0, -35)
+size = Vector3(2, 50, 70)
+
+[node name="Testing Solid Wall" parent="Solid Walls" index="4" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 26, -35)
+size = Vector3(70, 2, 70)
+
+[node name="Testing Solid Wall2" parent="Solid Walls" index="5" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -26, -35)
+size = Vector3(70, 2, 70)
+
+[node name="Exit Wall" type="Node3D" parent="Solid Walls" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+
+[node name="Testing Solid Wall" parent="Solid Walls/Exit Wall" index="0" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -62)
+size = Vector3(30, 50, 5)
+
+[node name="Testing Solid Wall2" parent="Solid Walls/Exit Wall" index="1" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -62)
+size = Vector3(30, 50, 5)
+
+[node name="Testing Solid Wall3" parent="Solid Walls/Exit Wall" index="2" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, -62)
+size = Vector3(10, 20, 5)
+
+[node name="Testing Solid Wall4" parent="Solid Walls/Exit Wall" index="3" instance=ExtResource("2_ob6oo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, -62)
+size = Vector3(10, 20, 5)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -32)
+light_energy = 4.0
+shadow_enabled = true
+omni_range = 120.0
