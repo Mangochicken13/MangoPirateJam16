@@ -19,15 +19,22 @@ class_name LevelTrigger
 @export var mesh_editor: MeshInstance3D
 @export var collision_shape_editor: CollisionShape3D
 
+signal triggered
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		pass
 	else:
-		mesh_editor.mesh.albedo_color = untriggered_color
-		body_entered.connect(_tween_color)
+		mesh_editor.mesh.get("material").set("albedo_color", untriggered_color)
+		body_entered.connect(_on_body_entered)
+
+func _on_body_entered(body: Node3D):
+	if body is Ball:
+		triggered.emit()
+		_tween_color()
+		body_entered.disconnect(_on_body_entered)
+		
 
 func _tween_color():
 	var tween = get_tree().create_tween()
-	tween.EaseType = Tween.EASE_IN_OUT
-	tween.tween_property(mesh_editor.mesh, "albedo_color", triggered_color, 1)
+	tween.tween_property(mesh_editor.mesh.get("material"), "albedo_color", triggered_color, .5)
