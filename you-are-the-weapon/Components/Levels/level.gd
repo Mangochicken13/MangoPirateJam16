@@ -90,6 +90,7 @@ const _ACTIVATE_TRIGGER_PERCENTAGE = "Enter {0}% of Triggers!"
 #endregion
 
 var win_condition_met: bool = false
+var level_complete: bool = false
 var completion: float = 0
 
 var bricks_in_level: int = 0
@@ -102,11 +103,6 @@ var level_score: int = 0
 var time_bonus: int = 0
 var completion_bonus: int = 0
 
-#region Signals
-
-signal level_finished
-
-#endregion
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -127,6 +123,11 @@ func _ready() -> void:
 			if node is BreakableWall:
 				node.destroyed.connect(_on_brick_destroyed)
 		
+		for i in trigger_holder.get_child_count():
+			var child = trigger_holder.get_child(i)
+			if child is LevelTrigger:
+				child.triggered.connect(_on_trigger_activated)
+		
 		completion_timer.wait_time = time
 
 #func _process(delta: float) -> void:
@@ -146,8 +147,12 @@ func _on_level_entered(_body: Node3D):
 	SignalBus.level_entered.emit(self)
 
 func try_finish_level(_body: Node3D) -> bool:
-	if win_condition_met:
-		level_finished.emit()
+	if win_condition_met and not level_complete:
+		level_complete = true
+		SignalBus.level_exited.emit()
+		
+		@warning_ignore("narrowing_conversion")
+		completion_bonus = maxi(100, (completion - 1) * 1000)
 		
 		@warning_ignore("narrowing_conversion")
 		time_bonus = completion_timer.time_left * 10
@@ -165,7 +170,10 @@ func try_finish_level(_body: Node3D) -> bool:
 func _on_brick_destroyed():
 	bricks_destroyed += 1
 	_check_win_condition_completion()
-	
+
+func _on_trigger_activated():
+	triggers_activated += 1
+	_check_win_condition_completion()
 
 func _check_win_condition_completion() -> float:
 	match win_condition:
@@ -194,8 +202,6 @@ func complete_win_condition(completion: float) -> void:
 		tween.tween_property(door, "position", door.position + Vector3(0, 0, -3), 1)
 		tween.tween_property(door, "position", door.position + Vector3(0, -10, -3), 1.5)
 		tween.tween_callback(door.queue_free)
-	@warning_ignore("narrowing_conversion")
-	completion_bonus = maxi(100, (completion - 1) * 1000)
 
 func objective_text(p_win_condition: Level.WIN_CONDITION = -1) -> String:
 	var local_win_condition: int
@@ -203,6 +209,7 @@ func objective_text(p_win_condition: Level.WIN_CONDITION = -1) -> String:
 		local_win_condition = win_condition
 	else:
 		local_win_condition = p_win_condition
+	
 	match local_win_condition:
 		Level.WIN_CONDITION.None:
 			return GET_TO_THE_EXIT
