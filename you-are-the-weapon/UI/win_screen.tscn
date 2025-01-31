@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://mifh078hdrki"]
+
+[ext_resource type="Script" path="res://win_screen.gd" id="1_v0nh7"]
+[ext_resource type="LabelSettings" uid="uid://b6xid1r8yq7d6" path="res://UI/label_settings.tres" id="2_3kv28"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_oi4dp"]
+font_size = 48
+
+[node name="Win screen" type="Control" node_paths=PackedStringArray("restart_button")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v0nh7")
+restart_button = NodePath("PanelContainer/CenterContainer/VBoxContainer/Restart Button")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CenterContainer"]
+custom_minimum_size = Vector2(0, 256)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Great Job!"
+label_settings = SubResource("LabelSettings_oi4dp")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "You scored: "
+label_settings = ExtResource("2_3kv28")
+horizontal_alignment = 1
+
+[node name="Restart Button" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+
+[node name="Label" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/Restart Button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Try again?"
+label_settings = ExtResource("2_3kv28")
+horizontal_alignment = 1
+vertical_alignment = 1
