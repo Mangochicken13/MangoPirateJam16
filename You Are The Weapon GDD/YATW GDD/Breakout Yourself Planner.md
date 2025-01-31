@@ -17,11 +17,11 @@ kanban-plugin: board
 
 - [ ] Score Mechanic
 	- Add points for: 
-		- [ ] breaking a brick
-		- [ ] activating a trigger
-		- [ ] completing a win condition
-		- [ ] completing the level
-		- [ ] time bonus
+		- [x] breaking a brick ✅ 2025-01-31
+		- [x] activating a trigger ✅ 2025-01-31
+		- [x] completing a win condition ✅ 2025-01-31
+		- [x] completing the level ✅ 2025-01-31
+		- [x] time bonus ✅ 2025-01-31
 	- [ ] Multiply level score by a combo value based on speed
 	- [ ] Store high score between plays
 
@@ -37,14 +37,14 @@ kanban-plugin: board
 ## Urgent
 
 - [ ] Create Main Menu
-	- [ ] Make buttons functional
+	- [x] Make buttons functional ✅ 2025-01-31
 	- [ ] (Optional) Make it look good
 - [ ] Create Main manager script
 	- Handle starting the game
 		- [ ] Position the ball correctly
 		- [ ] Lerp Engine.time_scale to 1 over a few seconds to launch
 	- [ ] Manage level transitions (manual positioning for now)
-	- [ ] Manage scoring
+	- [x] Manage scoring ✅ 2025-01-31
 
 
 ## Complete
