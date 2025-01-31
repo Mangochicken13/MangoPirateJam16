@@ -6,7 +6,7 @@
 
 [node name="Level" node_paths=PackedStringArray("door") instance=ExtResource("1_5rqff")]
 win_condition = 2
-_brick_num = 31
+_brick_num = 20
 door = NodePath("Exit Area/Door")
 boundary = AABB(-40, -40, -67, 80, 80, 107)
 
