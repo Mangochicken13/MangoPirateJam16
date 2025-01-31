@@ -145,12 +145,12 @@ func _start_level() -> void:
 
 func _on_level_entered(_body: Node3D):
 	SignalBus.level_entered.emit(self)
+	entrance_area.body_entered.disconnect(_on_level_entered)
 	_start_level()
 
 func try_finish_level(_body: Node3D) -> bool:
 	if win_condition_met and not level_complete:
 		level_complete = true
-		SignalBus.level_exited.emit()
 		
 		@warning_ignore("narrowing_conversion")
 		completion_bonus = maxi(100, (completion - 1) * 1000)
@@ -164,16 +164,20 @@ func try_finish_level(_body: Node3D) -> bool:
 		
 		level_score += completion_bonus
 		
+		SignalBus.level_exited.emit(self)
+		
 		return true
 	
 	return false
 
 func _on_brick_destroyed():
 	bricks_destroyed += 1
+	level_score += 20
 	_check_win_condition_completion()
 
 func _on_trigger_activated():
 	triggers_activated += 1
+	level_score += 50
 	_check_win_condition_completion()
 
 func _check_win_condition_completion() -> float:
