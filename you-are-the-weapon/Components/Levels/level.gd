@@ -145,6 +145,7 @@ func _start_level() -> void:
 
 func _on_level_entered(_body: Node3D):
 	SignalBus.level_entered.emit(self)
+	_start_level()
 
 func try_finish_level(_body: Node3D) -> bool:
 	if win_condition_met and not level_complete:
