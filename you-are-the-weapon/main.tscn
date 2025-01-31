@@ -1,16 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://010knv4cgwnh"]
+[gd_scene load_steps=6 format=3 uid="uid://010knv4cgwnh"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_qpx57"]
 [ext_resource type="PackedScene" uid="uid://crcwwsl077er8" path="res://UI/menu.tscn" id="2_j5eyx"]
+[ext_resource type="PackedScene" uid="uid://cvn5uhcel3n7h" path="res://UI/player_ui.tscn" id="3_cwpfu"]
 [ext_resource type="PackedScene" uid="uid://nv2sbbj23yw1" path="res://Components/ball.tscn" id="3_dowce"]
+[ext_resource type="PackedScene" uid="uid://bdhc4jew8px57" path="res://Components/Levels/level_1_dev.tscn" id="5_m4v8k"]
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" node_paths=PackedStringArray("menu_ui", "player_ui", "player")]
 process_mode = 3
 script = ExtResource("1_qpx57")
+menu_ui = NodePath("Menu")
+player_ui = NodePath("Game/Player UI")
+player = NodePath("Game/Ball")
 
 [node name="Menu" parent="." instance=ExtResource("2_j5eyx")]
 
 [node name="Game" type="Node" parent="."]
 process_mode = 1
 
+[node name="Player UI" parent="Game" node_paths=PackedStringArray("main_handler") instance=ExtResource("3_cwpfu")]
+visible = false
+main_handler = NodePath("../..")
+
 [node name="Ball" parent="Game" instance=ExtResource("3_dowce")]
+
+[node name="Level" parent="Game" instance=ExtResource("5_m4v8k")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Game"]
+transform = Transform3D(0.563103, -0.456679, -0.688738, 0.0111684, 0.837562, -0.546228, 0.826311, 0.299891, 0.476734, 0, 0, 0)
+light_energy = 0.2
+directional_shadow_mode = 0
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Game"]
+transform = Transform3D(-0.443766, -0.618998, 0.648007, -0.585843, 0.747577, 0.312915, -0.678129, -0.240769, -0.694385, 0, 0, 0)
+light_energy = 0.4
+directional_shadow_mode = 0
