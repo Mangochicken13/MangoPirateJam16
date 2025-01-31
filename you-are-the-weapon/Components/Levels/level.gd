@@ -189,11 +189,11 @@ func _check_win_condition_completion() -> float:
 			completion = float(triggers_activated) / trigger_num
 	
 	if completion >= 1 and !win_condition_met:
-		complete_win_condition(completion)
+		complete_win_condition()
 	
 	return completion
 
-func complete_win_condition(completion: float) -> void:
+func complete_win_condition() -> void:
 	SignalBus.level_win_condition_met.emit(self)
 	win_condition_met = true
 	# super temporary code, want this to be on the door node
@@ -203,7 +203,7 @@ func complete_win_condition(completion: float) -> void:
 		tween.tween_property(door, "position", door.position + Vector3(0, -10, -3), 1.5)
 		tween.tween_callback(door.queue_free)
 
-func objective_text(p_win_condition: Level.WIN_CONDITION = -1) -> String:
+func objective_text(p_win_condition: int = -1) -> String:
 	var local_win_condition: int
 	if p_win_condition == -1:
 		local_win_condition = win_condition
