@@ -244,6 +244,8 @@ func get_children_of_type(parent: Node, type: Variant) -> int:
 	if !parent:
 		parent = self
 	for node in parent.get_children():
+		if node.get_child_count() > 0:
+			num += get_children_of_type(node, type)
 		if is_instance_of(node, type):
 			num += 1
 	return num
