@@ -26,7 +26,7 @@ func _ready() -> void:
 func transition_to_scene(target: PanelContainer):
 	var h_anchor_change = target.anchor_left
 	for scene in scenes:
-		var tween = get_tree().create_tween()
+		var tween = create_tween()
 		tween.set_ease(Tween.EASE_IN)
 		tween.tween_property(scene, "anchor_left", scene.anchor_left - h_anchor_change, .8)
 		tween.parallel().tween_property(scene, "anchor_right", scene.anchor_right - h_anchor_change, .8)
