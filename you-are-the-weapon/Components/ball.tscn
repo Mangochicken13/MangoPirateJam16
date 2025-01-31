@@ -71,7 +71,7 @@ mesh = SubResource("SphereMesh_ryvd1")
 [node name="Node" type="Node" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="Node"]
-transform = Transform3D(1.94706e-07, -0.00113086, 0.999999, 4.65661e-10, 0.999999, 0.00113086, -1, 2.45476e-10, 1.94707e-07, 2.44991, 0.102771, 4.77015e-07)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4013e-45, 0.1, 2.4499)
 cull_mask = 1048573
 
 [node name="RayCast3D" type="RayCast3D" parent="Node/Camera3D"]
@@ -89,7 +89,7 @@ script = ExtResource("3_p2b4v")
 
 [node name="BallCamera" type="Node3D" parent="Node" node_paths=PackedStringArray("follow_target")]
 unique_name_in_owner = true
-transform = Transform3D(1.94701e-07, -0.00113081, 0.999964, 4.65648e-10, 0.999959, 0.00113082, -0.999972, 2.45466e-10, 1.947e-07, 2.44991, 0.102771, 4.77015e-07)
+transform = Transform3D(0.999972, 0, 0, 0, 0.999955, 0, 0, 0, 0.999961, 1.4013e-45, 0.1, 2.4499)
 script = ExtResource("4_j6r2q")
 follow_mode = 6
 follow_target = NodePath("../..")
