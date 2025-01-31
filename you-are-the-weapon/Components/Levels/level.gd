@@ -11,6 +11,12 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 	Trigger_num, ## Enter/meet [member trigger_num] of triggers (must be less than or equal to the total number of triggers) 
 }
 
+const GET_TO_THE_EXIT = "Get Going!"
+const _BREAK_BRICK_NUM = "Break {0} Bricks!"
+const _BREAK_BRICK_PERCENTAGE = "Break {0}% of Bricks!"
+const _ACTIVATE_TRIGGER_NUM = "Enter {0} of Triggers!"
+const _ACTIVATE_TRIGGER_PERCENTAGE = "Enter {0}% of Triggers!"
+
 #region Export vars
 
 @export var win_condition: WIN_CONDITION:
@@ -84,6 +90,7 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 #endregion
 
 var win_condition_met: bool = false
+var completion: float = 0
 
 var bricks_in_level: int = 0
 var bricks_destroyed: int = 0
@@ -98,7 +105,6 @@ var completion_bonus: int = 0
 #region Signals
 
 signal level_finished
-signal condition_met
 
 #endregion
 
@@ -110,6 +116,9 @@ func _ready() -> void:
 			exit_area.body_entered.connect(try_finish_level)
 		else:
 			push_error("No exit for level ", get_tree().current_scene.scene_file_path.get_file().get_basename())
+		
+		if entrance_area:
+			entrance_area.body_entered.connect(_on_level_entered)
 		
 		bricks_in_level = get_breakable_bricks()
 		triggers_in_level = get_triggers()
@@ -133,8 +142,11 @@ func _start_level() -> void:
 	if timed:
 		completion_timer.start()
 
+func _on_level_entered(_body: Node3D):
+	SignalBus.level_entered.emit(self)
+
 func try_finish_level(_body: Node3D) -> bool:
-	if condition_met:
+	if win_condition_met:
 		level_finished.emit()
 		
 		@warning_ignore("narrowing_conversion")
@@ -146,7 +158,6 @@ func try_finish_level(_body: Node3D) -> bool:
 		
 		level_score += completion_bonus
 		
-		
 		return true
 	
 	return false
@@ -157,7 +168,6 @@ func _on_brick_destroyed():
 	
 
 func _check_win_condition_completion() -> float:
-	var completion: float = 0
 	match win_condition:
 		WIN_CONDITION.None:
 			completion = 1
@@ -176,16 +186,36 @@ func _check_win_condition_completion() -> float:
 	return completion
 
 func complete_win_condition(completion: float) -> void:
-	condition_met.emit()
+	SignalBus.level_win_condition_met.emit(self)
 	win_condition_met = true
 	# super temporary code, want this to be on the door node
 	if door:
 		var tween = get_tree().create_tween()
-		tween.tween_property(door, "position", door.position + Vector3(0, 0, -3), 2)
-		tween.tween_property(door, "position", door.position + Vector3(0, -10, -3), 3)
+		tween.tween_property(door, "position", door.position + Vector3(0, 0, -3), 1)
+		tween.tween_property(door, "position", door.position + Vector3(0, -10, -3), 1.5)
 		tween.tween_callback(door.queue_free)
 	@warning_ignore("narrowing_conversion")
 	completion_bonus = maxi(100, (completion - 1) * 1000)
+
+func objective_text(p_win_condition: Level.WIN_CONDITION = -1) -> String:
+	var local_win_condition: int
+	if p_win_condition == -1:
+		local_win_condition = win_condition
+	else:
+		local_win_condition = p_win_condition
+	match local_win_condition:
+		Level.WIN_CONDITION.None:
+			return GET_TO_THE_EXIT
+		Level.WIN_CONDITION.Brick_num:
+			return _BREAK_BRICK_NUM.format([brick_num])
+		Level.WIN_CONDITION.Brick_percentage:
+			return _BREAK_BRICK_PERCENTAGE.format([brick_percentage])
+		Level.WIN_CONDITION.Trigger_num:
+			return _ACTIVATE_TRIGGER_NUM.format([trigger_num])
+		Level.WIN_CONDITION.Trigger_percentage:
+			return _ACTIVATE_TRIGGER_PERCENTAGE.format([trigger_percentage])
+		_:
+			return "error"
 
 #region Get children of holder nodes
 
@@ -205,7 +235,6 @@ func get_children_of_type(parent: Node, type: Variant) -> int:
 	return num
 
 #endregion
-
 
 #region AABB calculator
 
