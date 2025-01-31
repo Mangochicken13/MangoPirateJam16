@@ -1,0 +1,133 @@
+[gd_scene load_steps=4 format=3 uid="uid://dh17uwlnhjgw0"]
+
+[ext_resource type="PackedScene" uid="uid://ca0itvftvsk06" path="res://Components/Levels/base_level.tscn" id="1_d7xwl"]
+[ext_resource type="PackedScene" uid="uid://lnuocne6qmhb" path="res://Components/Walls/testing_wall.tscn" id="2_5rsmb"]
+[ext_resource type="PackedScene" uid="uid://7kcef77qbpfl" path="res://Components/Levels/level_trigger.tscn" id="2_t2jgq"]
+
+[node name="Level" node_paths=PackedStringArray("door") instance=ExtResource("1_d7xwl")]
+win_condition = 3
+door = NodePath("Exit Area/Door")
+
+[node name="Exit Area" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -62)
+
+[node name="Door" parent="Exit Area" index="1" instance=ExtResource("2_5rsmb")]
+size = Vector3(10, 10, 1)
+color = Color(0.326118, 0.838147, 0.973566, 0.996078)
+
+[node name="Entrance Area" parent="." index="1"]
+metadata/_edit_lock_ = true
+
+[node name="Level Trigger" parent="Trigger Holder" index="0" instance=ExtResource("2_t2jgq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, -17, -9)
+size = Vector3(8, 8, 8)
+
+[node name="Level Trigger2" parent="Trigger Holder" index="1" instance=ExtResource("2_t2jgq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -17, -9)
+size = Vector3(8, 8, 8)
+
+[node name="Level Trigger3" parent="Trigger Holder" index="2" instance=ExtResource("2_t2jgq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, -17, -50)
+size = Vector3(8, 8, 8)
+
+[node name="Level Trigger4" parent="Trigger Holder" index="3" instance=ExtResource("2_t2jgq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -17, -50)
+size = Vector3(8, 8, 8)
+
+[node name="Level Trigger5" parent="Trigger Holder" index="4" instance=ExtResource("2_t2jgq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 16, -9)
+size = Vector3(8, 8, 8)
+
+[node name="Level Trigger6" parent="Trigger Holder" index="5" instance=ExtResource("2_t2jgq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 16, -50)
+size = Vector3(8, 8, 8)
+
+[node name="Level Trigger7" parent="Trigger Holder" index="6" instance=ExtResource("2_t2jgq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 16, -9)
+size = Vector3(8, 8, 8)
+
+[node name="Level Trigger8" parent="Trigger Holder" index="7" instance=ExtResource("2_t2jgq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 16, -50)
+size = Vector3(8, 8, 8)
+
+[node name="Entrance Tunnel" type="Node3D" parent="Solid Walls" index="0"]
+
+[node name="Testing Solid Wall" parent="Solid Walls/Entrance Tunnel" index="0" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 10)
+size = Vector3(1, 10, 20)
+
+[node name="Testing Solid Wall2" parent="Solid Walls/Entrance Tunnel" index="1" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.5, 10)
+size = Vector3(10, 1, 20)
+
+[node name="Testing Solid Wall3" parent="Solid Walls/Entrance Tunnel" index="2" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 10)
+size = Vector3(10, 1, 20)
+
+[node name="Testing Solid Wall4" parent="Solid Walls/Entrance Tunnel" index="3" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, 10)
+size = Vector3(1, 10, 20)
+
+[node name="Entrance Wall" type="Node3D" parent="Solid Walls" index="1"]
+
+[node name="Testing Solid Wall" parent="Solid Walls/Entrance Wall" index="0" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+size = Vector3(20, 50, 1)
+
+[node name="Testing Solid Wall2" parent="Solid Walls/Entrance Wall" index="1" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+size = Vector3(20, 50, 1)
+
+[node name="Testing Solid Wall3" parent="Solid Walls/Entrance Wall" index="2" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, 0)
+size = Vector3(10, 20, 1)
+
+[node name="Testing Solid Wall4" parent="Solid Walls/Entrance Wall" index="3" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
+size = Vector3(10, 20, 1)
+
+[node name="Testing Solid Wall5" parent="Solid Walls" index="2" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -30)
+size = Vector3(2, 50, 60)
+
+[node name="Testing Solid Wall6" parent="Solid Walls" index="3" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0, -30)
+size = Vector3(2, 50, 60)
+
+[node name="Testing Solid Wall" parent="Solid Walls" index="4" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 26, -30)
+size = Vector3(54, 2, 60)
+
+[node name="Testing Solid Wall2" parent="Solid Walls" index="5" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -26, -30)
+size = Vector3(54, 2, 60)
+
+[node name="Exit Wall" type="Node3D" parent="Solid Walls" index="6"]
+
+[node name="Testing Solid Wall" parent="Solid Walls/Exit Wall" index="0" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -62)
+size = Vector3(20, 50, 5)
+
+[node name="Testing Solid Wall2" parent="Solid Walls/Exit Wall" index="1" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -62)
+size = Vector3(20, 50, 5)
+
+[node name="Testing Solid Wall3" parent="Solid Walls/Exit Wall" index="2" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, -62)
+size = Vector3(10, 20, 5)
+
+[node name="Testing Solid Wall4" parent="Solid Walls/Exit Wall" index="3" instance=ExtResource("2_5rsmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, -62)
+size = Vector3(10, 20, 5)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." index="6"]
+transform = Transform3D(0.69051, -0.473859, 0.546492, 0.137707, 0.827833, 0.54381, -0.710093, -0.30025, 0.636881, 24, 24, -1)
+light_energy = 15.561
+spot_range = 130.0
+spot_angle = 34.8791
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="." index="7"]
+transform = Transform3D(0.815413, 0.216921, -0.5367, 0.137708, 0.827833, 0.54381, 0.562262, -0.517337, 0.645154, -24, 24, -1)
+light_energy = 15.561
+spot_range = 130.0
+spot_angle = 34.8791
