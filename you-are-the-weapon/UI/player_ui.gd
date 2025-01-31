@@ -22,6 +22,7 @@ var target_progress_value: float
 func _ready() -> void:
 	SignalBus.level_entered.connect(_on_level_entered)
 	SignalBus.level_win_condition_met.connect(_on_level_win_conditon_met)
+	SignalBus.level_timer_timeout.connect(_on_level_timer_timeout)
 	
 
 func _process(_delta: float) -> void:
@@ -31,7 +32,7 @@ func _process(_delta: float) -> void:
 		
 		
 		if current_level.timed:
-			time_left_display.text = str(snapped(current_level.completion_timer.time_left, 0.001))
+			time_left_display.text = "%.2f" % current_level.completion_timer.time_left
 	
 	if main_handler:
 		total_score_target = main_handler.total_score
@@ -71,8 +72,11 @@ func _on_level_win_conditon_met(p_level: Level):
 			hide_timer()
 		
 		_change_objective(Level.WIN_CONDITION.None)
-		
-		
+
+func _on_level_timer_timeout(p_level: Level):
+	if current_level == p_level:
+		hide_timer()
+
 func hide_timer():
 	var tween = create_tween()
 	tween.tween_property(time_left_display.label_settings, "font_color", \
