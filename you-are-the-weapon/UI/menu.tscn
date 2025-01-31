@@ -8,15 +8,16 @@
 [ext_resource type="Script" path="res://UI/menu.main_scene.gd" id="5_5ob8y"]
 [ext_resource type="Script" path="res://UI/menu.player_customiser_scene.gd" id="7_e7sv3"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6xyjr"]
+bg_color = Color(0.13, 0.13, 0.13, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ytc6k"]
 bg_color = Color(0.31, 0.31, 0.31, 1)
 shadow_color = Color(0, 0, 0, 0.745098)
 shadow_size = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7k4v2"]
-bg_color = Color(0, 0, 0, 0.27451)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j8ngq"]
+bg_color = Color(0, 0, 0, 0.164706)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ifcco"]
 font_size = 64
@@ -41,6 +42,7 @@ anchor_left = -1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6xyjr")
 script = ExtResource("2_7c3c1")
 main_scene_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Back to Main")
 confirmation_popup = NodePath("Change Settings Confirmation")
@@ -227,9 +229,10 @@ grow_vertical = 2
 [node name="TextureRect" type="TextureRect" parent="Main/VBoxContainer/HBoxContainer/Open Settings/HBoxContainer"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 2
+size_flags_vertical = 4
 texture = ExtResource("1_midum")
-expand_mode = 1
+expand_mode = 5
 
 [node name="Label" type="Label" parent="Main/VBoxContainer/HBoxContainer/Open Settings/HBoxContainer"]
 layout_mode = 2
@@ -240,19 +243,34 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Customise Player" type="Button" parent="Main/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(288, 64)
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="TextureRect" type="TextureRect" parent="Main/VBoxContainer/HBoxContainer/Customise Player"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/VBoxContainer/HBoxContainer/Customise Player"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Main/VBoxContainer/HBoxContainer/Customise Player/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Player Customiser"
+label_settings = ExtResource("3_hrrea")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Main/VBoxContainer/HBoxContainer/Customise Player/HBoxContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 8
 texture = ExtResource("1_midum")
-expand_mode = 1
+expand_mode = 5
 
 [node name="Start Game" type="Button" parent="Main/VBoxContainer"]
 custom_minimum_size = Vector2(300, 200)
@@ -260,7 +278,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 size_flags_stretch_ratio = 8.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_j8ngq")
 
 [node name="Label" type="Label" parent="Main/VBoxContainer/Start Game"]
 layout_mode = 1
@@ -296,12 +313,16 @@ grow_vertical = 2
 [node name="TextureRect" type="TextureRect" parent="Main/VBoxContainer/HBoxContainer2/Quit Game/HBoxContainer"]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
+size_flags_horizontal = 6
 texture = ExtResource("1_midum")
-expand_mode = 1
+expand_mode = 5
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="Main/VBoxContainer/HBoxContainer2/Quit Game/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.2
 text = "Quit"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -315,6 +336,7 @@ anchor_right = 2.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6xyjr")
 script = ExtResource("7_e7sv3")
 main_scene_button = NodePath("MarginContainer/HBoxContainer/VBoxContainer/Back to Main Menu")
 
