@@ -201,6 +201,8 @@ func _check_win_condition_completion() -> float:
 func complete_win_condition() -> void:
 	SignalBus.level_win_condition_met.emit(self)
 	win_condition_met = true
+	if timed and stop_timer_on_win and not completion_timer.paused:
+		completion_timer.paused = true
 	# super temporary code, want this to be on the door node
 	if door:
 		var tween = get_tree().create_tween()
