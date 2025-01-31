@@ -29,7 +29,7 @@ func _ready() -> void:
 	
 	# TODO: Move this function out of here once a menu is implemented; 
 	#   Call it from there instead
-	start_moving()
+	#start_moving()
 
 
 func _physics_process(delta: float) -> void:
