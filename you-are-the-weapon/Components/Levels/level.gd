@@ -153,7 +153,7 @@ func try_finish_level(_body: Node3D) -> bool:
 		level_complete = true
 		
 		@warning_ignore("narrowing_conversion")
-		completion_bonus = maxi(100, (completion - 1) * 1000)
+		completion_bonus = maxi(100, (completion - 1) * 500)
 		
 		@warning_ignore("narrowing_conversion")
 		time_bonus = completion_timer.time_left * 10
