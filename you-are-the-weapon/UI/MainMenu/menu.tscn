@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://crcwwsl077er8"]
+[gd_scene load_steps=11 format=3 uid="uid://crcwwsl077er8"]
 
 [ext_resource type="Script" path="res://UI/MainMenu/menu.gd" id="1_jswmy"]
 [ext_resource type="Script" path="res://UI/MainMenu/menu.settings_scene.gd" id="2_t3sp7"]
-[ext_resource type="LabelSettings" uid="uid://b6xid1r8yq7d6" path="res://UI/label_settings.tres" id="3_vvf5f"]
 [ext_resource type="Script" path="res://UI/MainMenu/menu.settings_scene.confirm_changes.gd" id="4_aoilg"]
 [ext_resource type="Script" path="res://UI/MainMenu/menu.main_scene.gd" id="5_tofec"]
 [ext_resource type="Texture2D" uid="uid://dctrhgyqt27k3" path="res://icon.svg" id="6_ve4aq"]
@@ -66,7 +65,6 @@ layout_mode = 2
 custom_minimum_size = Vector2(414.1, 0)
 layout_mode = 2
 text = "Unfinished at the moment: Does not currently change gameplay"
-label_settings = ExtResource("3_vvf5f")
 autowrap_mode = 2
 
 [node name="Back to Main" type="Button" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer"]
@@ -82,7 +80,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Back →"
-label_settings = ExtResource("3_vvf5f")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -104,13 +101,11 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 2
 text = "Game Speed"
-label_settings = ExtResource("3_vvf5f")
 
 [node name="Label2" type="Label" parent="Settings/MarginContainer/VBoxContainer/SettingsContainer/VBoxContainer/Game Speed"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-label_settings = ExtResource("3_vvf5f")
 vertical_alignment = 1
 
 [node name="GameSpeed" type="HSlider" parent="Settings/MarginContainer/VBoxContainer/SettingsContainer/VBoxContainer/Game Speed"]
@@ -149,7 +144,6 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 text = "Do you want to apply your changes?"
-label_settings = ExtResource("3_vvf5f")
 horizontal_alignment = 1
 vertical_alignment = 1
 text_overrun_behavior = 2
@@ -170,7 +164,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "No"
-label_settings = ExtResource("3_vvf5f")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -190,7 +183,6 @@ grow_vertical = 2
 size_flags_vertical = 1
 text = "Yes
 "
-label_settings = ExtResource("3_vvf5f")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -216,7 +208,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Open Settings" type="Button" parent="Main/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(146, 48)
+custom_minimum_size = Vector2(136, 48)
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 0
@@ -241,12 +233,11 @@ stretch_mode = 4
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Settings"
-label_settings = ExtResource("3_vvf5f")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Customise Player" type="Button" parent="Main/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(232, 48)
+custom_minimum_size = Vector2(200, 48)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
@@ -265,7 +256,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Player Customiser"
-label_settings = ExtResource("3_vvf5f")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -355,11 +345,11 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Player Customiser/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(88, 0)
 layout_mode = 2
 
 [node name="Back to Main Menu" type="Button" parent="Player Customiser/MarginContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 64)
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Player Customiser/MarginContainer/HBoxContainer/VBoxContainer/Back to Main Menu"]
@@ -370,7 +360,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "←Back"
-label_settings = ExtResource("3_vvf5f")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -379,5 +368,4 @@ custom_minimum_size = Vector2(428.06, 0)
 layout_mode = 2
 size_flags_vertical = 0
 text = "Also not implemented lol. I definitely did not budget enough time for this to be part of the game in this timeframe"
-label_settings = ExtResource("3_vvf5f")
 autowrap_mode = 2

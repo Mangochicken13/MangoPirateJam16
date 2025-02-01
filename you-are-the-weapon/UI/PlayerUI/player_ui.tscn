@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cvn5uhcel3n7h"]
+[gd_scene load_steps=7 format=3 uid="uid://cvn5uhcel3n7h"]
 
 [ext_resource type="Script" path="res://UI/PlayerUI/player_ui.gd" id="1_axc0m"]
-[ext_resource type="LabelSettings" uid="uid://b6xid1r8yq7d6" path="res://UI/label_settings.tres" id="1_x2bnw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aixvr"]
 bg_color = Color(0.13, 0.13, 0.13, 0.117647)
@@ -27,7 +26,7 @@ border_width_bottom = 1
 border_color = Color(0.149475, 0.149475, 0.149474, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_p8uqs"]
-font_size = 22
+font_size = 20
 
 [node name="Player UI" type="Control" node_paths=PackedStringArray("score_lerp_timer", "total_score_label", "level_score_label", "objective_display", "progress_display", "time_left_display")]
 layout_mode = 3
@@ -36,6 +35,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_axc0m")
 score_lerp_timer = NodePath("Score Lerp Timer")
 total_score_label = NodePath("MarginContainer/HBoxContainer/Left Hand Side/Scoring/Total Score Container/Total Score Value")
@@ -75,13 +75,11 @@ layout_mode = 2
 [node name="Total Score" type="Label" parent="MarginContainer/HBoxContainer/Left Hand Side/Scoring/Total Score Container"]
 layout_mode = 2
 text = "Total Score:"
-label_settings = ExtResource("1_x2bnw")
 vertical_alignment = 1
 
 [node name="Total Score Value" type="Label" parent="MarginContainer/HBoxContainer/Left Hand Side/Scoring/Total Score Container"]
 layout_mode = 2
 size_flags_horizontal = 0
-label_settings = ExtResource("1_x2bnw")
 vertical_alignment = 1
 
 [node name="Level Score Container" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Left Hand Side/Scoring"]
@@ -90,12 +88,10 @@ layout_mode = 2
 [node name="Level Score" type="Label" parent="MarginContainer/HBoxContainer/Left Hand Side/Scoring/Level Score Container"]
 layout_mode = 2
 text = "Level Score: "
-label_settings = ExtResource("1_x2bnw")
 vertical_alignment = 1
 
 [node name="Level Score Value" type="Label" parent="MarginContainer/HBoxContainer/Left Hand Side/Scoring/Level Score Container"]
 layout_mode = 2
-label_settings = ExtResource("1_x2bnw")
 vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -105,7 +101,7 @@ anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -64.0
 offset_right = 64.0
-offset_bottom = 112.0
+offset_bottom = 82.0
 grow_horizontal = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
