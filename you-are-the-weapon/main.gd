@@ -27,6 +27,12 @@ func _ready() -> void:
 	
 	get_tree().paused = true
 
+func _input(event: InputEvent) -> void:
+	if OS.is_debug_build() and current_level:
+		if event is InputEventKey:
+			if event.physical_keycode == KEY_Q:
+				current_level.complete_win_condition()
+
 func get_levels(node: Node):
 	for i in node.get_child_count():
 		var child = node.get_child(i)
