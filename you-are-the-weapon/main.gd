@@ -11,14 +11,17 @@ var total_score: int
 
 var levels_in_scene: int
 var levels_completed: int
+var current_level: Level
+
 var game_started: bool
 
 func _ready() -> void:
 	player_ui.hide()
 	win_ui.hide()
 	menu_ui.start_game.connect(_start_game)
-	SignalBus.level_exited.connect(exit_level)
-	SignalBus.restart_game.connect(_restart_game)
+	SignalBus.level_entered.connect(_on_level_entered)
+	SignalBus.level_exited.connect(_on_level_exited)
+	SignalBus.restart_game.connect(_on_restart_game)
 	
 	get_levels(self)
 	
@@ -38,13 +41,25 @@ func _start_game():
 	player_ui.show()
 	player.start_moving()
 
-func exit_level(level: Level):
-	total_score += level.level_score
-	levels_completed += 1
-	if levels_completed >= levels_in_scene and win_ui:
-		win_ui.score_label.text = "You Scored: " + str(total_score)
-		win_ui.show()
-		get_tree().paused = true
+#region SignalBus Responses 
 
-func _restart_game():
+func _on_level_entered(p_level: Level):
+	if not current_level == p_level:
+		current_level = p_level
+
+func _on_level_exited(p_level: Level):
+	if current_level == p_level:
+		total_score += current_level.level_score
+		levels_completed += 1
+		
+		# TODO: Separate this into a standalone function
+		if levels_completed >= levels_in_scene and win_ui:
+			player_ui.hide()
+			win_ui.score_label.text = "You Scored: " + str(total_score)
+			win_ui.show()
+			get_tree().paused = true
+
+func _on_restart_game():
 	get_tree().reload_current_scene()
+
+#endregion
