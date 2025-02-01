@@ -26,10 +26,6 @@ func _ready() -> void:
 	# For some reason they are inverted without this, could be a sign that something else is benig done wrong
 	# This works for now though
 	basis = Basis.looking_at(basis * speed * Vector3.FORWARD)
-	
-	# TODO: Move this function out of here once a menu is implemented; 
-	#   Call it from there instead
-	#start_moving()
 
 
 func _physics_process(delta: float) -> void:
