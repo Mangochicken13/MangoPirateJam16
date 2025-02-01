@@ -71,8 +71,8 @@ const _ACTIVATE_TRIGGER_PERCENTAGE = "Enter {0}% of Triggers!"
 @export var score_multiplier: float = 1
 
 @export_category("References")
-@export var exit_area: Area3D
 @export var entrance_area: Area3D
+@export var exit_area: Area3D
 @export var door: StaticBody3D
 
 @export var trigger_holder: Node
@@ -190,12 +190,16 @@ func _check_win_condition_completion() -> float:
 	match win_condition:
 		WIN_CONDITION.None:
 			completion = 1
+		
 		WIN_CONDITION.Brick_percentage:
 			completion = (100.0 * bricks_destroyed / bricks_in_level) / brick_percentage
+		
 		WIN_CONDITION.Brick_num:
 			completion = float(bricks_destroyed) / brick_num
+		
 		WIN_CONDITION.Trigger_percentage:
 			completion = (100.0 * triggers_activated / triggers_in_level) / trigger_percentage
+		
 		WIN_CONDITION.Trigger_num:
 			completion = float(triggers_activated) / trigger_num
 	
@@ -205,6 +209,9 @@ func _check_win_condition_completion() -> float:
 	return completion
 
 func complete_win_condition() -> void:
+	if win_condition_met:
+		return
+	
 	SignalBus.level_win_condition_met.emit(self)
 	win_condition_met = true
 	if timed and stop_timer_on_win and not completion_timer.paused:
@@ -212,8 +219,7 @@ func complete_win_condition() -> void:
 	# super temporary code, want this to be on the door node
 	if door:
 		var tween = get_tree().create_tween()
-		tween.tween_property(door, "position", door.position + Vector3(0, 0, -3), 1)
-		tween.tween_property(door, "position", door.position + Vector3(0, -10, -3), 1.5)
+		tween.tween_property(door, "position", door.position + Vector3(0, -10, 0), 1.5)
 		tween.tween_callback(door.queue_free)
 
 func objective_text(p_win_condition: int = -1) -> String:
