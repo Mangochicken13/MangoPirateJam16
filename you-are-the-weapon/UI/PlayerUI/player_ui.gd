@@ -69,7 +69,8 @@ func _change_objective(p_win_condition: int = -1):
 func _on_level_win_conditon_met(p_level: Level):
 	if current_level == p_level:
 		if current_level.timed and current_level.stop_timer_on_win:
-			hide_timer()
+			#hide_timer()
+			pass
 		
 		_change_objective(Level.WIN_CONDITION.None)
 
