@@ -38,9 +38,9 @@ func _process(_delta: float) -> void:
 		total_score_target = main_handler.total_score
 	
 	level_score_displayed = lerp(level_score_displayed, float(level_score_target), .1)
-	level_score_label.text = str(snappedi(level_score_displayed, 1))
+	level_score_label.text = str(roundi(level_score_displayed))
 	total_score_displayed = lerp(total_score_displayed, float(total_score_target), .1)
-	total_score_label.text = str(roundi(total_score_displayed))
+	total_score_label.text = str(snappedi(total_score_displayed, 1))
 	
 	progress_display.value = lerpf(progress_display.value, target_progress_value, .1)
 
