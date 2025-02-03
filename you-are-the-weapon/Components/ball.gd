@@ -27,6 +27,17 @@ func _ready() -> void:
 	# This works for now though
 	basis = Basis.looking_at(basis * speed * Vector3.FORWARD)
 
+func _process(delta: float) -> void:
+	# Using a lerp here to change the angle of the phantom camera spring arm 
+	#   avoids manually changing the angle along with player input, and handles bouncing
+	var ball_cam_angle = ball_cam.get_third_person_rotation()
+	for i in range(3):
+		ball_cam_angle[i] = lerp_angle(ball_cam_angle[i], global_rotation[i], CAMERA_LERP_SPEED[i] * delta)
+	ball_cam.set_third_person_rotation(ball_cam_angle)
+	
+	# TODO: more work needed on this
+	target_spring_length = max(ball_cam_base_spring_length, ball_cam_base_spring_length + min(2, sqrt((velocity.length() + 1 - speed) - 1)))
+	ball_cam.spring_length = lerp(ball_cam.spring_length, target_spring_length, SPRING_LERP_SPEED * delta)
 
 func _physics_process(delta: float) -> void:
 	
@@ -97,17 +108,3 @@ func calculate_damage() -> float:
 
 func start_moving() -> void:
 	velocity = basis * speed * Vector3.FORWARD
-
-func _process(delta: float) -> void:
-	# Using a lerp here to change the angle of the phantom camera spring arm 
-	#   avoids manually changing the angle along with player input, and handles bouncing
-	var ball_cam_angle = ball_cam.get_third_person_rotation()
-	for i in range(3):
-		ball_cam_angle[i] = lerp_angle(ball_cam_angle[i], global_rotation[i], CAMERA_LERP_SPEED[i] * delta)
-	ball_cam.set_third_person_rotation(ball_cam_angle)
-	
-	# TODO: more work needed on this
-	target_spring_length = max(ball_cam_base_spring_length, ball_cam_base_spring_length + min(2, sqrt((velocity.length() + 1 - speed) - 1)))
-	ball_cam.spring_length = lerp(ball_cam.spring_length, target_spring_length, SPRING_LERP_SPEED * delta)
-	#pcam.set_third_person_rotation(lerp(pcam.get_third_person_rotation(), global_rotation, 0.06))
-	
