@@ -8,10 +8,10 @@ size = Vector3(10, 10, 5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_unbfw"]
 size = Vector3(10, 10, 5)
 
-[node name="Level" type="Node3D" node_paths=PackedStringArray("exit_area", "entrance_area", "trigger_holder", "breakable_bricks_holder", "solid_walls_holder", "completion_timer")]
+[node name="Level" type="Node3D" node_paths=PackedStringArray("entrance_area", "exit_area", "trigger_holder", "breakable_bricks_holder", "solid_walls_holder", "completion_timer")]
 script = ExtResource("1_4dys2")
-exit_area = NodePath("Exit Area")
 entrance_area = NodePath("Entrance Area")
+exit_area = NodePath("Exit Area")
 trigger_holder = NodePath("Trigger Holder")
 breakable_bricks_holder = NodePath("Breakable Bricks")
 solid_walls_holder = NodePath("Solid Walls")

@@ -36,7 +36,7 @@ const _ACTIVATE_TRIGGER_PERCENTAGE = "Enter {0}% of Triggers!"
 			_brick_num = num
 	get():
 		return _brick_num
-
+## Backing property for [member brick_num]
 @export var _brick_num: int = 0
 
 @export_range(0, 100, 1, "suffix:%") var trigger_percentage: int = 100
@@ -51,7 +51,7 @@ const _ACTIVATE_TRIGGER_PERCENTAGE = "Enter {0}% of Triggers!"
 			_trigger_num = num
 	get():
 		return _trigger_num
-
+## Backing property for [member trigger_num]
 @export var _trigger_num: int = 0
 
 ## If the selected win condition has a time to complete it within.
@@ -111,14 +111,16 @@ func _ready() -> void:
 		if exit_area:
 			exit_area.body_entered.connect(try_finish_level)
 		else:
-			push_error("No exit for level ", get_tree().current_scene.scene_file_path.get_file().get_basename())
+			push_error("No exit for level ", scene_file_path.get_basename())
 		
 		if entrance_area:
 			entrance_area.body_entered.connect(_on_level_entered)
+		else:
+			push_error("No entrance for level ", scene_file_path.get_basename())
 		
 		bricks_in_level = get_breakable_bricks()
 		triggers_in_level = get_triggers()
-		print(get_breakable_bricks())
+		#print(get_breakable_bricks())
 		
 		_recursive_connect_bricks()
 		
@@ -135,12 +137,13 @@ func _ready() -> void:
 		#debug_draw.call("draw_aabb", boundary, Color.DARK_ORANGE)
 	#pass
 
-func _recursive_connect_bricks(p_node: Node = breakable_bricks_holder):
-	for node in p_node.get_children():
-		if node.get_child_count() > 0: 
-			_recursive_connect_bricks(node)
-		if node is BreakableWall:
-			node.destroyed.connect(_on_brick_destroyed)
+func _recursive_connect_bricks(p_node: Node = breakable_bricks_holder) -> void:
+	for i in p_node.get_child_count():
+		var child = p_node.get_child(i)
+		if child.get_child_count() > 0: 
+			_recursive_connect_bricks(child)
+		if child is BreakableWall:
+			child.destroyed.connect(_on_brick_destroyed)
 
 func _start_level() -> void:
 	
@@ -149,10 +152,15 @@ func _start_level() -> void:
 	if timed:
 		completion_timer.start()
 
-func _on_level_entered(_body: Node3D):
+func _on_level_entered(_body: Node3D) -> void:
+	var start = Time.get_ticks_usec()
 	SignalBus.level_entered.emit(self)
 	entrance_area.body_entered.disconnect(_on_level_entered)
 	_start_level()
+	var end = Time.get_ticks_usec()
+	var objective_ticks = (end - start)/100.0
+	if objective_ticks:
+		print("level enter ticks %s" % [objective_ticks])
 
 func try_finish_level(_body: Node3D) -> bool:
 	if win_condition_met and not level_complete:
@@ -176,17 +184,17 @@ func try_finish_level(_body: Node3D) -> bool:
 	
 	return false
 
-func _on_brick_destroyed():
+func _on_brick_destroyed() -> void:
 	bricks_destroyed += 1
 	level_score += 20
 	_check_win_condition_completion()
 
-func _on_trigger_activated():
+func _on_trigger_activated() -> void:
 	triggers_activated += 1
 	level_score += 50
 	_check_win_condition_completion()
 
-func _check_win_condition_completion() -> float:
+func _check_win_condition_completion() -> void:
 	match win_condition:
 		WIN_CONDITION.None:
 			completion = 1
@@ -205,8 +213,6 @@ func _check_win_condition_completion() -> float:
 	
 	if completion >= 1 and !win_condition_met:
 		complete_win_condition()
-	
-	return completion
 
 func complete_win_condition() -> void:
 	if win_condition_met:
@@ -268,7 +274,7 @@ func get_children_of_type(parent: Node, type: Variant) -> int:
 
 # super expensive calc, only do this manually
 # Code adapted from the godot source code: https://github.com/godotengine/godot/blob/master/editor/plugins/node_3d_editor_plugin.cpp#L4475
-func get_aabb(p_parent: Node3D, p_omit_top_level: bool, p_bounds_orientation: Transform3D):
+func get_aabb(p_parent: Node3D, p_omit_top_level: bool, p_bounds_orientation: Transform3D) -> AABB:
 	var bounds: AABB
 	
 	var bounds_orientation: Transform3D
