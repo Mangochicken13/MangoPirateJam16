@@ -122,12 +122,14 @@ size = Vector3(10, 20, 5)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." index="6"]
 transform = Transform3D(0.69051, -0.473859, 0.546492, 0.137707, 0.827833, 0.54381, -0.710093, -0.30025, 0.636881, 24, 24, -1)
+visible = false
 light_energy = 15.561
 spot_range = 130.0
 spot_angle = 34.8791
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="." index="7"]
 transform = Transform3D(0.815413, 0.216921, -0.5367, 0.137708, 0.827833, 0.54381, 0.562262, -0.517337, 0.645154, -24, 24, -1)
+visible = false
 light_energy = 15.561
 spot_range = 130.0
 spot_angle = 34.8791
