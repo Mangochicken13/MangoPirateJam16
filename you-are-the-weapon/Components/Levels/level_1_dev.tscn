@@ -9,7 +9,7 @@ win_condition = 2
 _brick_num = 20
 timed = true
 door = NodePath("Exit Area/Door")
-boundary = AABB(-40, -40, -67, 80, 80, 107)
+boundary = AABB(-31, -25.5, -66.6585, 62, 51, 91.6585)
 
 [node name="Exit Area" parent="." index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -46)
@@ -211,13 +211,6 @@ size = Vector3(25, 10, 5)
 [node name="SpotLight3D" type="SpotLight3D" parent="." index="6"]
 transform = Transform3D(0.858966, -0.294255, 0.419037, 0.128923, 0.916302, 0.379169, -0.495537, -0.27167, 0.825008, 22, 17, 1.4)
 rotation_edit_mode = 1
-visible = false
 light_energy = 16.0
-shadow_enabled = true
-spot_range = 354.06
+spot_range = 66.6585
 spot_angle = 20.6265
-
-[node name="OmniLight3D" type="OmniLight3D" parent="." index="7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 9.04818, -6.11285)
-visible = false
-omni_range = 168.181
