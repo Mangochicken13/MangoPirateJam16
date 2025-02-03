@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://crcwwsl077er8"]
 
-[ext_resource type="Script" path="res://UI/MainMenu/menu.gd" id="1_jswmy"]
-[ext_resource type="Script" path="res://UI/MainMenu/menu.settings_scene.gd" id="2_t3sp7"]
-[ext_resource type="Script" path="res://UI/MainMenu/menu.settings_scene.confirm_changes.gd" id="4_aoilg"]
-[ext_resource type="Script" path="res://UI/MainMenu/menu.main_scene.gd" id="5_tofec"]
+[ext_resource type="Script" uid="uid://b60o7gyanvcyv" path="res://UI/MainMenu/menu.gd" id="1_jswmy"]
+[ext_resource type="Script" uid="uid://caap6wanh6efc" path="res://UI/MainMenu/menu.settings_scene.gd" id="2_t3sp7"]
+[ext_resource type="Script" uid="uid://cdp1lb754s71e" path="res://UI/MainMenu/menu.settings_scene.confirm_changes.gd" id="4_aoilg"]
+[ext_resource type="Script" uid="uid://dbc4asiardx7m" path="res://UI/MainMenu/menu.main_scene.gd" id="5_tofec"]
 [ext_resource type="Texture2D" uid="uid://dctrhgyqt27k3" path="res://icon.svg" id="6_ve4aq"]
-[ext_resource type="Script" path="res://UI/MainMenu/menu.player_customiser_scene.gd" id="7_pjlv1"]
+[ext_resource type="Script" uid="uid://dvcgbjtf6nbyu" path="res://UI/MainMenu/menu.player_customiser_scene.gd" id="7_pjlv1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6xyjr"]
 bg_color = Color(0.13, 0.13, 0.13, 1)
