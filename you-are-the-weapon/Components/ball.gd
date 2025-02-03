@@ -101,8 +101,8 @@ func handle_collision(last_collision: KinematicCollision3D) -> KinematicCollisio
 func calculate_damage() -> float:
 	var damage = max(0.5, (1 + pow(max(0, (velocity.length() - speed)) ** 2, (1.0/3)))) * damage_multiplier
 	
-	print("Damage: ", damage)
-	print("From values: \nVelocity magnitude: {0}\nSpeed: {1}\nDamage Multiplier: {2}\n".format([velocity.length(), speed, damage_multiplier]))
+	#print("Damage: ", damage)
+	#print("From values: \nVelocity magnitude: {0}\nSpeed: {1}\nDamage Multiplier: {2}\n".format([velocity.length(), speed, damage_multiplier]))
 	return damage
 	
 
