@@ -108,6 +108,7 @@ debug_start_moving={
 3d_physics/layer_2="Static Walls"
 3d_physics/layer_3="Breakable Blocks"
 3d_physics/layer_4="Area3Ds"
+3d_physics/layer_16="Debug"
 
 [phantom_camera]
 
@@ -120,5 +121,5 @@ common/physics_interpolation=true
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+scaling_3d/mode.ios=3
+scaling_3d/mode.macos=3
