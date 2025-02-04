@@ -6,6 +6,8 @@ class_name Ball
 @onready var ball_cam_base_spring_length: float
 var target_spring_length: float
 
+@onready var mouse_based_camera: PhantomCamera3D
+
 @export var speed: float = 20
 @export var turn_speed: float = 1
 
@@ -15,6 +17,10 @@ const CAMERA_LERP_SPEED: Vector3 = Vector3(2, 4, 2)
 const SPRING_LERP_SPEED: float = 4
 const VELOCITY_LERP_SPEED: float = 1
 const ADDITIONAL_COLLISIONS: int = 3
+
+#region Debug Values
+var _velocity: Vector3
+var _velocity_length: float
 
 
 func _ready() -> void:
@@ -30,13 +36,16 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# Using a lerp here to change the angle of the phantom camera spring arm 
 	#   avoids manually changing the angle along with player input, and handles bouncing
-	var ball_cam_angle = ball_cam.get_third_person_rotation()
+	var ball_cam_angle := ball_cam.get_third_person_rotation()
 	for i in range(3):
 		ball_cam_angle[i] = lerp_angle(ball_cam_angle[i], global_rotation[i], CAMERA_LERP_SPEED[i] * delta)
 	ball_cam.set_third_person_rotation(ball_cam_angle)
 	
 	# TODO: more work needed on this
-	target_spring_length = max(ball_cam_base_spring_length, ball_cam_base_spring_length + min(2, sqrt((velocity.length() + 1 - speed) - 1)))
+	var v_length: float = sqrt((abs(velocity.length()) + 1 - speed) - 1)
+	var extension: float = minf(2, v_length)
+	assert(extension <= 1.9)
+	target_spring_length = maxf(ball_cam_base_spring_length, ball_cam_base_spring_length + extension)
 	ball_cam.spring_length = lerp(ball_cam.spring_length, target_spring_length, SPRING_LERP_SPEED * delta)
 
 func _physics_process(delta: float) -> void:
@@ -73,12 +82,15 @@ func _physics_process(delta: float) -> void:
 		
 	#endregion
 	
+	_velocity = velocity
+	_velocity_length = velocity.length()
+	
 
 func handle_collision(last_collision: KinematicCollision3D) -> KinematicCollision3D:
 	if !last_collision:
 		return null
 	
-	var collider = last_collision.get_collider()
+	var collider := last_collision.get_collider()
 	
 	if collider is BreakableWall:
 		collider._deal_damage(calculate_damage())
@@ -87,14 +99,16 @@ func handle_collision(last_collision: KinematicCollision3D) -> KinematicCollisio
 	# Common logic; bouncing, imparted velocity
 	if collider is Wall:
 		
-		var normal = last_collision.get_normal()
+		var normal := last_collision.get_normal()
 		velocity = velocity.bounce(normal)
 		velocity = collider._bounce(velocity)
 		
 		# No need to multiply by delta, the remainder magnitude is already multiplied by it
-		var collision = move_and_collide(velocity.normalized() * last_collision.get_remainder().length())
+		var collision := move_and_collide(velocity.normalized() * last_collision.get_remainder().length())
 		basis = Basis.looking_at(velocity)
 		return collision
+	else: 
+		breakpoint
 	
 	return null
 
