@@ -17,8 +17,6 @@ material = SubResource("StandardMaterial3D_y3nyg")
 [node name="Level Trigger" type="Area3D" node_paths=PackedStringArray("mesh_editor", "collision_shape_editor")]
 collision_layer = 8
 script = ExtResource("1_xwh3f")
-untriggered_color = Color(1, 0.55, 0, 1)
-triggered_color = Color(0.192, 0.8, 0.192, 1)
 mesh_editor = NodePath("MeshInstance3D")
 collision_shape_editor = NodePath("CollisionShape3D")
 
