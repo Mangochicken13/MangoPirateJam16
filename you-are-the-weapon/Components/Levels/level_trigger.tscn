@@ -7,9 +7,8 @@ resource_local_to_scene = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y3nyg"]
 resource_local_to_scene = true
-transparency = 4
-cull_mode = 2
-albedo_color = Color(1, 0.54902, 0, 0.501961)
+distance_fade_mode = 2
+distance_fade_min_distance = 3.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_ud4qt"]
 resource_local_to_scene = true
@@ -18,6 +17,8 @@ material = SubResource("StandardMaterial3D_y3nyg")
 [node name="Level Trigger" type="Area3D" node_paths=PackedStringArray("mesh_editor", "collision_shape_editor")]
 collision_layer = 8
 script = ExtResource("1_xwh3f")
+untriggered_color = Color(1, 0.55, 0, 1)
+triggered_color = Color(0.192, 0.8, 0.192, 1)
 mesh_editor = NodePath("MeshInstance3D")
 collision_shape_editor = NodePath("CollisionShape3D")
 
