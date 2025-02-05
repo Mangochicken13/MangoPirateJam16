@@ -9,11 +9,11 @@ class_name LevelTrigger
 		if mesh_editor:
 			mesh_editor.mesh.set("size", new_size)
 		if collision_shape_editor:
-			collision_shape_editor.shape.set("size", new_size)
+			collision_shape_editor.shape.set("size", Vector3(new_size.x + 1, new_size.y + 1, new_size.z + 1))
 		size = new_size
 
 @export var untriggered_color: Color = Color(Color.DARK_ORANGE, 128.0/255)
-@export var triggered_color: Color = Color(Color.LIME_GREEN, 128.0/255) 
+@export var triggered_color: Color = Color(Color.LIME_GREEN, 128.0/255)
 
 @export_category("Internals")
 @export var mesh_editor: MeshInstance3D
