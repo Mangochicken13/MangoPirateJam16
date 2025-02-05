@@ -3,28 +3,16 @@
 [ext_resource type="Script" uid="uid://docv3qj8fk2yg" path="res://Walls/breakable_wall.gd" id="1_7jxn8"]
 [ext_resource type="Gradient" uid="uid://b0110vjwm62cs" path="res://Walls/health_gradient.tres" id="2_ogmrn"]
 [ext_resource type="PackedScene" uid="uid://c0t5ebt5gausq" path="res://Components/HealthComponent.tscn" id="3_ugjwp"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dwrtj"]
-resource_local_to_scene = true
-distance_fade_mode = 2
-distance_fade_min_distance = 1.0
-distance_fade_max_distance = 5.0
+[ext_resource type="Material" uid="uid://kinnl8focjp7" path="res://Bricks/brick_base.material" id="3_yu1ga"]
+[ext_resource type="Material" uid="uid://4kl4aamky0r4" path="res://Bricks/brick_outline.material" id="4_ws4qq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_l5uip"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_dwrtj")
+material = ExtResource("3_yu1ga")
 size = Vector3(5, 4, 2)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_btf7d"]
-cull_mode = 1
-shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-distance_fade_mode = 3
-distance_fade_min_distance = 4.0
-distance_fade_max_distance = 7.0
-
 [sub_resource type="BoxMesh" id="BoxMesh_e7bn1"]
-material = SubResource("StandardMaterial3D_btf7d")
+material = ExtResource("4_ws4qq")
 size = Vector3(5.2, 4.2, 2.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0ybw5"]
@@ -34,7 +22,6 @@ size = Vector3(5, 4, 2)
 [node name="Breakable Wall" type="Node3D" node_paths=PackedStringArray("health_component")]
 script = ExtResource("1_7jxn8")
 health_component = NodePath("HealthComponent")
-health = null
 defence = null
 damage_reduction = null
 health_gradient = ExtResource("2_ogmrn")
