@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://010knv4cgwnh"]
+[gd_scene load_steps=10 format=3 uid="uid://010knv4cgwnh"]
 
 [ext_resource type="Script" uid="uid://dfbe4ge3174i2" path="res://main.gd" id="1_qpx57"]
 [ext_resource type="PackedScene" uid="uid://crcwwsl077er8" path="res://UI/MainMenu/menu.tscn" id="2_j5eyx"]
 [ext_resource type="PackedScene" uid="uid://mifh078hdrki" path="res://UI/win_screen.tscn" id="3_cbwob"]
 [ext_resource type="PackedScene" uid="uid://cvn5uhcel3n7h" path="res://UI/PlayerUI/player_ui.tscn" id="3_cwpfu"]
 [ext_resource type="PackedScene" uid="uid://nv2sbbj23yw1" path="res://Components/ball.tscn" id="3_dowce"]
+[ext_resource type="PackedScene" uid="uid://d2s68yn88n8w4" path="res://UI/Debug/DebugUI.tscn" id="5_kek77"]
 [ext_resource type="PackedScene" uid="uid://bdhc4jew8px57" path="res://Components/Levels/level_1_dev.tscn" id="5_m4v8k"]
 [ext_resource type="PackedScene" uid="uid://dh17uwlnhjgw0" path="res://Components/Levels/level_2_dev.tscn" id="6_620i0"]
 [ext_resource type="PackedScene" uid="uid://tql1shvc5wn" path="res://Components/Levels/level_3_dev.tscn" id="8_0ycsd"]
@@ -25,6 +26,9 @@ main_handler = NodePath("..")
 
 [node name="Win screen" parent="." instance=ExtResource("3_cbwob")]
 visible = false
+
+[node name="DebugUi" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_kek77")]
+player = NodePath("../Game/Ball")
 
 [node name="Game" type="Node" parent="."]
 process_mode = 1

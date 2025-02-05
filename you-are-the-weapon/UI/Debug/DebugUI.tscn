@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2s68yn88n8w4"]
+
+[ext_resource type="Script" uid="uid://0gbblgr2qwbk" path="res://UI/Debug/debug_ui.gd" id="1_yvwk2"]
+
+[node name="DebugUi" type="Control" node_paths=PackedStringArray("frame_rate_label", "camera_spring_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_yvwk2")
+frame_rate_label = NodePath("VBoxContainer/HBoxContainer/FrameRate")
+camera_spring_label = NodePath("VBoxContainer/HBoxContainer2/CameraSpring")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Frame Rate:"
+
+[node name="FrameRate" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "60"
+horizontal_alignment = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Camera Spring:"
+
+[node name="CameraSpring" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
