@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://37702wvtpjm6"]
 
-[ext_resource type="Script" path="res://Components/Walls/breakable_wall.gd" id="1_7jxn8"]
+[ext_resource type="Script" uid="uid://docv3qj8fk2yg" path="res://Components/Walls/breakable_wall.gd" id="1_7jxn8"]
 [ext_resource type="FastNoiseLite" uid="uid://t62yaaxyjx8e" path="res://Components/Walls/wall_crack_noise.tres" id="2_ko5f1"]
 [ext_resource type="Gradient" uid="uid://b0110vjwm62cs" path="res://Components/Walls/health_gradient.tres" id="2_ogmrn"]
 [ext_resource type="BoxMesh" uid="uid://781nrqkwx8te" path="res://Components/Walls/breakable_wall.tres" id="4_h6878"]
