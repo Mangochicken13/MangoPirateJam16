@@ -1,7 +1,7 @@
 @tool
 
 extends Wall
-class_name Testing_Solid_Wall
+class_name SixSidedWall
 
 @export var size: Vector3 = Vector3.ONE:
 	set(new_size):
@@ -29,7 +29,7 @@ var mesh_texture: Texture2D
 
 func _enter_tree() -> void:
 	if Engine.is_editor_hint():
-		var image = Image.load_from_file("res://Components/Walls/testing_wall.png")
+		var image: Image = Image.load_from_file("res://Components/Walls/testing_wall.png")
 		mesh_texture = ImageTexture.create_from_image(image)
 	else:
 		var image = load("res://Components/Walls/testing_wall.png")
