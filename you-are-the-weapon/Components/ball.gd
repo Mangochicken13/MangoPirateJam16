@@ -18,10 +18,13 @@ const SPRING_LERP_SPEED: float = 4
 const VELOCITY_LERP_SPEED: float = 1
 const ADDITIONAL_COLLISIONS: int = 3
 
+
 #region Debug Values
+
 var _velocity: Vector3
 var _velocity_length: float
 
+#endregion
 
 func _ready() -> void:
 	ball_cam = %BallCamera
@@ -32,6 +35,7 @@ func _ready() -> void:
 	# For some reason they are inverted without this, could be a sign that something else is benig done wrong
 	# This works for now though
 	basis = Basis.looking_at(basis * speed * Vector3.FORWARD)
+
 
 func _process(delta: float) -> void:
 	# Using a lerp here to change the angle of the phantom camera spring arm 
@@ -47,6 +51,7 @@ func _process(delta: float) -> void:
 	assert(extension <= 1.9)
 	target_spring_length = maxf(ball_cam_base_spring_length, ball_cam_base_spring_length + extension)
 	ball_cam.spring_length = lerp(ball_cam.spring_length, target_spring_length, SPRING_LERP_SPEED * delta)
+
 
 func _physics_process(delta: float) -> void:
 	

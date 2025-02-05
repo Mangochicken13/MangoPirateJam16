@@ -98,6 +98,7 @@ script = ExtResource("3_p2b4v")
 unique_name_in_owner = true
 transform = Transform3D(0.999972, 0, 0, 0, 0.999955, 0, 0, 0, 0.999961, 1.4013e-45, 0.1, 2.4499)
 script = ExtResource("4_j6r2q")
+priority = 1
 follow_mode = 6
 follow_target = NodePath("../..")
 tween_resource = SubResource("Resource_m43vb")
