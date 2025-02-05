@@ -20,8 +20,14 @@ func _ready() -> void:
 		elif node is CollisionShape3D and !collision_shape:
 			collision_shape = node
 	
+	_set_collision_layer()
+
+func _set_collision_layer() -> void:
 	# Solid Walls
-	collision_layer = 2
+	if collision_layer == 1: #Default value
+		collision_layer = 2
+	else:
+		print(collision_layer, self)
 
 func _bounce(velocity: Vector3) -> Vector3:
 	velocity = velocity * velocity_multiplier

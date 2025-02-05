@@ -2,27 +2,26 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8r4udxdokno0"
-path.s3tc="res://.godot/imported/Breakable_wall_cracks.png-a42ef0b4974d9bc9d40153cc474118e9.s3tc.ctex"
+uid="uid://b2chgrkjp72rm"
+path="res://.godot/imported/testing_wall.png-09e0a8fa59a69a418ca1a9bc7ebf878a.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://Components/Walls/Breakable_wall_cracks.png"
-dest_files=["res://.godot/imported/Breakable_wall_cracks.png-a42ef0b4974d9bc9d40153cc474118e9.s3tc.ctex"]
+source_file="res://Walls/testing_wall.png"
+dest_files=["res://.godot/imported/testing_wall.png-09e0a8fa59a69a418ca1a9bc7ebf878a.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

@@ -1,8 +1,0 @@
-[gd_resource type="BoxMesh" load_steps=2 format=3 uid="uid://781nrqkwx8te"]
-
-[ext_resource type="Material" uid="uid://chqnhdm57ks0o" path="res://Components/Walls/breakable_wall_material.tres" id="1_2r1p2"]
-
-[resource]
-resource_local_to_scene = true
-material = ExtResource("1_2r1p2")
-size = Vector3(5, 4, 2)

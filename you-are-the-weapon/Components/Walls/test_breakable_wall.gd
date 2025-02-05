@@ -1,2 +1,0 @@
-extends BreakableWall
-class_name TestBreakableWall

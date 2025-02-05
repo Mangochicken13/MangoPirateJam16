@@ -48,7 +48,7 @@ func _process(delta: float) -> void:
 	# TODO: more work needed on this
 	var v_length: float = sqrt((abs(velocity.length()) + 1 - speed) - 1)
 	var extension: float = minf(2, v_length)
-	assert(extension <= 1.9)
+	assert(extension < 1.9)
 	target_spring_length = maxf(ball_cam_base_spring_length, ball_cam_base_spring_length + extension)
 	ball_cam.spring_length = lerp(ball_cam.spring_length, target_spring_length, SPRING_LERP_SPEED * delta)
 

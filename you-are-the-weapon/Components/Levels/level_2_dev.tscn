@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dh17uwlnhjgw0"]
 
 [ext_resource type="PackedScene" uid="uid://ca0itvftvsk06" path="res://Components/Levels/base_level.tscn" id="1_d7xwl"]
-[ext_resource type="PackedScene" uid="uid://lnuocne6qmhb" path="res://Components/Walls/testing_wall.tscn" id="2_5rsmb"]
+[ext_resource type="PackedScene" uid="uid://lnuocne6qmhb" path="res://Walls/testing_wall.tscn" id="2_5rsmb"]
 [ext_resource type="PackedScene" uid="uid://7kcef77qbpfl" path="res://Components/Levels/level_trigger.tscn" id="2_t2jgq"]
 
 [node name="Level" node_paths=PackedStringArray("door") instance=ExtResource("1_d7xwl")]
