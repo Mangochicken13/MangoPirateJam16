@@ -252,21 +252,10 @@ func objective_text(p_win_condition: int = -1) -> String:
 #region Get children of holder nodes
 
 func get_breakable_bricks(parent: Node = breakable_bricks_holder) -> int:
-	return get_children_of_type(parent, BreakableWall)
+	return Utils.get_children_of_type(parent, BreakableWall)
 
 func get_triggers(parent: Node = trigger_holder) -> int:
-	return get_children_of_type(parent, LevelTrigger)
-
-func get_children_of_type(parent: Node, type: Variant) -> int:
-	var num: int = 0
-	if !parent:
-		parent = self
-	for node in parent.get_children():
-		if node.get_child_count() > 0:
-			num += get_children_of_type(node, type)
-		if is_instance_of(node, type):
-			num += 1
-	return num
+	return Utils.get_children_of_type(parent, LevelTrigger)
 
 #endregion
 
