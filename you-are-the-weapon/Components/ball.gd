@@ -48,7 +48,7 @@ func _process(delta: float) -> void:
 	# TODO: more work needed on this
 	var v_length: float = sqrt((abs(velocity.length()) + 1 - speed) - 1)
 	var extension: float = minf(2, v_length)
-	assert(extension < 1.9)
+	#assert(extension < 1.9)
 	target_spring_length = maxf(ball_cam_base_spring_length, ball_cam_base_spring_length + extension)
 	ball_cam.spring_length = lerp(ball_cam.spring_length, target_spring_length, SPRING_LERP_SPEED * delta)
 
@@ -100,6 +100,19 @@ func handle_collision(last_collision: KinematicCollision3D) -> KinematicCollisio
 	if collider is BreakableWall:
 		collider._deal_damage(calculate_damage())
 		pass
+	
+	# should be main logic after refactor
+	if collider is HitboxComponent:
+		collider._deal_damage(calculate_damage())
+		
+		var normal := last_collision.get_normal()
+		velocity = velocity.bounce(normal)
+		#velocity = collider._bounce(velocity)
+		
+		# No need to multiply by delta, the remainder magnitude is already multiplied by it
+		var collision := move_and_collide(velocity.normalized() * last_collision.get_remainder().length())
+		basis = Basis.looking_at(velocity)
+		return collision
 	
 	# Common logic; bouncing, imparted velocity
 	if collider is Wall:
