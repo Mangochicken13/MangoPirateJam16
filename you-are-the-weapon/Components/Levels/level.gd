@@ -11,11 +11,11 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 	Trigger_num, ## Enter/meet [member trigger_num] of triggers (must be less than or equal to the total number of triggers) 
 }
 
-const GET_TO_THE_EXIT = "Get Going!"
-const _BREAK_BRICK_NUM = "Break {0} Bricks!"
-const _BREAK_BRICK_PERCENTAGE = "Break {0}% of Bricks!"
-const _ACTIVATE_TRIGGER_NUM = "Enter {0} of Triggers!"
-const _ACTIVATE_TRIGGER_PERCENTAGE = "Enter {0}% of Triggers!"
+const GET_TO_THE_EXIT: String = "Get Going!"
+const _BREAK_BRICK_NUM: String = "Break {0} Bricks!"
+const _BREAK_BRICK_PERCENTAGE: String = "Break {0}% of Bricks!"
+const _ACTIVATE_TRIGGER_NUM: String = "Enter {0} of Triggers!"
+const _ACTIVATE_TRIGGER_PERCENTAGE: String = "Enter {0}% of Triggers!"
 
 #region Export vars
 
@@ -125,7 +125,7 @@ func _ready() -> void:
 		_recursive_connect_bricks()
 		
 		for i in trigger_holder.get_child_count():
-			var child = trigger_holder.get_child(i)
+			var child: Node = trigger_holder.get_child(i)
 			if child is LevelTrigger:
 				child.triggered.connect(_on_trigger_activated)
 		
@@ -139,7 +139,7 @@ func _ready() -> void:
 
 func _recursive_connect_bricks(p_node: Node = breakable_bricks_holder) -> void:
 	for i in p_node.get_child_count():
-		var child = p_node.get_child(i)
+		var child: Node = p_node.get_child(i)
 		if child.get_child_count() > 0: 
 			_recursive_connect_bricks(child)
 		if child is BreakableWall:
@@ -153,14 +153,9 @@ func _start_level() -> void:
 		completion_timer.start()
 
 func _on_level_entered(_body: Node3D) -> void:
-	var start = Time.get_ticks_usec()
 	SignalBus.level_entered.emit(self)
 	entrance_area.body_entered.disconnect(_on_level_entered)
 	_start_level()
-	var end = Time.get_ticks_usec()
-	var objective_ticks = (end - start)/100.0
-	if objective_ticks:
-		print("level enter ticks %s" % [objective_ticks])
 
 func try_finish_level(_body: Node3D) -> bool:
 	if win_condition_met and not level_complete:
@@ -224,7 +219,7 @@ func complete_win_condition() -> void:
 		completion_timer.paused = true
 	# super temporary code, want this to be on the door node
 	if door:
-		var tween = get_tree().create_tween()
+		var tween: Tween = get_tree().create_tween()
 		tween.tween_property(door, "position", door.position + Vector3(0, -10, 0), 1.5)
 		tween.tween_callback(door.queue_free)
 
@@ -292,7 +287,8 @@ func get_aabb(p_parent: Node3D, p_omit_top_level: bool, p_bounds_orientation: Tr
 			var box when box is BoxShape3D:
 				shape_bounds.size = box.size
 			var x when x is SphereShape3D:
-				shape_bounds.size = (2 * Vector3(x.radius, x.radius, x.radius))
+				var radius: float = (x as SphereShape3D).radius
+				shape_bounds.size = (2 * Vector3(radius, radius, radius))
 		
 		bounds = bounds.merge(AABB(p_parent.global_position - shape_bounds.size / 2, shape_bounds.size))
 	
@@ -312,8 +308,8 @@ func get_aabb(p_parent: Node3D, p_omit_top_level: bool, p_bounds_orientation: Tr
 			#for j in child_as_node.get_child_count():
 				#child_as_node
 	
-	print(p_parent.name)
-	print(bounds)
+	#print(p_parent.name)
+	#print(bounds)
 	return bounds;
 	
 	#important for automatic positioning of nodes if seemless transitions are required
