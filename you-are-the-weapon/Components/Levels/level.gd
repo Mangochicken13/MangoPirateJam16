@@ -11,7 +11,7 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 	Trigger_num, ## Enter/meet [member trigger_num] of triggers (must be less than or equal to the total number of triggers) 
 }
 
-const GET_TO_THE_EXIT: String = "Get Going!"
+const _GET_TO_THE_EXIT: String = "Get Going!"
 const _BREAK_BRICK_NUM: String = "Break {0} Bricks!"
 const _BREAK_BRICK_PERCENTAGE: String = "Break {0}% of Bricks!"
 const _ACTIVATE_TRIGGER_NUM: String = "Enter {0} of Triggers!"
