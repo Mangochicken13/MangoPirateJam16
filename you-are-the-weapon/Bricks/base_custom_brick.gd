@@ -1,0 +1,2 @@
+extends BaseBrick
+class_name CustomBrick
