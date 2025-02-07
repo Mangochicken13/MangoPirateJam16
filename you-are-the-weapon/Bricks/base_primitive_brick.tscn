@@ -1,0 +1,53 @@
+[gd_scene load_steps=11 format=3 uid="uid://deacl5letwecf"]
+
+[ext_resource type="Script" uid="uid://cxxhyx6h8jjmv" path="res://Bricks/primitive_brick.gd" id="1_gnhu3"]
+[ext_resource type="Gradient" uid="uid://b0110vjwm62cs" path="res://Walls/health_gradient.tres" id="2_co77g"]
+[ext_resource type="Material" uid="uid://kinnl8focjp7" path="res://Bricks/brick_health_indicator.material" id="3_2xvou"]
+[ext_resource type="Script" uid="uid://di4ti33j6cwmm" path="res://Components/hitbox_component.gd" id="3_co77g"]
+[ext_resource type="Material" uid="uid://4kl4aamky0r4" path="res://Bricks/brick_outline.material" id="4_honec"]
+[ext_resource type="Script" uid="uid://vbemhemu4dxm" path="res://Components/mesh_component.gd" id="7_honec"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2xvou"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_honec"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mwu3c"]
+resource_local_to_scene = true
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+distance_fade_mode = 3
+distance_fade_min_distance = 0.727461
+distance_fade_max_distance = 2.55885
+
+[sub_resource type="BoxMesh" id="BoxMesh_g61il"]
+material = SubResource("StandardMaterial3D_mwu3c")
+size = Vector3(1.2, 1.2, 1.2)
+
+[node name="Base Primitive Brick" type="Node3D" node_paths=PackedStringArray("hitbox_component", "mesh_component")]
+script = ExtResource("1_gnhu3")
+plane_mesh_size = Vector3(10, 1, 10)
+hitbox_component = NodePath("HitboxComponent")
+mesh_component = NodePath("MeshInstance3D")
+health_gradient = ExtResource("2_co77g")
+base_mesh_health_material = ExtResource("3_2xvou")
+base_mesh_outline_material = ExtResource("4_honec")
+
+[node name="HitboxComponent" type="StaticBody3D" parent="." node_paths=PackedStringArray("primitive_collision_shape")]
+collision_layer = 4
+script = ExtResource("3_co77g")
+is_primitive = true
+primitive_collision_shape = NodePath("CollisionShape3D")
+metadata/_custom_type_script = ExtResource("3_co77g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxComponent"]
+shape = SubResource("BoxShape3D_2xvou")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." node_paths=PackedStringArray("outline_mesh")]
+mesh = SubResource("BoxMesh_honec")
+surface_material_override/0 = ExtResource("3_2xvou")
+script = ExtResource("7_honec")
+outline_mesh = NodePath("OutlineMesh")
+
+[node name="OutlineMesh" type="MeshInstance3D" parent="MeshInstance3D"]
+mesh = SubResource("BoxMesh_g61il")
