@@ -16,7 +16,7 @@ trigger_holder = NodePath("Trigger Holder")
 breakable_bricks_holder = NodePath("Breakable Bricks")
 solid_walls_holder = NodePath("Solid Walls")
 completion_timer = NodePath("Completion Timer")
-boundary = AABB(-5, -5, -42.5, 10, 10, 45)
+boundary = AABB(-5, -5, -2.5, 10, 10, 5)
 
 [node name="Exit Area" type="Area3D" parent="."]
 collision_layer = 8
