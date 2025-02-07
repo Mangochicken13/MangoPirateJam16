@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://37702wvtpjm6"]
+[gd_scene load_steps=8 format=3 uid="uid://37702wvtpjm6"]
 
 [ext_resource type="Script" uid="uid://docv3qj8fk2yg" path="res://Walls/breakable_wall.gd" id="1_7jxn8"]
 [ext_resource type="Gradient" uid="uid://b0110vjwm62cs" path="res://Walls/health_gradient.tres" id="2_ogmrn"]
-[ext_resource type="PackedScene" uid="uid://c0t5ebt5gausq" path="res://Components/HealthComponent.tscn" id="3_ugjwp"]
-[ext_resource type="Material" uid="uid://kinnl8focjp7" path="res://Bricks/brick_base.material" id="3_yu1ga"]
+[ext_resource type="Material" uid="uid://kinnl8focjp7" path="res://Bricks/brick_health_indicator.material" id="3_yu1ga"]
 [ext_resource type="Material" uid="uid://4kl4aamky0r4" path="res://Bricks/brick_outline.material" id="4_ws4qq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_l5uip"]
@@ -19,14 +18,9 @@ size = Vector3(5.2, 4.2, 2.2)
 resource_local_to_scene = true
 size = Vector3(5, 4, 2)
 
-[node name="Breakable Wall" type="Node3D" node_paths=PackedStringArray("health_component")]
+[node name="Breakable Wall" type="StaticBody3D"]
 script = ExtResource("1_7jxn8")
-health_component = NodePath("HealthComponent")
-defence = null
-damage_reduction = null
 health_gradient = ExtResource("2_ogmrn")
-velocity_multiplier = null
-combo_modifier = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_l5uip")
@@ -36,5 +30,3 @@ mesh = SubResource("BoxMesh_e7bn1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_0ybw5")
-
-[node name="HealthComponent" parent="." instance=ExtResource("3_ugjwp")]

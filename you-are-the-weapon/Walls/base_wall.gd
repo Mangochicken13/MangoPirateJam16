@@ -27,7 +27,8 @@ func _set_collision_layer() -> void:
 	if collision_layer == 1: #Default value
 		collision_layer = 2
 	else:
-		print(collision_layer, self)
+		#print(collision_layer, self)
+		pass
 
 func _bounce(velocity: Vector3) -> Vector3:
 	velocity = velocity * velocity_multiplier

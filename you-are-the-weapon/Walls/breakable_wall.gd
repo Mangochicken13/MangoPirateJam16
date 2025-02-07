@@ -1,10 +1,10 @@
 extends Wall
 class_name BreakableWall
 
-@export var health_component: HealthComponent
+#@export var health_component: HealthComponent
 
-#@export var health: float = 1
-#var max_health: float
+@export var health: float = 1
+var max_health: float
 @export var defence: float = 0
 @export var damage_reduction: float = 0
 
@@ -15,7 +15,7 @@ signal destroyed
 
 func _ready() -> void:
 	super._ready()
-	#max_health = health
+	max_health = health
 	_update_color()
 	
 
@@ -30,8 +30,11 @@ func _deal_damage(incoming_damage: float) -> float:
 	final_damage = final_damage - defence
 	final_damage = maxf(final_damage, 0.0)
 	
-	health_component.damage(final_damage)
+	#health_component.damage(final_damage)
 	
+	health -= final_damage
+	if health <= 0:
+		_destroy()
 	_update_cracks()
 	_update_color()
 	
@@ -39,7 +42,7 @@ func _deal_damage(incoming_damage: float) -> float:
 
 func _update_color() -> void:
 	# there has to be a better method to change the color of the texture right?
-	mesh_material.set("albedo_color", health_gradient.sample(1 - health/max_health))
+	mesh_material.set("albedo_color", health_gradient.sample(health/max_health))
 
 
 func _update_cracks() -> void:
