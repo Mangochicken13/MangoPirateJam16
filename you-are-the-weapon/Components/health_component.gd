@@ -9,7 +9,7 @@ signal health_depleted
 func _ready() -> void:
 	health = MAX_HEALTH
 
-func damage(damage: float) -> void:
+func _deal_damage(damage: float) -> void:
 	health -= damage
 	if health <= 0:
 		health_depleted.emit()
