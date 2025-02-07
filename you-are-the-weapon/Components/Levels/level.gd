@@ -17,6 +17,28 @@ const _BREAK_BRICK_PERCENTAGE: String = "Break {0}% of Bricks!"
 const _ACTIVATE_TRIGGER_NUM: String = "Enter {0} of Triggers!"
 const _ACTIVATE_TRIGGER_PERCENTAGE: String = "Enter {0}% of Triggers!"
 
+# This function is up here as it's relevant to the constants
+func objective_text(p_win_condition: int = -1) -> String:
+	var local_win_condition: int
+	if p_win_condition == -1:
+		local_win_condition = win_condition
+	else:
+		local_win_condition = p_win_condition
+	
+	match local_win_condition:
+		Level.WIN_CONDITION.None:
+			return _GET_TO_THE_EXIT
+		Level.WIN_CONDITION.Brick_num:
+			return _BREAK_BRICK_NUM.format([brick_num])
+		Level.WIN_CONDITION.Brick_percentage:
+			return _BREAK_BRICK_PERCENTAGE.format([brick_percentage])
+		Level.WIN_CONDITION.Trigger_num:
+			return _ACTIVATE_TRIGGER_NUM.format([trigger_num])
+		Level.WIN_CONDITION.Trigger_percentage:
+			return _ACTIVATE_TRIGGER_PERCENTAGE.format([trigger_percentage])
+		_:
+			return "error"
+
 #region Export vars
 
 @export var win_condition: WIN_CONDITION:
