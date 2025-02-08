@@ -35,12 +35,12 @@ process_mode = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Game"]
 transform = Transform3D(0.563103, -0.456679, -0.688737, 0.0111684, 0.837562, -0.546228, 0.826311, 0.299891, 0.476734, 0, 0, 0)
-light_energy = 0.2
+light_energy = 0.4
 directional_shadow_mode = 0
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Game"]
 transform = Transform3D(-0.443766, -0.618998, 0.648007, -0.585843, 0.747577, 0.312916, -0.678129, -0.240769, -0.694385, 0, 0, 0)
-light_energy = 0.4
+light_energy = 0.7
 directional_shadow_mode = 0
 
 [node name="Ball" parent="Game" instance=ExtResource("3_dowce")]
