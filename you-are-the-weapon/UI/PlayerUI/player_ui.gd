@@ -20,10 +20,10 @@ var target_progress_value: float
 
 
 func _ready() -> void:
-	SignalBus.level_entered.connect(_on_level_entered)
-	SignalBus.level_win_condition_met.connect(_on_level_win_conditon_met)
-	SignalBus.level_timer_timeout.connect(_on_level_timer_timeout)
-	
+	#SignalBus.level_entered.connect(_on_level_entered)
+	#SignalBus.level_win_condition_met.connect(_on_level_win_conditon_met)
+	#SignalBus.level_timer_timeout.connect(_on_level_timer_timeout)
+	pass
 
 func _process(_delta: float) -> void:
 	if current_level:

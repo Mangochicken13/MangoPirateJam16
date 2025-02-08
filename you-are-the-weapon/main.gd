@@ -19,9 +19,9 @@ func _ready() -> void:
 	player_ui.hide()
 	win_ui.hide()
 	menu_ui.start_game.connect(_start_game)
-	SignalBus.level_entered.connect(_on_level_entered)
-	SignalBus.level_exited.connect(_on_level_exited)
-	SignalBus.restart_game.connect(_on_restart_game)
+	#SignalBus.level_entered.connect(_on_level_entered)
+	#SignalBus.level_exited.connect(_on_level_exited)
+	#SignalBus.restart_game.connect(_on_restart_game)
 	
 	get_levels(self)
 	
