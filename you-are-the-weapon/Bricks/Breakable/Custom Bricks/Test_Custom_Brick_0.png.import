@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://xeka1fo6ytfs"
-path.s3tc="res://.godot/imported/Test_Custom_Brick_0.png-d9c3f8d0df94c8c1250af6a4cd442012.s3tc.ctex"
+path.s3tc="res://.godot/imported/Test_Custom_Brick_0.png-8f2bdcc207f87b7cf5408264e751c4a3.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://Bricks/Custom Bricks/Test_Custom_Brick_0.png"
-dest_files=["res://.godot/imported/Test_Custom_Brick_0.png-d9c3f8d0df94c8c1250af6a4cd442012.s3tc.ctex"]
+source_file="res://Bricks/Breakable/Custom Bricks/Test_Custom_Brick_0.png"
+dest_files=["res://.godot/imported/Test_Custom_Brick_0.png-8f2bdcc207f87b7cf5408264e751c4a3.s3tc.ctex"]
 
 [params]
 

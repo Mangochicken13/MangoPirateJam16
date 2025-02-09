@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://d07wsjuf4py1d"
-path="res://.godot/imported/Test_Custom_Brick.gltf-7c6c08dbc843cbdc381bbac08625eba8.scn"
+path="res://.godot/imported/Test_Custom_Brick.gltf-ed8575d903bbfadce7877b8584c8d31d.scn"
 
 [deps]
 
-source_file="res://Bricks/Custom Bricks/Test_Custom_Brick.gltf"
-dest_files=["res://.godot/imported/Test_Custom_Brick.gltf-7c6c08dbc843cbdc381bbac08625eba8.scn"]
+source_file="res://Bricks/Breakable/Custom Bricks/Test_Custom_Brick.gltf"
+dest_files=["res://.godot/imported/Test_Custom_Brick.gltf-ed8575d903bbfadce7877b8584c8d31d.scn"]
 
 [params]
 
