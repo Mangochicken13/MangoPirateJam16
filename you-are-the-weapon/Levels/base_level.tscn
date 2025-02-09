@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ca0itvftvsk06"]
 
-[ext_resource type="Script" uid="uid://dn713gfmf5267" path="res://Components/Levels/level.gd" id="1_4dys2"]
+[ext_resource type="Script" uid="uid://dn713gfmf5267" path="res://Levels/level.gd" id="1_4dys2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4n8d0"]
 size = Vector3(10, 10, 5)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cw2l6ifqw3yxn"]
 
-[ext_resource type="PackedScene" uid="uid://nv2sbbj23yw1" path="res://Components/ball.tscn" id="1_ikktw"]
+[ext_resource type="PackedScene" uid="uid://nv2sbbj23yw1" path="res://ball.tscn" id="1_ikktw"]
 [ext_resource type="PackedScene" uid="uid://lnuocne6qmhb" path="res://Walls/testing_wall.tscn" id="3_1vec6"]
 
 [node name="Test Scene" type="Node3D"]

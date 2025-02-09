@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://7kcef77qbpfl"]
 
-[ext_resource type="Script" uid="uid://emas1ywyyync" path="res://Components/Levels/level_trigger.gd" id="1_xwh3f"]
+[ext_resource type="Script" uid="uid://emas1ywyyync" path="res://Levels/level_trigger.gd" id="1_xwh3f"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ff0tt"]
 resource_local_to_scene = true
