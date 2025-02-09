@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://010knv4cgwnh"]
+[gd_scene load_steps=11 format=3 uid="uid://010knv4cgwnh"]
 
 [ext_resource type="Script" uid="uid://dfbe4ge3174i2" path="res://main.gd" id="1_qpx57"]
 [ext_resource type="PackedScene" uid="uid://crcwwsl077er8" path="res://UI/MainMenu/menu.tscn" id="2_j5eyx"]
@@ -9,6 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://bdhc4jew8px57" path="res://Components/Levels/level_1_dev.tscn" id="5_m4v8k"]
 [ext_resource type="PackedScene" uid="uid://dh17uwlnhjgw0" path="res://Components/Levels/level_2_dev.tscn" id="6_620i0"]
 [ext_resource type="PackedScene" uid="uid://tql1shvc5wn" path="res://Components/Levels/level_3_dev.tscn" id="8_0ycsd"]
+
+[sub_resource type="Environment" id="Environment_kek77"]
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.4
 
 [node name="Main" type="Node" node_paths=PackedStringArray("menu_ui", "player_ui", "win_ui", "player")]
 process_mode = 3
@@ -33,16 +38,6 @@ player = NodePath("../Game/Ball")
 [node name="Game" type="Node" parent="."]
 process_mode = 1
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Game"]
-transform = Transform3D(0.563103, -0.456679, -0.688737, 0.0111684, 0.837562, -0.546228, 0.826311, 0.299891, 0.476734, 0, 0, 0)
-light_energy = 0.4
-directional_shadow_mode = 0
-
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Game"]
-transform = Transform3D(-0.443766, -0.618998, 0.648007, -0.585843, 0.747577, 0.312916, -0.678129, -0.240769, -0.694385, 0, 0, 0)
-light_energy = 0.7
-directional_shadow_mode = 0
-
 [node name="Ball" parent="Game" instance=ExtResource("3_dowce")]
 
 [node name="Level" parent="Game" instance=ExtResource("5_m4v8k")]
@@ -52,3 +47,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -68.5)
 
 [node name="Level3" parent="Game" instance=ExtResource("8_0ycsd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -153)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kek77")

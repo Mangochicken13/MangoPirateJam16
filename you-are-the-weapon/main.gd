@@ -4,6 +4,7 @@ class_name Main
 @export var menu_ui: Menu
 @export var player_ui: PlayerUI
 @export var win_ui: WinScreen
+@export var debug_ui: DebugUI
 
 @export var player: Ball
 
@@ -23,7 +24,7 @@ func _ready() -> void:
 	#SignalBus.level_exited.connect(_on_level_exited)
 	#SignalBus.restart_game.connect(_on_restart_game)
 	
-	get_levels(self)
+	levels_in_scene = get_levels(self)
 	
 	get_tree().paused = true
 
@@ -33,13 +34,8 @@ func _input(event: InputEvent) -> void:
 			if event.physical_keycode == KEY_Q:
 				current_level.complete_win_condition()
 
-func get_levels(node: Node):
-	for i in node.get_child_count():
-		var child = node.get_child(i)
-		if child.get_child_count() > 0:
-			get_levels(child)
-		if child is Level:
-			levels_in_scene += 1
+func get_levels(p_parent: Node) -> int:
+	return Utils.get_children_of_type(p_parent, Level)
 
 func _start_game():
 	get_tree().paused = false

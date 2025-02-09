@@ -1,4 +1,5 @@
 extends Control
+class_name DebugUI
 
 @export var frame_rate_label: Label
 @export var camera_spring_label: Label
