@@ -60,7 +60,7 @@ func objective_text(p_win_condition: int = -1) -> String:
 	get():
 		return _brick_num
 ## Backing property for [member brick_num]
-@export var _brick_num: int = 0
+@export_storage var _brick_num: int = 0
 
 @export_range(0, 100, 1, "suffix:%") var trigger_percentage: int = 100
 ## Cannot exceed the number of triggers in the level
@@ -76,7 +76,7 @@ func objective_text(p_win_condition: int = -1) -> String:
 	get():
 		return _trigger_num
 ## Backing property for [member trigger_num]
-@export var _trigger_num: int = 0
+@export_storage var _trigger_num: int = 0
 
 ## If the selected win condition has a time to complete it within.
 ## Using this in conjunction with [enum WIN_CONDITION.None] 
@@ -442,9 +442,5 @@ func _validate_property(property: Dictionary) -> void:
 		"brick_num", \
 		"trigger_num": # show variable but 
 			property.usage += PROPERTY_USAGE_NO_INSTANCE_STATE
-		# Hide backing properties in editor
-		"_brick_num", \
-		"_trigger_num":
-			property.usage = PROPERTY_USAGE_NO_EDITOR
 
 #endregion
