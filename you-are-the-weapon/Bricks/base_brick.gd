@@ -1,12 +1,18 @@
+@tool
 extends Node3D
 class_name BaseBrick
 
+@export var hitbox_component: HitboxComponent:
+	set(new_value):
+		hitbox_component = new_value
+		update_configuration_warnings()
+@export var mesh_component: MeshComponent
+@export_category("Extras")
 @export var health_component: HealthComponent
-@export var hitbox_component: HitboxComponent
 @export var bounce_component: BounceComponent
 @export var combo_component: Node3D
-@export var mesh_component: MeshComponent
 
+@export_group("Constant References")
 @export var health_gradient: Gradient
 @export var base_mesh_health_material: Material
 @export var base_mesh_outline_material: Material
@@ -21,9 +27,9 @@ func _ready() -> void:
 				_update_mesh_color(health_gradient.sample(1))
 				
 
-func _recieve_damage(damage: float) -> void:
+func _recieve_damage(p_damage: float) -> void:
 	if health_component:
-		health_component._deal_damage(damage)
+		health_component._deal_damage(p_damage)
 		var health_ratio: float = health_component.health / health_component.MAX_HEALTH
 		var health_color: Color = health_gradient.sample(health_ratio)
 		if mesh_component:
@@ -43,3 +49,11 @@ func _update_mesh_color(p_color: Color) -> void:
 
 func _destroy() -> void:
 	self.queue_free()
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var err: PackedStringArray = []
+	
+	if not hitbox_component:
+		err.append("No hitbox attached; Collisions will not be detected")
+	
+	return err
