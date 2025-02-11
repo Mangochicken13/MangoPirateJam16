@@ -43,6 +43,8 @@ enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg")
 
 folder_colors={
 "res://Bricks/": "orange",
+"res://Bricks/Breakable/Custom Bricks/": "teal",
+"res://Bricks/Breakable/Primitives/": "purple",
 "res://addons/": "gray"
 }
 
