@@ -7,10 +7,10 @@
 [ext_resource type="Material" uid="uid://4kl4aamky0r4" path="res://Bricks/brick_outline.material" id="4_honec"]
 [ext_resource type="Script" uid="uid://vbemhemu4dxm" path="res://Components/mesh_component.gd" id="7_honec"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_2xvou"]
+[sub_resource type="BoxMesh" id="BoxMesh_honec"]
 material = ExtResource("3_2xvou")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_2xvou"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_mwu3c"]
 
 [node name="Base Primitive Brick" type="Node3D" node_paths=PackedStringArray("hitbox_component", "mesh_component")]
 script = ExtResource("1_gnhu3")
@@ -22,14 +22,15 @@ base_mesh_health_material = ExtResource("3_2xvou")
 base_mesh_outline_material = ExtResource("4_honec")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_2xvou")
+mesh = SubResource("BoxMesh_honec")
 script = ExtResource("7_honec")
 
 [node name="HitboxComponent" type="StaticBody3D" parent="." node_paths=PackedStringArray("primitive_collision_shape")]
+collision_layer = 2
 script = ExtResource("3_co77g")
 is_primitive = true
 primitive_collision_shape = NodePath("CollisionShape3D")
 metadata/_custom_type_script = ExtResource("3_co77g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxComponent"]
-shape = SubResource("BoxShape3D_2xvou")
+shape = SubResource("BoxShape3D_mwu3c")

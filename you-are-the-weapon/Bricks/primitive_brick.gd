@@ -51,10 +51,9 @@ enum PRIMITIVE_SHAPES {
 		plane_mesh_size = new_size
 		_update_shape()
 
-@export_group("References")
-@export_tool_button("Reset Collision Shape") var update_hitbox_shape : Callable = reset_collision_shape
-@export_tool_button("Get Shape Length") var get_shape_length : Callable = _get_half_shape_diagonal.bind(null)
-
+@export_group("Editor Tools")
+@export_tool_button("Reset Collision Shape") var update_hitbox_shape_button : Callable = reset_collision_shape
+@export_tool_button("Get Shape Length") var get_shape_length_button : Callable = _get_half_shape_diagonal.bind(null)
 
 func reset_collision_shape() -> bool:
 	if hitbox_component:
@@ -68,8 +67,9 @@ func reset_collision_shape() -> bool:
 					var new_shape: Shape3D = _get_primitive_shape(primitive_shape)
 					child.shape = new_shape
 					if i + 1 < children:
-						print("More children than expected in {0}".format([hitbox_component.name]))
+						print("More children than expected in %s" % hitbox_component.name)
 					return true
+		
 	
 	return false
 
@@ -78,10 +78,9 @@ func _change_shape() -> void:
 	var mesh: Mesh = _get_primitive_mesh(primitive_shape)
 	var outline_mesh: Mesh = mesh.duplicate() # has to be a different mesh instance, otherwise changes are synced
 	if not shape or not mesh:
-		printerr("Invalid shape index passed")
+		push_error("Invalid shape index passed")
 		return
 	if not hitbox_component:
-		push_warning("No Hitbox in Brick")
 		return
 	
 	
@@ -92,6 +91,7 @@ func _change_shape() -> void:
 		if mesh_component.outline_mesh:
 			mesh_component.outline_mesh.mesh = outline_mesh
 	else: 
+		# Important in case these settings get toggled off so i know why nothing is happening
 		push_warning("Hitbox \"%s\" is not marked as primitive " % hitbox_component.name)
 
 func _update_shape() -> void:
@@ -104,6 +104,7 @@ func _update_shape() -> void:
 	
 	if mesh_component.mesh:
 		mesh = mesh_component.mesh
+		
 		if mesh_component.outline_mesh:
 			if mesh_component.outline_mesh.mesh:
 				outline_mesh = mesh_component.outline_mesh.mesh
@@ -112,12 +113,11 @@ func _update_shape() -> void:
 				if health_component:
 					outline_mesh = mesh.duplicate()
 					mesh_component.outline_mesh.mesh = outline_mesh
-				
-			
+		
 		
 	if hitbox_component.primitive_collision_shape:
 		collision_shape = hitbox_component.primitive_collision_shape.shape
-	
+		
 	match primitive_shape:
 		PRIMITIVE_SHAPES.Sphere:
 			if mesh is SphereMesh:
@@ -148,7 +148,7 @@ func _update_shape() -> void:
 				
 			if outline_mesh is CapsuleMesh:
 				outline_mesh.height = height + 0.2
-				outline_mesh.radius = radius + 0.2
+				outline_mesh.radius = radius + 0.1
 				
 			if collision_shape is CapsuleShape3D:
 				collision_shape.height = height
@@ -176,41 +176,38 @@ func _update_shape() -> void:
 			#if outline_mesh is BoxMesh:
 				#outline_mesh.size = plane_mesh_size + Vector3(0.2, 0.2, 0.2)
 	
-	_update_mesh_material(mesh)
+	#_set_material_dither(mesh)
 	if health_component:
-		_update_outline_mesh_material(outline_mesh)
+		_set_material_dither(outline_mesh, true)
 	
-	match primitive_shape:
+	#match primitive_shape:
 		#PRIMITIVE_SHAPES.WorldBoundary:
 			#mesh_component.position.y = 0 - plane_mesh_size.y / 2.0
-		_:
-			mesh_component.position.y = 0 # reset to default
+		#_:
+			#mesh_component.position.y = 0 # reset to default
 
-func _update_mesh_material(p_mesh: Mesh) -> void:
-	var length: float = _get_half_shape_diagonal(p_mesh)
-	
+func _set_material_dither(p_mesh: Mesh, p_is_outline_mesh: bool = false) -> void:
 	var material: Material = p_mesh.get("material")
+	var length: float = _get_half_shape_diagonal(p_mesh)
+	var min_length: float = 0.0
+	var max_length: float = 0.0
+	
+	if p_is_outline_mesh:
+		min_length = _min_outline_dither_dist(length)
+		max_length = _max_outline_dither_dist(length)
+	else: 
+		min_length = _min_brick_dither_dist(length)
+		max_length = _max_brick_dither_dist(length)
+	
 	if not material:
-		print("no mesh")
-		material = base_mesh_health_material.duplicate()
-	material.distance_fade_min_distance = _min_brick_dither_dist(length)
-	material.set("distance_fade_max_distance", _max_brick_dither_dist(length))
+		if p_is_outline_mesh:
+			material = base_mesh_outline_material.duplicate()
+		else: 
+			material = base_mesh_health_material.duplicate()
+	
+	material.set("distance_fade_min_distance", min_length)
+	material.set("distance_fade_max_distance", max_length)
 	p_mesh.set("material", material)
-
-func _update_outline_mesh_material(p_outline_mesh: Mesh) -> void:
-	# Only apply outline for breakable bricks
-	if not health_component:
-		return
-	
-	var length: float = _get_half_shape_diagonal(p_outline_mesh)
-	
-	var material: Material = p_outline_mesh.get("material")
-	if not material:
-		material = base_mesh_outline_material.duplicate()
-	material.set("distance_fade_min_distance", _min_outline_dither_dist(length))
-	material.set("distance_fade_max_distance", _max_outline_dither_dist(length))
-	p_outline_mesh.set("material", material)
-	
 
 func _get_half_shape_diagonal(p_mesh_shape: Mesh) -> float:
 	var mesh: Mesh
@@ -230,42 +227,19 @@ func _get_half_shape_diagonal(p_mesh_shape: Mesh) -> float:
 		length = mesh.size.length() / 2
 	
 	if mesh is CapsuleMesh:
-		length = Vector2(mesh.height, mesh.radius * 2).length() / 2
+		length = mesh.height / 2
 	
 	if mesh is CylinderMesh:
 		length = Vector2(mesh.height, mesh.bottom_radius * 2).length() / 2
 	
 	
-	print_debug("\nLength: ", length)
-	if mesh == mesh_component.mesh:
-		print("Brick Dither %2.2f, %2.2f" % [_min_brick_dither_dist(length), _max_brick_dither_dist(length)])
-	if mesh_component.outline_mesh:
-		if mesh == mesh_component.outline_mesh.mesh:
-			print("Outline Dither %2.2f, %2.2f" % [_min_outline_dither_dist(length), _max_outline_dither_dist(length)])
+	#if mesh == mesh_component.mesh:
+		#print("Brick Dither %2.2f, %2.2f" % [_min_brick_dither_dist(length), _max_brick_dither_dist(length)])
+	#if mesh_component.outline_mesh:
+		#if mesh == mesh_component.outline_mesh.mesh:
+			#print_debug("\nLength: ", length)
+			#print("Outline Dither %2.2f, %2.2f" % [_min_outline_dither_dist(length), _max_outline_dither_dist(length)])
 	return length
-
-#region Dither Boundaries
-
-# Pretty jank stuff here, might use a shader instead at some point
-func _min_brick_dither_dist(p_length: float) -> float:
-	var decrease: float = minf(1.0, p_length * 0.2)
-	var distance: float = minf(5.0, p_length - decrease)
-	return distance
-
-func _max_brick_dither_dist(p_length: float) -> float:
-	var increase: float = minf(5.0, p_length * 0.8)
-	var distance: float = minf(7.0, p_length + increase)
-	return distance
-
-func _min_outline_dither_dist(p_length: float) -> float:
-	var decrease: float = minf(2.0, p_length * 0.3)
-	return p_length - decrease
-
-func _max_outline_dither_dist(p_length: float) -> float:
-	var increase: float = minf(7.0, p_length * 0.5) + 1
-	return p_length + increase
-
-#endregion
 
 func _get_primitive_shape(p_type: PRIMITIVE_SHAPES) -> Shape3D:
 	match p_type:
@@ -305,6 +279,30 @@ func _get_primitive_mesh(p_type: PRIMITIVE_SHAPES) -> Mesh:
 		var shape:
 			print_debug("invalid shape index: %s" % shape)
 			return null
+
+#region Dither Boundaries
+
+# Pretty jank stuff here, might use a shader instead at some point
+func _min_brick_dither_dist(p_length: float) -> float:
+	var decrease: float = minf(1.0, p_length * 0.2)
+	var distance: float = minf(5.0, p_length - decrease)
+	return distance
+
+func _max_brick_dither_dist(p_length: float) -> float:
+	var increase: float = minf(5.0, p_length * 0.8)
+	var distance: float = minf(7.0, p_length + increase)
+	return distance
+
+func _min_outline_dither_dist(p_length: float) -> float:
+	var decrease: float = minf(2.0, p_length * 0.3)
+	return p_length - decrease
+
+func _max_outline_dither_dist(p_length: float) -> float:
+	var increase: float = minf(7.0, p_length * 0.5) + 1
+	return p_length + increase
+
+#endregion
+
 
 func _validate_property(p_property: Dictionary) -> void:
 	match primitive_shape:

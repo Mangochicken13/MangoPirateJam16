@@ -21,6 +21,7 @@ func _ready() -> void:
 	if not Engine.is_editor_hint():
 		if hitbox_component:
 			hitbox_component.recieved_damage.connect(_recieve_damage)
+			hitbox_component.collision_layer = Utils.COLLISION_LAYERS.Solid_Walls
 		if health_component:
 			health_component.health_depleted.connect(_destroy)
 			if mesh_component:
