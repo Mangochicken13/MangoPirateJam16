@@ -7,7 +7,6 @@ enum PRIMITIVE_SHAPES {
 	Box, # Size: Vec3
 	Capsule, # Radius: float, Height: float
 	Cylinder, # Radius: float, Height: float
-	#WorldBoundary # Plane: Plane # Not super useful
 }
 
 @export_group("Shape")
@@ -42,20 +41,79 @@ enum PRIMITIVE_SHAPES {
 		size = new_size
 		_update_shape()
 
-#@export var plane: Plane = Plane.PLANE_XZ:
-	#set(new_plane):
-		#plane = new_plane
-		#_update_shape()
-@export var plane_mesh_size: Vector3 = Vector3(20, 1, 20):
-	set(new_size):
-		plane_mesh_size = new_size
-		_update_shape()
-
 @export_group("Editor Tools")
 @export_tool_button("Reset Collision Shape") var update_hitbox_shape_button : Callable = reset_collision_shape
 @export_tool_button("Get Shape Length") var get_shape_length_button : Callable = _get_half_shape_diagonal.bind(null)
 
 #region Editor Functions
+
+func _get_primitive_shape(p_type: PRIMITIVE_SHAPES) -> Shape3D:
+	match p_type:
+		PRIMITIVE_SHAPES.Sphere:
+			return SphereShape3D.new()
+		PRIMITIVE_SHAPES.Box:
+			return BoxShape3D.new()
+		PRIMITIVE_SHAPES.Capsule:
+			return CapsuleShape3D.new()
+		PRIMITIVE_SHAPES.Cylinder:
+			return CylinderShape3D.new()
+		var shape:
+			push_warning("invalid shape index: %s" % shape)
+			return null
+
+func _get_primitive_mesh(p_type: PRIMITIVE_SHAPES) -> Mesh:
+	# Reducing the faces on the round shapes should save rendering time?
+	# Boxes should only have 12 polygons in most circumstances
+	match p_type:
+		PRIMITIVE_SHAPES.Sphere:
+			var sphere_mesh: SphereMesh = SphereMesh.new()
+			sphere_mesh.rings = 16
+			sphere_mesh.radial_segments = 32
+			return sphere_mesh
+		PRIMITIVE_SHAPES.Box:
+			return BoxMesh.new()
+		PRIMITIVE_SHAPES.Capsule:
+			var capsule_mesh: CapsuleMesh = CapsuleMesh.new()
+			capsule_mesh.radial_segments = 32
+			return capsule_mesh
+		PRIMITIVE_SHAPES.Cylinder:
+			var cylinder_mesh: CylinderMesh = CylinderMesh.new()
+			cylinder_mesh.radial_segments = 32
+			return cylinder_mesh
+		var shape:
+			push_warning("invalid shape index: %s" % shape)
+			return null
+
+func _get_half_shape_diagonal(p_mesh_shape: Mesh) -> float:
+	var mesh: Mesh
+	var length: float
+	if not p_mesh_shape:
+		if mesh_component:
+			mesh = mesh_component.mesh
+		else:
+			return 0
+	else:
+		mesh = p_mesh_shape
+	
+	if mesh is SphereMesh:
+		length = mesh.radius
+	
+	if mesh is BoxMesh:
+		length = mesh.size.length() / 2
+	
+	if mesh is CapsuleMesh:
+		length = mesh.height / 2
+	
+	if mesh is CylinderMesh:
+		length = Vector2(mesh.height, mesh.bottom_radius * 2).length() / 2
+	
+	#if mesh_component.outline_mesh:
+		#if mesh == mesh_component.outline_mesh.mesh:
+			#print_debug("\nLength: ", length)
+			#print("Outline Dither %2.2f, %2.2f" % [_min_outline_dither_dist(length), _max_outline_dither_dist(length)])
+	
+	return length
+
 
 func reset_collision_shape() -> bool:
 	if hitbox_component:
@@ -171,128 +229,24 @@ func _update_shape() -> void:
 				collision_shape.height = height
 				collision_shape.radius = radius
 				
-		#PRIMITIVE_SHAPES.WorldBoundary:
-			#if mesh is BoxMesh:
-				#mesh.size = plane_mesh_size
-				#
-			#if outline_mesh is BoxMesh:
-				#outline_mesh.size = plane_mesh_size + Vector3(0.2, 0.2, 0.2)
 	
-	#_set_material_dither(mesh)
 	if health_component:
-		_set_material_dither(outline_mesh, true)
-	
-	#match primitive_shape:
-		#PRIMITIVE_SHAPES.WorldBoundary:
-			#mesh_component.position.y = 0 - plane_mesh_size.y / 2.0
-		#_:
-			#mesh_component.position.y = 0 # reset to default
+		_set_outline_dither(outline_mesh)
 
-func _set_material_dither(p_mesh: Mesh, p_is_outline_mesh: bool = false) -> void:
+func _set_outline_dither(p_mesh: Mesh) -> void:
 	var material: Material = p_mesh.get("material")
 	var length: float = _get_half_shape_diagonal(p_mesh)
-	var min_length: float = 0.0
-	var max_length: float = 0.0
-	
-	if p_is_outline_mesh:
-		min_length = _min_outline_dither_dist(length)
-		max_length = _max_outline_dither_dist(length)
-	#else: 
-		#min_length = _min_brick_dither_dist(length)
-		#max_length = _max_brick_dither_dist(length)
+	var min_length: float = _min_outline_dither_dist(length)
+	var max_length: float = _max_outline_dither_dist(length)
 	
 	if not material:
-		if p_is_outline_mesh:
-			material = base_mesh_outline_material.duplicate()
-		else: 
-			material = base_mesh_health_material.duplicate()
+		material = base_mesh_outline_material.duplicate()
 	
 	material.set("distance_fade_min_distance", min_length)
 	material.set("distance_fade_max_distance", max_length)
 	p_mesh.set("material", material)
 
-func _get_half_shape_diagonal(p_mesh_shape: Mesh) -> float:
-	var mesh: Mesh
-	var length: float
-	if not p_mesh_shape:
-		if mesh_component:
-			mesh = mesh_component.mesh
-		else:
-			return 0
-	else:
-		mesh = p_mesh_shape
-	
-	if mesh is SphereMesh:
-		length = mesh.radius
-	
-	if mesh is BoxMesh:
-		length = mesh.size.length() / 2
-	
-	if mesh is CapsuleMesh:
-		length = mesh.height / 2
-	
-	if mesh is CylinderMesh:
-		length = Vector2(mesh.height, mesh.bottom_radius * 2).length() / 2
-	
-	
-	#if mesh == mesh_component.mesh:
-		#print("Brick Dither %2.2f, %2.2f" % [_min_brick_dither_dist(length), _max_brick_dither_dist(length)])
-	#if mesh_component.outline_mesh:
-		#if mesh == mesh_component.outline_mesh.mesh:
-			#print_debug("\nLength: ", length)
-			#print("Outline Dither %2.2f, %2.2f" % [_min_outline_dither_dist(length), _max_outline_dither_dist(length)])
-	return length
-
-func _get_primitive_shape(p_type: PRIMITIVE_SHAPES) -> Shape3D:
-	match p_type:
-		PRIMITIVE_SHAPES.Sphere:
-			return SphereShape3D.new()
-		PRIMITIVE_SHAPES.Box:
-			return BoxShape3D.new()
-		PRIMITIVE_SHAPES.Capsule:
-			return CapsuleShape3D.new()
-		PRIMITIVE_SHAPES.Cylinder:
-			return CylinderShape3D.new()
-		#PRIMITIVE_SHAPES.WorldBoundary:
-			#return WorldBoundaryShape3D.new()
-		var shape:
-			print("invalid shape index: %s" % shape)
-			return null
-
-func _get_primitive_mesh(p_type: PRIMITIVE_SHAPES) -> Mesh:
-	match p_type:
-		PRIMITIVE_SHAPES.Sphere:
-			var sphere_mesh: SphereMesh = SphereMesh.new()
-			sphere_mesh.rings = 16
-			sphere_mesh.radial_segments = 32
-			return sphere_mesh
-		PRIMITIVE_SHAPES.Box:
-			return BoxMesh.new()
-		PRIMITIVE_SHAPES.Capsule:
-			var capsule_mesh: CapsuleMesh = CapsuleMesh.new()
-			capsule_mesh.radial_segments = 32
-			return capsule_mesh
-		PRIMITIVE_SHAPES.Cylinder:
-			var cylinder_mesh: CylinderMesh = CylinderMesh.new()
-			cylinder_mesh.radial_segments = 32
-			return cylinder_mesh
-		#PRIMITIVE_SHAPES.WorldBoundary:
-			#return BoxMesh.new()
-		var shape:
-			print_debug("invalid shape index: %s" % shape)
-			return null
-
 # Pretty jank stuff here, might use a shader instead at some point
-#func _min_brick_dither_dist(p_length: float) -> float:
-	#var decrease: float = minf(1.0, p_length * 0.2)
-	#var distance: float = minf(5.0, p_length - decrease)
-	#return distance
-#
-#func _max_brick_dither_dist(p_length: float) -> float:
-	#var increase: float = minf(5.0, p_length * 0.8)
-	#var distance: float = minf(7.0, p_length + increase)
-	#return distance
-
 func _min_outline_dither_dist(p_length: float) -> float:
 	var decrease: float = minf(2.0, p_length * 0.3)
 	return p_length - decrease
@@ -309,43 +263,26 @@ func _validate_property(p_property: Dictionary) -> void:
 			match p_property.name:
 				#"radius". \
 				"height", \
-				"size", \
-				"plane", \
-				"plane_mesh_size":
+				"size":
 					p_property.usage = PROPERTY_USAGE_NO_EDITOR
 		
 		PRIMITIVE_SHAPES.Box:
 			match p_property.name:
 				"radius", \
-				"height", \
+				"height":
 				#"size". \
-				"plane", \
-				"plane_mesh_size":
 					p_property.usage = PROPERTY_USAGE_NO_EDITOR
 		
 		PRIMITIVE_SHAPES.Capsule:
 			match p_property.name:
 				#"radius", \
 				#"height". \
-				"size", \
-				"plane", \
-				"plane_mesh_size":
+				"size":
 					p_property.usage = PROPERTY_USAGE_NO_EDITOR
 		
 		PRIMITIVE_SHAPES.Cylinder:
 			match p_property.name:
 				#"radius", \
 				#"height", \
-				"size", \
-				"plane", \
-				"plane_mesh_size":
+				"size":
 					p_property.usage = PROPERTY_USAGE_NO_EDITOR
-		
-		#PRIMITIVE_SHAPES.WorldBoundary:
-			#match p_property.name:
-				#"radius", \
-				#"height", \
-				#"size":
-				##"plane", \
-				##"plane_mesh_size":
-					#p_property.usage = PROPERTY_USAGE_NO_EDITOR
