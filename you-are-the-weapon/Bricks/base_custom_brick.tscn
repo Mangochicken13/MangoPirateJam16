@@ -1,23 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://irur8v000gnk"]
+[gd_scene load_steps=6 format=3 uid="uid://irur8v000gnk"]
 
 [ext_resource type="Script" uid="uid://c7lvicqrkg5ws" path="res://Bricks/base_custom_brick.gd" id="1_ujkta"]
 [ext_resource type="Gradient" uid="uid://b0110vjwm62cs" path="res://Walls/health_gradient.tres" id="2_2c54x"]
 [ext_resource type="Script" uid="uid://ipjsfrbmm4v0" path="res://Bricks/base_brick.gd" id="3_8uurx"]
 [ext_resource type="Material" uid="uid://kinnl8focjp7" path="res://Bricks/brick_health_indicator.material" id="3_ujkta"]
-[ext_resource type="Script" uid="uid://ci0a10b0gi1uk" path="res://Components/health_component.gd" id="4_yds3b"]
 [ext_resource type="Material" uid="uid://4kl4aamky0r4" path="res://Bricks/brick_outline.material" id="7_yds3b"]
 
-[node name="Custom Brick" type="Node3D" node_paths=PackedStringArray("health_component")]
+[node name="Custom Brick" type="Node3D"]
 script = ExtResource("1_ujkta")
-health_component = NodePath("HealthComponent")
 health_gradient = ExtResource("2_2c54x")
 base_mesh_health_material = ExtResource("3_ujkta")
 base_mesh_outline_material = ExtResource("7_yds3b")
 metadata/_custom_type_script = ExtResource("3_8uurx")
-
-[node name="HealthComponent" type="Node3D" parent="."]
-script = ExtResource("4_yds3b")
-MAX_HEALTH = 2.0
-metadata/_custom_type_script = ExtResource("4_yds3b")
-
-[node name="MeshHolder" type="Node3D" parent="."]
