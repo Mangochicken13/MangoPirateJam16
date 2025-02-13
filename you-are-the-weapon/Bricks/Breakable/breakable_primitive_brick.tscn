@@ -1,20 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://dfrtvwfs26arh"]
+[gd_scene load_steps=7 format=3 uid="uid://dfrtvwfs26arh"]
 
 [ext_resource type="PackedScene" uid="uid://deacl5letwecf" path="res://Bricks/base_primitive_brick.tscn" id="1_ox8y3"]
 [ext_resource type="Script" uid="uid://ci0a10b0gi1uk" path="res://Components/health_component.gd" id="2_5romo"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cnsjk"]
-resource_local_to_scene = true
-distance_fade_mode = 3
-distance_fade_min_distance = 0.69282
-distance_fade_max_distance = 1.55885
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yi07g"]
-resource_local_to_scene = true
-cull_mode = 1
-shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-distance_fade_mode = 3
 
 [sub_resource type="BoxMesh" id="BoxMesh_rb6tb"]
 
@@ -35,8 +22,6 @@ size = Vector3(1.2, 1.2, 1.2)
 
 [node name="Base Primitive Brick" node_paths=PackedStringArray("health_component") instance=ExtResource("1_ox8y3")]
 health_component = NodePath("HealthComponent")
-base_mesh_health_material = SubResource("StandardMaterial3D_cnsjk")
-base_mesh_outline_material = SubResource("StandardMaterial3D_yi07g")
 metadata/_edit_lock_ = true
 
 [node name="MeshInstance3D" parent="." index="0" node_paths=PackedStringArray("outline_mesh")]
