@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://bpunf0t0oagg8"]
+
+[ext_resource type="PackedScene" uid="uid://dfrtvwfs26arh" path="res://Bricks/Breakable/breakable_primitive_brick.tscn" id="1_fr7ol"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yleh2"]
+resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qgcy5"]
+resource_local_to_scene = true
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+distance_fade_mode = 3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lx3tf"]
+top_radius = 1.5
+bottom_radius = 1.5
+height = 6.0
+radial_segments = 32
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_di5bg"]
+resource_local_to_scene = true
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+distance_fade_mode = 3
+distance_fade_min_distance = 2.44199
+distance_fade_max_distance = 6.23283
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_42lqn"]
+material = SubResource("StandardMaterial3D_di5bg")
+top_radius = 1.6
+bottom_radius = 1.6
+height = 6.2
+radial_segments = 32
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1fox4"]
+height = 6.0
+radius = 1.5
+
+[node name="Base Primitive Brick" instance=ExtResource("1_fr7ol")]
+primitive_shape = 3
+radius = 1.5
+height = 6.0
+base_mesh_health_material = SubResource("StandardMaterial3D_yleh2")
+base_mesh_outline_material = SubResource("StandardMaterial3D_qgcy5")
+
+[node name="MeshInstance3D" parent="." index="0"]
+mesh = SubResource("CylinderMesh_lx3tf")
+
+[node name="MeshInstance3D" parent="MeshInstance3D" index="0"]
+mesh = SubResource("CylinderMesh_42lqn")
+
+[node name="CollisionShape3D" parent="HitboxComponent" index="0"]
+shape = SubResource("CylinderShape3D_1fox4")
