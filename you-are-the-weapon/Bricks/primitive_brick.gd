@@ -55,6 +55,8 @@ enum PRIMITIVE_SHAPES {
 @export_tool_button("Reset Collision Shape") var update_hitbox_shape_button : Callable = reset_collision_shape
 @export_tool_button("Get Shape Length") var get_shape_length_button : Callable = _get_half_shape_diagonal.bind(null)
 
+#region Editor Functions
+
 func reset_collision_shape() -> bool:
 	if hitbox_component:
 		var children: int = hitbox_component.get_child_count()
@@ -195,9 +197,9 @@ func _set_material_dither(p_mesh: Mesh, p_is_outline_mesh: bool = false) -> void
 	if p_is_outline_mesh:
 		min_length = _min_outline_dither_dist(length)
 		max_length = _max_outline_dither_dist(length)
-	else: 
-		min_length = _min_brick_dither_dist(length)
-		max_length = _max_brick_dither_dist(length)
+	#else: 
+		#min_length = _min_brick_dither_dist(length)
+		#max_length = _max_brick_dither_dist(length)
 	
 	if not material:
 		if p_is_outline_mesh:
@@ -280,18 +282,16 @@ func _get_primitive_mesh(p_type: PRIMITIVE_SHAPES) -> Mesh:
 			print_debug("invalid shape index: %s" % shape)
 			return null
 
-#region Dither Boundaries
-
 # Pretty jank stuff here, might use a shader instead at some point
-func _min_brick_dither_dist(p_length: float) -> float:
-	var decrease: float = minf(1.0, p_length * 0.2)
-	var distance: float = minf(5.0, p_length - decrease)
-	return distance
-
-func _max_brick_dither_dist(p_length: float) -> float:
-	var increase: float = minf(5.0, p_length * 0.8)
-	var distance: float = minf(7.0, p_length + increase)
-	return distance
+#func _min_brick_dither_dist(p_length: float) -> float:
+	#var decrease: float = minf(1.0, p_length * 0.2)
+	#var distance: float = minf(5.0, p_length - decrease)
+	#return distance
+#
+#func _max_brick_dither_dist(p_length: float) -> float:
+	#var increase: float = minf(5.0, p_length * 0.8)
+	#var distance: float = minf(7.0, p_length + increase)
+	#return distance
 
 func _min_outline_dither_dist(p_length: float) -> float:
 	var decrease: float = minf(2.0, p_length * 0.3)
@@ -302,7 +302,6 @@ func _max_outline_dither_dist(p_length: float) -> float:
 	return p_length + increase
 
 #endregion
-
 
 func _validate_property(p_property: Dictionary) -> void:
 	match primitive_shape:
