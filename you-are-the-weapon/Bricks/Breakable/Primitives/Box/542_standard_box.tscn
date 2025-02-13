@@ -1,16 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dps8oiq248v5f"]
+[gd_scene load_steps=6 format=3 uid="uid://dps8oiq248v5f"]
 
 [ext_resource type="PackedScene" uid="uid://dfrtvwfs26arh" path="res://Bricks/Breakable/breakable_primitive_brick.tscn" id="1_lej45"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_87gcm"]
-resource_local_to_scene = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7c0hb"]
-resource_local_to_scene = true
-cull_mode = 1
-shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-distance_fade_mode = 3
 
 [sub_resource type="BoxMesh" id="BoxMesh_6nhtu"]
 size = Vector3(5, 4, 2)
@@ -33,8 +23,6 @@ size = Vector3(5, 4, 2)
 
 [node name="Standard Box" instance=ExtResource("1_lej45")]
 size = Vector3(5, 4, 2)
-base_mesh_health_material = SubResource("StandardMaterial3D_87gcm")
-base_mesh_outline_material = SubResource("StandardMaterial3D_7c0hb")
 
 [node name="MeshInstance3D" parent="." index="0"]
 mesh = SubResource("BoxMesh_6nhtu")

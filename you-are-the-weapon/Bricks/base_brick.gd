@@ -13,9 +13,9 @@ class_name BaseBrick
 @export var combo_component: Node3D
 
 @export_group("Constant References")
-@export var health_gradient: Gradient
-@export var base_mesh_health_material: Material
-@export var base_mesh_outline_material: Material
+@export var health_gradient: Gradient = preload("res://Walls/health_gradient.tres")
+@export var base_mesh_health_material: Material = preload("res://Bricks/brick_health_indicator.material")
+@export var base_mesh_outline_material: Material = preload("res://Bricks/brick_outline.material")
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():

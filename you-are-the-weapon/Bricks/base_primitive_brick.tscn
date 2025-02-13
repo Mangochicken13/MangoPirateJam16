@@ -1,10 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://deacl5letwecf"]
+[gd_scene load_steps=7 format=3 uid="uid://deacl5letwecf"]
 
 [ext_resource type="Script" uid="uid://cxxhyx6h8jjmv" path="res://Bricks/primitive_brick.gd" id="1_gnhu3"]
-[ext_resource type="Gradient" uid="uid://b0110vjwm62cs" path="res://Walls/health_gradient.tres" id="2_co77g"]
 [ext_resource type="Material" uid="uid://kinnl8focjp7" path="res://Bricks/brick_health_indicator.material" id="3_2xvou"]
 [ext_resource type="Script" uid="uid://di4ti33j6cwmm" path="res://Components/hitbox_component.gd" id="3_co77g"]
-[ext_resource type="Material" uid="uid://4kl4aamky0r4" path="res://Bricks/brick_outline.material" id="4_honec"]
 [ext_resource type="Script" uid="uid://vbemhemu4dxm" path="res://Components/mesh_component.gd" id="7_honec"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_honec"]
@@ -17,9 +15,6 @@ script = ExtResource("1_gnhu3")
 plane_mesh_size = Vector3(10, 1, 10)
 hitbox_component = NodePath("HitboxComponent")
 mesh_component = NodePath("MeshInstance3D")
-health_gradient = ExtResource("2_co77g")
-base_mesh_health_material = ExtResource("3_2xvou")
-base_mesh_outline_material = ExtResource("4_honec")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_honec")
