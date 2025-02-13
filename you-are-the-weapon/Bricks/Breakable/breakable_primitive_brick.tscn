@@ -22,7 +22,6 @@ size = Vector3(1.2, 1.2, 1.2)
 
 [node name="Base Primitive Brick" node_paths=PackedStringArray("health_component") instance=ExtResource("1_ox8y3")]
 health_component = NodePath("HealthComponent")
-metadata/_edit_lock_ = true
 
 [node name="MeshInstance3D" parent="." index="0" node_paths=PackedStringArray("outline_mesh")]
 mesh = SubResource("BoxMesh_rb6tb")
