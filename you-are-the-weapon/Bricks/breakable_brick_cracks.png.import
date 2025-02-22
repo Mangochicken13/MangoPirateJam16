@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://8r4udxdokno0"
-path.s3tc="res://.godot/imported/Breakable_wall_cracks.png-7ff759fed561e69658943e143357c89f.s3tc.ctex"
+path.s3tc="res://.godot/imported/breakable_brick_cracks.png-5b424d53e722da07e2791891d2987457.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Walls/Breakable_wall_cracks.png"
-dest_files=["res://.godot/imported/Breakable_wall_cracks.png-7ff759fed561e69658943e143357c89f.s3tc.ctex"]
+source_file="res://Bricks/breakable_brick_cracks.png"
+dest_files=["res://.godot/imported/breakable_brick_cracks.png-5b424d53e722da07e2791891d2987457.s3tc.ctex"]
 
 [params]
 

@@ -1,6 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://bpunf0t0oagg8"]
+[gd_scene load_steps=10 format=3 uid="uid://bpunf0t0oagg8"]
 
 [ext_resource type="PackedScene" uid="uid://dfrtvwfs26arh" path="res://Bricks/Breakable/breakable_primitive_brick.tscn" id="1_fr7ol"]
+[ext_resource type="Script" uid="uid://d28q82ox4ip80" path="res://Bricks/primitive_shape.gd" id="2_yleh2"]
+
+[sub_resource type="Resource" id="Resource_yleh2"]
+resource_local_to_scene = true
+script = ExtResource("2_yleh2")
+primitive_shape = 3
+radius = 1.5
+height = 6.0
+size = Vector3(1, 1, 1)
+metadata/_custom_type_script = "uid://d28q82ox4ip80"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yleh2"]
 resource_local_to_scene = true
@@ -12,13 +22,13 @@ shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 distance_fade_mode = 3
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_lx3tf"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_qgcy5"]
 top_radius = 1.5
 bottom_radius = 1.5
 height = 6.0
 radial_segments = 32
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_di5bg"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lx3tf"]
 resource_local_to_scene = true
 cull_mode = 1
 shading_mode = 0
@@ -27,29 +37,27 @@ distance_fade_mode = 3
 distance_fade_min_distance = 2.44199
 distance_fade_max_distance = 6.23283
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_42lqn"]
-material = SubResource("StandardMaterial3D_di5bg")
+[sub_resource type="CylinderMesh" id="CylinderMesh_di5bg"]
+material = SubResource("StandardMaterial3D_lx3tf")
 top_radius = 1.6
 bottom_radius = 1.6
 height = 6.2
 radial_segments = 32
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_1fox4"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_42lqn"]
 height = 6.0
 radius = 1.5
 
 [node name="Base Primitive Brick" instance=ExtResource("1_fr7ol")]
-primitive_shape = 3
-radius = 1.5
-height = 6.0
+shape = SubResource("Resource_yleh2")
 base_mesh_health_material = SubResource("StandardMaterial3D_yleh2")
 base_mesh_outline_material = SubResource("StandardMaterial3D_qgcy5")
 
 [node name="MeshInstance3D" parent="." index="0"]
-mesh = SubResource("CylinderMesh_lx3tf")
+mesh = SubResource("CylinderMesh_qgcy5")
 
 [node name="MeshInstance3D" parent="MeshInstance3D" index="0"]
-mesh = SubResource("CylinderMesh_42lqn")
+mesh = SubResource("CylinderMesh_di5bg")
 
 [node name="CollisionShape3D" parent="HitboxComponent" index="0"]
-shape = SubResource("CylinderShape3D_1fox4")
+shape = SubResource("CylinderShape3D_42lqn")

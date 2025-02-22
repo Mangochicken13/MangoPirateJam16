@@ -2,26 +2,30 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2chgrkjp72rm"
-path="res://.godot/imported/testing_wall.png-09e0a8fa59a69a418ca1a9bc7ebf878a.ctex"
+uid="uid://xeka1fo6ytfs"
+path.s3tc="res://.godot/imported/Test_Custom_Brick_0.png-c135866b9c84ea6857d46bec81526ef0.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "b44541b0b2f9ed66445f184d7f366d57"
 }
 
 [deps]
 
-source_file="res://Walls/testing_wall.png"
-dest_files=["res://.godot/imported/testing_wall.png-09e0a8fa59a69a418ca1a9bc7ebf878a.ctex"]
+source_file="res://Bricks/Breakable/Custom/Test_Custom_Brick_0.png"
+dest_files=["res://.godot/imported/Test_Custom_Brick_0.png-c135866b9c84ea6857d46bec81526ef0.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://dps8oiq248v5f"]
+
+[ext_resource type="PackedScene" uid="uid://dfrtvwfs26arh" path="res://Bricks/Breakable/breakable_primitive_brick.tscn" id="1_lej45"]
+[ext_resource type="Script" uid="uid://d28q82ox4ip80" path="res://Bricks/primitive_shape.gd" id="2_87gcm"]
+
+[sub_resource type="Resource" id="Resource_87gcm"]
+resource_local_to_scene = true
+script = ExtResource("2_87gcm")
+primitive_shape = 1
+radius = 0.5
+height = 2.0
+size = Vector3(5, 4, 2)
+metadata/_custom_type_script = "uid://d28q82ox4ip80"
+
+[sub_resource type="BoxMesh" id="BoxMesh_87gcm"]
+size = Vector3(5, 4, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_87gcm"]
+resource_local_to_scene = true
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+distance_fade_mode = 3
+distance_fade_min_distance = 2.46297
+distance_fade_max_distance = 6.27778
+
+[sub_resource type="BoxMesh" id="BoxMesh_7c0hb"]
+material = SubResource("StandardMaterial3D_87gcm")
+size = Vector3(5.2, 4.2, 2.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6nhtu"]
+size = Vector3(5, 4, 2)
+
+[node name="Standard Box" instance=ExtResource("1_lej45")]
+shape = SubResource("Resource_87gcm")
+
+[node name="MeshInstance3D" parent="." index="0"]
+mesh = SubResource("BoxMesh_87gcm")
+
+[node name="MeshInstance3D" parent="MeshInstance3D" index="0"]
+mesh = SubResource("BoxMesh_7c0hb")
+
+[node name="CollisionShape3D" parent="HitboxComponent" index="0"]
+shape = SubResource("BoxShape3D_6nhtu")

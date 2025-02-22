@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://010knv4cgwnh"]
+[gd_scene load_steps=8 format=3 uid="uid://010knv4cgwnh"]
 
 [ext_resource type="Script" uid="uid://dfbe4ge3174i2" path="res://main.gd" id="1_qpx57"]
 [ext_resource type="PackedScene" uid="uid://crcwwsl077er8" path="res://UI/MainMenu/menu.tscn" id="2_j5eyx"]
@@ -6,9 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cvn5uhcel3n7h" path="res://UI/PlayerUI/player_ui.tscn" id="3_cwpfu"]
 [ext_resource type="PackedScene" uid="uid://nv2sbbj23yw1" path="res://ball.tscn" id="3_dowce"]
 [ext_resource type="PackedScene" uid="uid://d2s68yn88n8w4" path="res://UI/Debug/DebugUI.tscn" id="5_kek77"]
-[ext_resource type="PackedScene" uid="uid://bdhc4jew8px57" path="res://Levels/level_1_dev.tscn" id="5_m4v8k"]
-[ext_resource type="PackedScene" uid="uid://dh17uwlnhjgw0" path="res://Levels/level_2_dev.tscn" id="6_620i0"]
-[ext_resource type="PackedScene" uid="uid://tql1shvc5wn" path="res://Levels/level_3_dev.tscn" id="8_0ycsd"]
 
 [sub_resource type="Environment" id="Environment_kek77"]
 ambient_light_source = 2
@@ -42,11 +39,3 @@ environment = SubResource("Environment_kek77")
 process_mode = 1
 
 [node name="Ball" parent="Game" instance=ExtResource("3_dowce")]
-
-[node name="Level" parent="Game" instance=ExtResource("5_m4v8k")]
-
-[node name="Level2" parent="Game" instance=ExtResource("6_620i0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -68.5)
-
-[node name="Level3" parent="Game" instance=ExtResource("8_0ycsd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -153)

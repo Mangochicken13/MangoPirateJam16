@@ -6,6 +6,8 @@ var health: float
 
 signal health_depleted
 
+const GRADIENT: Gradient = preload("res://Components/health_gradient.tres")
+
 func _ready() -> void:
 	health = MAX_HEALTH
 
