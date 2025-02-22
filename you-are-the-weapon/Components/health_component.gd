@@ -6,7 +6,10 @@ var health: float
 
 signal health_depleted
 
-const GRADIENT: Gradient = preload("res://Components/health_gradient.tres")
+@export var gradient: Gradient = base_gradient
+const base_gradient: Gradient = preload("res://Components/health_gradient.tres")
+
+const base_material: Material = preload("res://Components/brick_health.material")
 
 func _ready() -> void:
 	health = MAX_HEALTH

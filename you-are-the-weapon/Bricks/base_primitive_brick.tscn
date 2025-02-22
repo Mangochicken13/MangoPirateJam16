@@ -1,34 +1,22 @@
-[gd_scene load_steps=9 format=3 uid="uid://deacl5letwecf"]
+[gd_scene load_steps=6 format=3 uid="uid://deacl5letwecf"]
 
 [ext_resource type="Script" uid="uid://cxxhyx6h8jjmv" path="res://Bricks/primitive_brick.gd" id="1_gnhu3"]
-[ext_resource type="Script" uid="uid://d28q82ox4ip80" path="res://Bricks/primitive_shape.gd" id="2_nrbl0"]
-[ext_resource type="Material" uid="uid://kinnl8focjp7" path="res://Bricks/brick_health_indicator.material" id="3_2xvou"]
 [ext_resource type="Script" uid="uid://di4ti33j6cwmm" path="res://Components/hitbox_component.gd" id="3_co77g"]
 [ext_resource type="Script" uid="uid://vbemhemu4dxm" path="res://Components/mesh_component.gd" id="7_honec"]
 
-[sub_resource type="Resource" id="Resource_nrbl0"]
-resource_local_to_scene = true
-script = ExtResource("2_nrbl0")
-primitive_shape = 1
-radius = 0.5
-height = 2.0
-size = Vector3(1, 1, 1)
-metadata/_custom_type_script = "uid://d28q82ox4ip80"
+[sub_resource type="BoxMesh" id="BoxMesh_co77g"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_honec"]
-material = ExtResource("3_2xvou")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_mwu3c"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_nrbl0"]
 
 [node name="Base Primitive Brick" type="Node3D" node_paths=PackedStringArray("hitbox_component", "mesh_component")]
 script = ExtResource("1_gnhu3")
-shape = SubResource("Resource_nrbl0")
 hitbox_component = NodePath("HitboxComponent")
-mesh_component = NodePath("MeshInstance3D")
+mesh_component = NodePath("MeshComponent")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_honec")
+[node name="MeshComponent" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_co77g")
 script = ExtResource("7_honec")
+metadata/_custom_type_script = "uid://vbemhemu4dxm"
 
 [node name="HitboxComponent" type="StaticBody3D" parent="." node_paths=PackedStringArray("primitive_collision_shape")]
 collision_layer = 2
@@ -38,4 +26,4 @@ primitive_collision_shape = NodePath("CollisionShape3D")
 metadata/_custom_type_script = "uid://di4ti33j6cwmm"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxComponent"]
-shape = SubResource("BoxShape3D_mwu3c")
+shape = SubResource("BoxShape3D_nrbl0")
