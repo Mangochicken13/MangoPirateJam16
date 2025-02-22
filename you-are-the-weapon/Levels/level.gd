@@ -11,6 +11,7 @@ enum WIN_CONDITION { ## The condition to meet for the exit to enable
 	Trigger_num, ## Enter/meet [member trigger_num] of triggers (must be less than or equal to the total number of triggers) 
 }
 
+# could probably use an array indexed by the enum
 const _GET_TO_THE_EXIT: String = "Get Going!"
 const _BREAK_BRICK_NUM: String = "Break {0} Bricks!"
 const _BREAK_BRICK_PERCENTAGE: String = "Break {0}% of Bricks!"
@@ -51,7 +52,7 @@ func objective_text(p_win_condition: int = -1) -> String:
 @export_range(0, 1000, 1, "or_greater") var brick_num: int:
 	set(num):
 		if Engine.is_editor_hint():
-			bricks_in_level = get_breakable_bricks()
+			bricks_in_level = get_breakable_bricks().size()
 			if num > bricks_in_level:
 				_brick_num = bricks_in_level
 				#print("Variable \"Brick Num\" cannot exceed the number of bricks in the scene (%s)" % bricks_in_level)
@@ -67,7 +68,7 @@ func objective_text(p_win_condition: int = -1) -> String:
 @export_range(0, 255, 1, "or_greater") var trigger_num: int:
 	set(num):
 		if Engine.is_editor_hint():
-			triggers_in_level = get_triggers()
+			triggers_in_level = get_triggers().size()
 			if num > triggers_in_level:
 				_trigger_num = triggers_in_level
 				#print("Variable \"Trugger Num\" cannot exceed the number of bricks in the scene (%s)" % triggers_in_level)
@@ -118,7 +119,8 @@ var is_win_condition_met: bool = false
 ## If the player has completed and exited the level. Used to prevent adding extra points to the player score
 var is_level_complete: bool = false
 ## Completion percentage. 1 = 100% complete. 
-## Can exceed 1, and will reward extra points in levels that are timed and continue after reaching the win condition
+## Can exceed 1, and will reward extra points in levels that are timed 
+## and continue after reaching the win condition
 var completion: float = 0
 
 var bricks_in_level: int = 0
@@ -149,10 +151,13 @@ signal level_timer_timeout(level: Level)
 
 #endregion
 
+#region Startup
+
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		pass
 	else:
+		# check that an exit and entrance exist
 		if exit_area:
 			exit_area.body_entered.connect(_on_try_exit_level)
 		else:
@@ -163,12 +168,15 @@ func _ready() -> void:
 		else:
 			push_error("No entrance for level ", scene_file_path.get_basename())
 		
-		bricks_in_level = get_breakable_bricks()
-		triggers_in_level = get_triggers()
+		var breakable_bricks: Array[Node] = get_breakable_bricks()
+		bricks_in_level = breakable_bricks.size()
+		for brick: BaseBrick in breakable_bricks:
+			brick.destroyed.connect(_on_brick_destroyed) # connect brick signals
 		
-		_recursive_connect_bricks()
+		triggers_in_level = get_triggers().size()
 		
-		for i in trigger_holder.get_child_count():
+		
+		for i: int in trigger_holder.get_child_count():
 			var child: Node = trigger_holder.get_child(i)
 			if child is LevelTrigger:
 				child.triggered.connect(_on_trigger_activated)
@@ -177,26 +185,19 @@ func _ready() -> void:
 			completion_timer.wait_time = time
 			completion_timer.timeout.connect(_on_completion_timer_timeout)
 
-func get_breakable_bricks(parent: Node = breakable_bricks_holder) -> int:
-	return Utils.get_children_of_type(parent, BreakableWall)
+func get_breakable_bricks(parent: Node = breakable_bricks_holder) -> Array:
+	return Utils.get_children_of_type(parent, Utils.Conditions.breakable_brick)
 
-func get_triggers(parent: Node = trigger_holder) -> int:
-	return Utils.get_children_of_type(parent, LevelTrigger)
+func get_triggers(parent: Node = trigger_holder) -> Array:
+	return Utils.get_children_of_type(parent, Utils.Conditions.level_trigger)
+
+#endregion
 
 func _start_level() -> void:
 	_check_win_condition_completion()
 	
 	if timed:
 		completion_timer.start()
-
-# TODO: Update this to use Bricks instead of BreakableWalls
-func _recursive_connect_bricks(p_node: Node = breakable_bricks_holder) -> void:
-	for i in p_node.get_child_count():
-		var child: Node = p_node.get_child(i)
-		if child.get_child_count() > 0: 
-			_recursive_connect_bricks(child)
-		if child is BreakableWall:
-			child.destroyed.connect(_on_brick_destroyed)
 
 func _check_win_condition_completion() -> void:
 	match win_condition:
@@ -359,7 +360,7 @@ func get_aabb(p_parent: Node3D, p_omit_top_level: bool, p_bounds_orientation: Tr
 	
 	bounds = xform_to_top_level_parent_space * bounds;
 	
-	for i in p_parent.get_child_count():
+	for i: int in p_parent.get_child_count():
 		#print(p_parent.get_child(i).name)
 		var child: Node3D = p_parent.get_child(i) as Node3D;
 		#print(child)

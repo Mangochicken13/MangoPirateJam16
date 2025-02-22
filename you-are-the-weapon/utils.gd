@@ -7,14 +7,27 @@ enum COLLISION_LAYERS {
 	Triggers = 1 << 2,			# 0100
 }
 
-static func get_children_of_type(p_parent: Node, p_type: Variant) -> int:
-	var num: int = 0
-	if !p_parent:
-		push_error("No node provided")
-		return 0
+class Conditions:
+	
+	static func breakable_brick(brick: Node) -> bool:
+		if brick is BaseBrick:
+			if brick.is_breakable:
+				return true
+		
+		return false
+	
+	static func level_trigger(trigger: Node) -> bool:
+		if trigger is LevelTrigger:
+			return true
+		
+		return false
+
+static func get_children_of_type(p_parent: Node, condition: Callable, children: Array[Node] = []) -> Array[Node]:
 	for node: Node in p_parent.get_children():
 		if node.get_child_count() > 0:
-			num += get_children_of_type(node, p_type)
-		if is_instance_of(node, p_type):
-			num += 1
-	return num
+			get_children_of_type(node, condition, children)
+		
+		if condition.call(node):
+			children.append(node)
+	
+	return children
