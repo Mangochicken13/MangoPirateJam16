@@ -14,24 +14,26 @@ var new_settings: Dictionary = {}
 
 signal return_to_main_scene
 
+# TODO: Full refactor
+
 func _ready() -> void:
 	config = ConfigFile.new()
-	var err = config.load("user://config.cfg")
+	var err := config.load("user://config.cfg")
 	
 	if not err == OK:
 		config = ConfigFile.new()
-		for i in settings_container.get_child_count():
-			var child = settings_container.get_child(i)
+		for i: int in settings_container.get_child_count():
+			var child: Control = settings_container.get_child(i)
 			if child.has_signal("changed") and child.get("value"):
 				config.set_value("Settings", child.name, child.value)
 	
 	main_scene_button.pressed.connect(_confirm_changes)
-	for i in settings_container.get_child_count():
-		var child = settings_container.get_child(i)
+	for i: int in settings_container.get_child_count():
+		var child: Control = settings_container.get_child(i)
 		if child.has_signal("changed") and child.get("value"):
 			child.changed.connect(_update_settings.bind(child.name, child.value))
 
-func _confirm_changes():
+func _confirm_changes() -> void:
 	confirmation_popup.position = get_viewport_rect().size / 2
 	confirmation_popup.show()
 	await confirmation_popup.popup_hide
@@ -44,7 +46,7 @@ func _confirm_changes():
 	new_settings = current_settings.duplicate(true)
 	return_to_main_scene.emit()
 
-func _update_settings(key: String, value: Variant):
+func _update_settings(key: String, value: Variant) -> void:
 	new_settings[key] = value
 
 

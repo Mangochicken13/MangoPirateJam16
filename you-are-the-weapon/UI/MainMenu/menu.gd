@@ -23,14 +23,14 @@ func _ready() -> void:
 	if player_customiser_scene:
 		player_customiser_scene.return_to_main_scene.connect(transition_to_scene.bind(main_scene))
 
-func transition_to_scene(target: PanelContainer):
-	var h_anchor_change = target.anchor_left
-	for scene in scenes:
-		var tween = create_tween()
+func transition_to_scene(target: PanelContainer) -> void:
+	var h_anchor_change: float = target.anchor_left
+	for scene: Node in scenes:
+		var tween: Tween = create_tween()
 		tween.set_ease(Tween.EASE_IN)
 		tween.tween_property(scene, "anchor_left", scene.anchor_left - h_anchor_change, .8)
 		tween.parallel().tween_property(scene, "anchor_right", scene.anchor_right - h_anchor_change, .8)
 	
 
-func _on_start_button_pressed():
+func _on_start_button_pressed() -> void:
 	start_game.emit()

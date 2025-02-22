@@ -35,9 +35,9 @@ func _input(event: InputEvent) -> void:
 				current_level.complete_win_condition()
 
 func get_levels(p_parent: Node) -> int:
-	return Utils.get_children_of_type(p_parent, Level)
+	return Utils.get_children_of_type(p_parent, func(x: Node) -> bool: return x is Level).size()
 
-func _start_game():
+func _start_game() -> void:
 	get_tree().paused = false
 	menu_ui.hide()
 	player_ui.show()
@@ -45,11 +45,11 @@ func _start_game():
 
 #region SignalBus Responses 
 
-func _on_level_entered(p_level: Level):
+func _on_level_entered(p_level: Level) -> void:
 	if not current_level == p_level:
 		current_level = p_level
 
-func _on_level_exited(p_level: Level):
+func _on_level_exited(p_level: Level) -> void:
 	if current_level == p_level:
 		total_score += current_level.level_score
 		levels_completed += 1
@@ -61,7 +61,7 @@ func _on_level_exited(p_level: Level):
 			win_ui.show()
 			get_tree().paused = true
 
-func _on_restart_game():
+func _on_restart_game() -> void:
 	get_tree().reload_current_scene()
 
 #endregion

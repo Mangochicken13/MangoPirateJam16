@@ -55,18 +55,18 @@ func _on_level_entered(p_level: Level) -> void:
 	else:
 		hide_timer()
 
-func _change_objective(p_win_condition: int = -1):
-	var win_condition
+func _change_objective(p_win_condition: int = -1) -> void:
+	var win_condition: int
 	if p_win_condition == -1:
 		win_condition = current_level.win_condition
 	else:
 		win_condition = p_win_condition
-	var tween = create_tween()
+	var tween: Tween = create_tween()
 	tween.tween_property(objective_display, "visible_ratio", 0, 1)
 	tween.tween_property(objective_display, "text", current_level.objective_text(p_win_condition), 0)
 	tween.tween_property(objective_display, "visible_ratio", 1, 1)
 
-func _on_level_win_conditon_met(p_level: Level):
+func _on_level_win_conditon_met(p_level: Level) -> void:
 	if current_level == p_level:
 		if current_level.timed and current_level.stop_timer_on_win:
 			#hide_timer()
@@ -74,16 +74,17 @@ func _on_level_win_conditon_met(p_level: Level):
 		
 		_change_objective(Level.WIN_CONDITION.None)
 
-func _on_level_timer_timeout(p_level: Level):
+func _on_level_timer_timeout(p_level: Level) -> void:
 	if current_level == p_level:
 		hide_timer()
 
-func hide_timer():
-	var tween = create_tween()
+# TODO: Swap tweens for animation player
+func hide_timer() -> void:
+	var tween: Tween = create_tween()
 	tween.tween_property(time_left_display.label_settings, "font_color", \
 	  Color(time_left_display.label_settings.font_color, 0), 1.5)
 
-func show_timer():
-	var tween = create_tween()
+func show_timer() -> void:
+	var tween: Tween = create_tween()
 	tween.tween_property(time_left_display.label_settings, "font_color", \
 	  Color(time_left_display.label_settings.font_color, 1), 1.5)

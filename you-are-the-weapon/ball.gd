@@ -40,8 +40,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# Using a lerp here to change the angle of the phantom camera spring arm 
 	#   avoids manually changing the angle along with player input, and handles bouncing
-	var ball_cam_angle := ball_cam.get_third_person_rotation()
-	for i in range(3):
+	var ball_cam_angle: Vector3 = ball_cam.get_third_person_rotation()
+	for i: int in range(3):
 		ball_cam_angle[i] = lerp_angle(ball_cam_angle[i], global_rotation[i], CAMERA_LERP_SPEED[i] * delta)
 	ball_cam.set_third_person_rotation(ball_cam_angle)
 	
@@ -58,11 +58,11 @@ func _physics_process(delta: float) -> void:
 	#region Rotation
 	
 	# I don't entirely understand the rotation functions, but they work so that's good enough
-	var turn_dir_x = Input.get_axis("turn_up", "turn_down")
+	var turn_dir_x: float = Input.get_axis("turn_up", "turn_down")
 	rotate_object_local(Vector3.MODEL_RIGHT, turn_dir_x * delta)
 	velocity = velocity.rotated(basis * Vector3.LEFT, turn_dir_x * delta)
 	
-	var turn_dir_y = Input.get_axis("turn_right", "turn_left")
+	var turn_dir_y: float = Input.get_axis("turn_right", "turn_left")
 	rotate_object_local(Vector3.MODEL_TOP, turn_dir_y * delta)
 	velocity = velocity.rotated(basis * Vector3.MODEL_TOP, turn_dir_y * delta)
 	
@@ -77,9 +77,9 @@ func _physics_process(delta: float) -> void:
 	
 	#region Collision Handling
 	
-	var collision := move_and_collide(velocity * delta)
+	var collision: KinematicCollision3D = move_and_collide(velocity * delta)
 	
-	for i in ADDITIONAL_COLLISIONS:
+	for i: int in ADDITIONAL_COLLISIONS:
 		if collision == null:
 			break
 		
@@ -97,41 +97,32 @@ func handle_collision(last_collision: KinematicCollision3D) -> KinematicCollisio
 	
 	var collider := last_collision.get_collider()
 	
-	if collider is BreakableWall:
-		collider._deal_damage(calculate_damage())
-		pass
-	
 	# should be main logic after refactor
 	if collider is HitboxComponent:
 		collider._deal_damage(calculate_damage())
 		
-		var normal := last_collision.get_normal()
+		var normal: Vector3 = last_collision.get_normal()
 		velocity = velocity.bounce(normal)
 		#velocity = collider._bounce(velocity)
 		
 		# No need to multiply by delta, the remainder magnitude is already multiplied by it
-		var collision := move_and_collide(velocity.normalized() * last_collision.get_remainder().length())
+		var collision: KinematicCollision3D = move_and_collide(velocity.normalized() * last_collision.get_remainder().length())
 		basis = Basis.looking_at(velocity)
 		return collision
 	
-	# Common logic; bouncing, imparted velocity
-	if collider is Wall:
-		
-		var normal := last_collision.get_normal()
-		velocity = velocity.bounce(normal)
-		velocity = collider._bounce(velocity)
-		
-		# No need to multiply by delta, the remainder magnitude is already multiplied by it
-		var collision := move_and_collide(velocity.normalized() * last_collision.get_remainder().length())
-		basis = Basis.looking_at(velocity)
-		return collision
-	else: 
-		breakpoint
+	#var normal: Vector3 = last_collision.get_normal()
+	#velocity = velocity.bounce(normal)
+	#velocity = collider._bounce(velocity)
+	#
+	## No need to multiply by delta, the remainder magnitude is already multiplied by it
+	#var collision: KinematicCollision3D = move_and_collide(velocity.normalized() * last_collision.get_remainder().length())
+	#basis = Basis.looking_at(velocity)
+	#return collision
 	
 	return null
 
 func calculate_damage() -> float:
-	var damage = max(0.5, (1 + pow(max(0, (velocity.length() - speed)) ** 2, (1.0/3)))) * damage_multiplier
+	var damage: float = max(0.5, (1 + pow(max(0, (velocity.length() - speed)) ** 2, (1.0/3)))) * damage_multiplier
 	
 	#print("Damage: ", damage)
 	#print("From values: \nVelocity magnitude: {0}\nSpeed: {1}\nDamage Multiplier: {2}\n".format([velocity.length(), speed, damage_multiplier]))

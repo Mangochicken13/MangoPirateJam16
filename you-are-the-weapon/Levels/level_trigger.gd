@@ -28,13 +28,13 @@ func _ready() -> void:
 		mesh_editor.mesh.get("material").set("albedo_color", untriggered_color)
 		body_entered.connect(_on_body_entered)
 
-func _on_body_entered(body: Node3D):
+func _on_body_entered(body: Node3D) -> void:
 	if body is Ball:
 		triggered.emit()
 		_tween_color()
 		body_entered.disconnect(_on_body_entered)
 		
 
-func _tween_color():
-	var tween = get_tree().create_tween()
+func _tween_color() -> void:
+	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(mesh_editor.mesh.get("material"), "albedo_color", triggered_color, .5)

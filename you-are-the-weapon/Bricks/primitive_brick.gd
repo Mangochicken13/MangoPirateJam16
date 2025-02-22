@@ -31,8 +31,8 @@ func _get_primitive_shape(p_type: PrimitiveShape.PRIMITIVE_SHAPES) -> Shape3D:
 			return CapsuleShape3D.new()
 		PrimitiveShape.PRIMITIVE_SHAPES.Cylinder:
 			return CylinderShape3D.new()
-		var shape:
-			push_warning("invalid shape index: %s" % shape)
+		var invalid_shape:
+			push_warning("invalid shape index: %s" % invalid_shape)
 			return null
 
 func _get_primitive_mesh(p_type: PrimitiveShape.PRIMITIVE_SHAPES) -> Mesh:
@@ -54,8 +54,8 @@ func _get_primitive_mesh(p_type: PrimitiveShape.PRIMITIVE_SHAPES) -> Mesh:
 			var cylinder_mesh: CylinderMesh = CylinderMesh.new()
 			cylinder_mesh.radial_segments = 32
 			return cylinder_mesh
-		var shape:
-			push_warning("invalid shape index: %s" % shape)
+		var invalid_shape:
+			push_warning("invalid shape index: %s" % invalid_shape)
 			return null
 
 func _get_half_shape_diagonal(p_mesh_shape: Mesh) -> float:
@@ -125,11 +125,13 @@ func _change_shape() -> void:
 		hitbox_component.primitive_collision_shape.shape = new_shape
 		if mesh_component:
 			mesh_component.mesh = new_mesh
-		if mesh_component.outline_mesh:
-			mesh_component.outline_mesh.mesh = new_outline_mesh
+		if outline_component:
+			outline_component.mesh = new_outline_mesh
 	else: 
 		# Important in case these settings get toggled off so i know why nothing is happening
 		push_warning("Hitbox \"%s\" is not marked as primitive " % hitbox_component.name)
+	
+	_update_shape()
 
 func _update_shape() -> void:
 	var mesh: Mesh
@@ -142,14 +144,14 @@ func _update_shape() -> void:
 	if mesh_component.mesh:
 		mesh = mesh_component.mesh
 		
-		if mesh_component.outline_mesh:
-			if mesh_component.outline_mesh.mesh:
-				outline_mesh = mesh_component.outline_mesh.mesh
+		if outline_component:
+			if outline_component.mesh:
+				outline_mesh = outline_component.mesh
 			else:
 				# Only add the outline for breakable bricks
 				if health_component:
 					outline_mesh = mesh.duplicate()
-					mesh_component.outline_mesh.mesh = outline_mesh
+					outline_component.mesh = outline_mesh
 		
 		
 	if hitbox_component.primitive_collision_shape:
@@ -207,7 +209,7 @@ func _update_shape() -> void:
 				collision_shape.radius = shape.radius
 				
 	
-	if health_component:
+	if outline_component:
 		_set_outline_dither(outline_mesh)
 
 func _set_outline_dither(p_mesh: Mesh) -> void:
@@ -217,7 +219,7 @@ func _set_outline_dither(p_mesh: Mesh) -> void:
 	var max_length: float = _max_outline_dither_dist(length)
 	
 	if not material:
-		material = base_mesh_outline_material.duplicate()
+		material = base_outline_material.duplicate()
 	
 	material.set("distance_fade_min_distance", min_length)
 	material.set("distance_fade_max_distance", max_length)
