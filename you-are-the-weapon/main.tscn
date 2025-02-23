@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://crcwwsl077er8" path="res://UI/MainMenu/menu.tscn" id="2_j5eyx"]
 [ext_resource type="PackedScene" uid="uid://mifh078hdrki" path="res://UI/win_screen.tscn" id="3_cbwob"]
 [ext_resource type="PackedScene" uid="uid://cvn5uhcel3n7h" path="res://UI/PlayerUI/player_ui.tscn" id="3_cwpfu"]
-[ext_resource type="PackedScene" uid="uid://nv2sbbj23yw1" path="res://ball.tscn" id="3_dowce"]
+[ext_resource type="PackedScene" uid="uid://nv2sbbj23yw1" path="res://Balls/ball.tscn" id="3_dowce"]
 [ext_resource type="PackedScene" uid="uid://d2s68yn88n8w4" path="res://UI/Debug/DebugUI.tscn" id="5_kek77"]
 
 [sub_resource type="Environment" id="Environment_kek77"]
