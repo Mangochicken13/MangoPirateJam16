@@ -21,6 +21,12 @@ class Conditions:
 			return true
 		
 		return false
+	
+	static func level(node: Node) -> bool:
+		if node is Level:
+			return true
+		
+		return false
 
 static func get_children_of_type(p_parent: Node, condition: Callable, children: Array[Node] = []) -> Array[Node]:
 	for node: Node in p_parent.get_children():
