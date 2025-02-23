@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://di4ti33j6cwmm" path="res://Components/hitbox_component.gd" id="3_co77g"]
 [ext_resource type="Script" uid="uid://vbemhemu4dxm" path="res://Components/mesh_component.gd" id="7_honec"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_co77g"]
+[sub_resource type="BoxMesh" id="BoxMesh_26hc2"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_nrbl0"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_co77g"]
 
 [node name="Base Primitive Brick" type="Node3D" node_paths=PackedStringArray("hitbox_component", "mesh_component")]
 script = ExtResource("1_gnhu3")
@@ -14,7 +14,7 @@ hitbox_component = NodePath("HitboxComponent")
 mesh_component = NodePath("MeshComponent")
 
 [node name="MeshComponent" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_co77g")
+mesh = SubResource("BoxMesh_26hc2")
 script = ExtResource("7_honec")
 metadata/_custom_type_script = "uid://vbemhemu4dxm"
 
@@ -26,4 +26,4 @@ primitive_collision_shape = NodePath("CollisionShape3D")
 metadata/_custom_type_script = "uid://di4ti33j6cwmm"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxComponent"]
-shape = SubResource("BoxShape3D_nrbl0")
+shape = SubResource("BoxShape3D_co77g")

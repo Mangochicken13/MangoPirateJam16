@@ -1,21 +1,40 @@
-[gd_scene load_steps=5 format=3 uid="uid://dfrtvwfs26arh"]
+[gd_scene load_steps=8 format=3 uid="uid://dfrtvwfs26arh"]
 
 [ext_resource type="PackedScene" uid="uid://deacl5letwecf" path="res://Bricks/base_primitive_brick.tscn" id="1_ox8y3"]
 [ext_resource type="Script" uid="uid://ci0a10b0gi1uk" path="res://Components/health_component.gd" id="2_5romo"]
 [ext_resource type="Script" uid="uid://bkvy3qr21ltbh" path="res://Components/outline_component.gd" id="3_5vl63"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_jojn7"]
+[sub_resource type="BoxMesh" id="BoxMesh_fo1h8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5vl63"]
+resource_local_to_scene = true
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+distance_fade_mode = 3
+distance_fade_min_distance = 0.727461
+distance_fade_max_distance = 2.55885
+
+[sub_resource type="BoxMesh" id="BoxMesh_jojn7"]
+material = SubResource("StandardMaterial3D_5vl63")
+size = Vector3(1.2, 1.2, 1.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nvavv"]
 
 [node name="Breakable Primitive Brick" node_paths=PackedStringArray("outline_component", "health_component") instance=ExtResource("1_ox8y3")]
 outline_component = NodePath("MeshComponent/OutlineComponent")
 health_component = NodePath("HealthComponent")
 
+[node name="MeshComponent" parent="." index="0"]
+mesh = SubResource("BoxMesh_fo1h8")
+
 [node name="OutlineComponent" type="MeshInstance3D" parent="MeshComponent" index="0"]
+mesh = SubResource("BoxMesh_jojn7")
 script = ExtResource("3_5vl63")
 metadata/_custom_type_script = "uid://bkvy3qr21ltbh"
 
 [node name="CollisionShape3D" parent="HitboxComponent" index="0"]
-shape = SubResource("BoxShape3D_jojn7")
+shape = SubResource("BoxShape3D_nvavv")
 
 [node name="HealthComponent" type="Node3D" parent="." index="2"]
 script = ExtResource("2_5romo")
