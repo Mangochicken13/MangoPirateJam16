@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2atx4mhes5sv"]
+
+[ext_resource type="PackedScene" uid="uid://dfrtvwfs26arh" path="res://Bricks/Breakable/breakable_primitive_brick.tscn" id="1_t1knw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_t1knw"]
+size = Vector3(5, 5, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u4qvq"]
+resource_local_to_scene = true
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+distance_fade_mode = 3
+distance_fade_min_distance = 3.15233
+distance_fade_max_distance = 7.755
+
+[sub_resource type="BoxMesh" id="BoxMesh_1kt5m"]
+material = SubResource("StandardMaterial3D_u4qvq")
+size = Vector3(5.2, 5.2, 5.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u7ry4"]
+size = Vector3(5, 5, 5)
+
+[node name="Breakable Primitive Brick" instance=ExtResource("1_t1knw")]
+size = Vector3(5, 5, 5)
+
+[node name="MeshComponent" parent="." index="0"]
+mesh = SubResource("BoxMesh_t1knw")
+
+[node name="OutlineComponent" parent="MeshComponent" index="0"]
+mesh = SubResource("BoxMesh_1kt5m")
+
+[node name="CollisionShape3D" parent="HitboxComponent" index="0"]
+shape = SubResource("BoxShape3D_u7ry4")

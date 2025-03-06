@@ -18,12 +18,10 @@ distance_fade_max_distance = 6.27778
 material = SubResource("StandardMaterial3D_2w6qx")
 size = Vector3(5.2, 4.2, 2.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_m2lcp"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ovtfo"]
 size = Vector3(5, 4, 2)
 
 [node name="Standard Box" instance=ExtResource("1_2w6qx")]
-radius = null
-height = null
 size = Vector3(5, 4, 2)
 
 [node name="MeshComponent" parent="." index="0"]
@@ -33,4 +31,7 @@ mesh = SubResource("BoxMesh_ovtfo")
 mesh = SubResource("BoxMesh_hrnns")
 
 [node name="CollisionShape3D" parent="HitboxComponent" index="0"]
-shape = SubResource("BoxShape3D_m2lcp")
+shape = SubResource("BoxShape3D_ovtfo")
+
+[node name="HealthComponent" parent="." index="2"]
+MAX_HEALTH = 2.64

@@ -41,3 +41,6 @@ mesh = SubResource("CylinderMesh_q5dea")
 
 [node name="CollisionShape3D" parent="HitboxComponent" index="0"]
 shape = SubResource("CylinderShape3D_hbpda")
+
+[node name="HealthComponent" parent="." index="2"]
+MAX_HEALTH = 5.0

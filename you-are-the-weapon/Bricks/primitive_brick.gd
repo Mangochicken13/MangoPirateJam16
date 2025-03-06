@@ -172,7 +172,7 @@ func _update_shape() -> void:
 			if outline_component.mesh:
 				outline_mesh = outline_component.mesh
 			else:
-				# Only add the outline for breakable bricks
+				# Only automatically add the outline for breakable bricks
 				if health_component:
 					outline_mesh = mesh.duplicate()
 					outline_component.mesh = outline_mesh
@@ -195,6 +195,7 @@ func _update_shape() -> void:
 				collision_shape.radius = radius
 				
 		PRIMITIVE_SHAPES.Box:
+			print(size)
 			if mesh is BoxMesh:
 				mesh.size = size
 				
@@ -257,6 +258,14 @@ func _min_outline_dither_dist(p_length: float) -> float:
 func _max_outline_dither_dist(p_length: float) -> float:
 	var increase: float = minf(7.0, p_length * 0.5) + 1
 	return p_length + increase
+
+#endregion
+
+func _enter_tree() -> void:
+	if Engine.is_editor_hint():
+		if primitive_shape == PRIMITIVE_SHAPES.Box:
+			if size != mesh_component.mesh.size:
+				_change_shape()
 
 func _validate_property(p_property: Dictionary) -> void:
 	match primitive_shape:
